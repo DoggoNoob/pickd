@@ -1037,9 +1037,15 @@ function distMiles(lat1, lon1, lat2, lon2) {
   const dLon = (lon2 - lon1) * Math.PI / 180;
   const a = Math.sin(dLat/2)**2 + Math.cos(lat1*Math.PI/180) * Math.cos(lat2*Math.PI/180) * Math.sin(dLon/2)**2;
   const straightLine = R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-  // Multiply by road factor — roads aren't straight lines
-  // 1.35 is a well-studied average for suburban/urban road networks
-  return straightLine * 1.35;
+  // Sliding road factor — city streets wind more than highways
+  // Under 5 mi: 1.35 (suburban streets)
+  // 5-15 mi: 1.25 (mix of streets and main roads)  
+  // Over 15 mi: 1.18 (mostly highway)
+  let factor;
+  if (straightLine < 5) factor = 1.35;
+  else if (straightLine < 15) factor = 1.25;
+  else factor = 1.18;
+  return straightLine * factor;
 }
 function extractCuisine(types) {
   if (!types || !types.length) return 'Restaurant';
@@ -1280,7 +1286,7 @@ async function fetchWithTimeout(url, opts, ms) {
 async function fetchZone(zone) {
   try {
     const body = {
-      includedTypes: ['restaurant', 'cafe', 'meal_takeaway', 'meal_delivery'],
+      includedTypes: ['restaurant'],
       maxResultCount: 20,
       locationRestriction: {
         circle: { center: { latitude: zone.lat, longitude: zone.lng }, radius: ZONE_RADIUS }
@@ -1311,39 +1317,52 @@ async function fetchZone(zone) {
 
 function placesToAppFormat(places, refLat, refLng) {
   const plMap = { 'PRICE_LEVEL_FREE':0,'PRICE_LEVEL_INEXPENSIVE':1,'PRICE_LEVEL_MODERATE':2,'PRICE_LEVEL_EXPENSIVE':3,'PRICE_LEVEL_VERY_EXPENSIVE':4 };
-  return places.map(p => {
-    const pLoc = p.location || {};
-    const d = distMiles(refLat || 27.3364, refLng || -82.5307, pLoc.latitude || 27.3364, pLoc.longitude || -82.5307);
-    const rating = Math.round((p.rating || 0) * 10) / 10;
-    const price = priceLevelToString(plMap[p.priceLevel] ?? null);
-    const types = p.types || [];
-    const cuisine = extractCuisine(types);
-    const ratingCount = p.userRatingCount || 0;
-    const hours = p.currentOpeningHours || null;
-    const isOpen = hours?.openNow ?? null;
-    const phone = p.nationalPhoneNumber || null;
-    const address = p.formattedAddress || null;
-    return {
-      name: p.displayName?.text || 'Unknown',
-      rating, price,
-      dist: d < 0.1 ? '< 0.1 mi' : d.toFixed(1) + ' mi',
-      tags: extractTags(types, cuisine),
-      why: generateWhy(p.displayName?.text || '', rating, d, ratingCount, cuisine, types),
-      cuisine, placeId: p.id,
-      _lat: pLoc.latitude, _lng: pLoc.longitude,
-      _priceNum: plMap[p.priceLevel] ?? null,
-      _ratingCount: ratingCount,
-      _isOpen: isOpen,
-      _phone: phone,
-      _address: address,
-      _todayHours: parseTodayHours(hours),
-      _types: types, // raw Google types for meal-time filtering
-    };
-  });
-  // Quality gate — log what's being filtered
+  
+  // Filter out non-restaurant places (Barnes & Noble cafes, gas stations, etc.)
+  const NON_RESTAURANT = ['book_store', 'gas_station', 'convenience_store', 'grocery_store',
+    'supermarket', 'department_store', 'shopping_mall', 'clothing_store', 'electronics_store',
+    'furniture_store', 'hardware_store', 'home_goods_store', 'pharmacy', 'hospital',
+    'lodging', 'hotel', 'car_dealer', 'car_repair', 'gym', 'movie_theater', 'bowling_alley'];
+  
+  const result = places
+    .filter(p => {
+      const types = p.types || [];
+      return !types.some(t => NON_RESTAURANT.includes(t));
+    })
+    .map(p => {
+      const pLoc = p.location || {};
+      const d = distMiles(refLat || 27.3364, refLng || -82.5307, pLoc.latitude || 27.3364, pLoc.longitude || -82.5307);
+      const rating = Math.round((p.rating || 0) * 10) / 10;
+      const price = priceLevelToString(plMap[p.priceLevel] ?? null);
+      const types = p.types || [];
+      const cuisine = extractCuisine(types);
+      const ratingCount = p.userRatingCount || 0;
+      const hours = p.currentOpeningHours || null;
+      const isOpen = hours?.openNow ?? null;
+      const phone = p.nationalPhoneNumber || null;
+      const address = p.formattedAddress || null;
+      return {
+        name: p.displayName?.text || 'Unknown',
+        rating, price,
+        dist: d < 0.1 ? '< 0.1 mi' : d.toFixed(1) + ' mi',
+        tags: extractTags(types, cuisine),
+        why: generateWhy(p.displayName?.text || '', rating, d, ratingCount, cuisine, types),
+        cuisine, placeId: p.id,
+        _lat: pLoc.latitude, _lng: pLoc.longitude,
+        _priceNum: plMap[p.priceLevel] ?? null,
+        _ratingCount: ratingCount,
+        _isOpen: isOpen,
+        _phone: phone,
+        _address: address,
+        _todayHours: parseTodayHours(hours),
+        _types: types,
+      };
+    });
+  
+  // Quality gate
   const before = result.length;
   const filtered = result.filter(r => r.rating >= 3.2 && r._ratingCount >= 5);
-  console.log(`[pick] Quality gate: ${before} total → ${filtered.length} passed (3.2+ stars, 5+ reviews). Rejected: ${result.filter(r => r.rating < 3.2 || r._ratingCount < 5).slice(0,10).map(r => `${r.name} (${r.rating}★, ${r._ratingCount} reviews)`).join(', ')}`);
+  console.log('[pick] Quality gate: ' + before + ' total -> ' + filtered.length + ' passed (3.2+ stars, 5+ reviews)');
   return filtered;
 }
 
@@ -1645,9 +1664,20 @@ function applyYelpPrices(yelpPrices) {
       ) {
         r._priceNum = 1; r.price = '$'; r._priceSource = 'inferred';
       }
-      // Default unknown — mark as 'unknown' so it passes all budget filters
+      // No name/type match — use review count heuristic
+      // Cheap/casual places tend to have very high review counts
       else {
-        r._priceNum = -1; r.price = ''; r._priceSource = 'unknown';
+        const rc = r._ratingCount || 0;
+        if (rc > 800) {
+          r._priceNum = 1; r.price = '$'; r._priceSource = 'inferred-reviews';
+        } else if (rc > 300 && r.rating <= 4.3) {
+          r._priceNum = 1; r.price = '$'; r._priceSource = 'inferred-reviews';
+        } else if (r.rating >= 4.6 && rc < 150) {
+          r._priceNum = 3; r.price = '$$$'; r._priceSource = 'inferred-reviews';
+        } else {
+          r._priceNum = 2; r.price = '$$'; r._priceSource = 'inferred-default';
+        }
+        console.log('[pick] No price match: ' + r.name + ' (' + rc + ' reviews, ' + r.rating + ' stars) -> ' + r.price);
       }
     }
   }
@@ -1791,15 +1821,21 @@ function filterPool() {
   if (Array.isArray(state.budget) && state.budget.length > 0) {
     const beforeBudget = pool.length;
     pool = pool.filter(r => {
-      // Unknown price (-1) — always include
-      if (r._priceNum === -1) return true;
-      // Has confirmed price — check against budget
+      // Must have confirmed price data to pass budget filter
       if (r._priceNum !== undefined && r._priceNum !== null && r._priceNum > 0) {
         return budgetAllowsPrice(r._priceNum);
       }
-      // No price data at all — include (better to show than hide)
-      return true;
+      // No price data — exclude (prevents wrong-price restaurants sneaking in)
+      return false;
     });
+    // If strict filtering leaves too few results, add back unknowns
+    if (pool.length < 3) {
+      const unknowns = [...(masterPool.length ? masterPool : fallbackRestaurants)].filter(r => {
+        return (!r._priceNum || r._priceNum <= 0);
+      });
+      pool = pool.concat(unknowns);
+      console.log(`[pick] Budget filter too strict, added ${unknowns.length} unknowns back`);
+    }
     if (beforeBudget !== pool.length) {
       console.log(`[pick] Budget filter (${state.budget.join(',')}): ${beforeBudget} → ${pool.length}`);
     }
@@ -1845,7 +1881,7 @@ async function fetchTargeted() {
 
   try {
     const body = {
-      includedTypes: ['restaurant', 'cafe', 'meal_takeaway', 'meal_delivery'],
+      includedTypes: ['restaurant'],
       maxResultCount: 20,
       locationRestriction: {
         circle: { center: { latitude: lat, longitude: lng }, radius: Math.min(radiusM, 50000) }
@@ -2226,11 +2262,10 @@ function updateDistHint() {
   // Apply budget filter — EXACT MATCH, same logic as filterPool
   if (Array.isArray(state.budget) && state.budget.length > 0) {
     pool = pool.filter(r => {
-      if (r._priceNum === -1) return true; // unknown price — include
       if (r._priceNum !== undefined && r._priceNum !== null && r._priceNum > 0) {
         return budgetAllowsPrice(r._priceNum);
       }
-      return true; // no data — include
+      return false; // exclude unknowns
     });
   }
   
@@ -2319,6 +2354,21 @@ async function handleSpinClick() {
 
   const coords = getUserCoords();
   console.log(`[pick] Spin — API key: ${!!GOOGLE_API_KEY}, masterPool: ${masterPool.length}, coords:`, coords);
+
+  // Location gate — check if user is within the Sarasota/Bradenton metro area
+  if (coords) {
+    const distFromSRQ = distMiles(coords.latitude, coords.longitude, 27.3364, -82.5307);
+    if (distFromSRQ > 75) {
+      // User is far from Sarasota — show warning
+      show('noresults-screen');
+      const nrScreen = document.getElementById('noresults-screen');
+      if (nrScreen) {
+        nrScreen.querySelector('h2').textContent = 'Coming soon to your area!';
+        nrScreen.querySelector('p').textContent = `pickd. currently covers the Sarasota/Bradenton area. You're about ${Math.round(distFromSRQ)} miles away. We're expanding soon!`;
+      }
+      return;
+    }
+  }
 
   if (GOOGLE_API_KEY && masterPool.length > 0) {
     const status = filterPool();
