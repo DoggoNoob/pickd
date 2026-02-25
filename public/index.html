@@ -1173,14 +1173,46 @@ async function geocodeZip(zip) {
 // ─── Persistent restaurant pool ───
 // One-time bulk fetch across Sarasota/Manatee zones, stored permanently
 const SRQ_ZONES = [
+  // Sarasota core (dense — lots of restaurants)
   { name: 'Downtown Sarasota', lat: 27.3364, lng: -82.5307 },
-  { name: 'Siesta Key / South', lat: 27.2670, lng: -82.5460 },
+  { name: 'Sarasota Midtown', lat: 27.3450, lng: -82.5150 },
+  { name: 'Gulf Gate / Bee Ridge', lat: 27.3050, lng: -82.5100 },
+  { name: 'Fruitville / Tuttle', lat: 27.3400, lng: -82.4900 },
+  { name: 'Sarasota Springs', lat: 27.3100, lng: -82.4700 },
+  { name: 'Beneva / Webber', lat: 27.3250, lng: -82.4850 },
+  // Beaches & keys
   { name: 'St. Armands / Lido', lat: 27.3170, lng: -82.5780 },
-  { name: 'Lakewood Ranch', lat: 27.3950, lng: -82.4050 },
-  { name: 'Bradenton / Cortez', lat: 27.4989, lng: -82.5748 },
+  { name: 'Siesta Key Village', lat: 27.2670, lng: -82.5460 },
+  { name: 'Siesta Key South', lat: 27.2450, lng: -82.5350 },
+  { name: 'Longboat Key', lat: 27.3800, lng: -82.6200 },
+  { name: 'Casey Key / Nokomis', lat: 27.2100, lng: -82.5200 },
+  // University / mall corridor
   { name: 'UTC / University', lat: 27.3550, lng: -82.4550 },
+  { name: 'University Park', lat: 27.3750, lng: -82.4300 },
+  // Lakewood Ranch
+  { name: 'Lakewood Ranch West', lat: 27.3950, lng: -82.4050 },
+  { name: 'Lakewood Ranch East', lat: 27.4050, lng: -82.3600 },
+  { name: 'Lakewood Ranch Main St', lat: 27.3850, lng: -82.3900 },
+  // Bradenton
+  { name: 'Bradenton South', lat: 27.4600, lng: -82.5600 },
+  { name: 'Bradenton Downtown', lat: 27.4989, lng: -82.5748 },
+  { name: 'Bradenton East', lat: 27.4800, lng: -82.5100 },
+  { name: 'Bradenton 14th St', lat: 27.4700, lng: -82.5400 },
+  { name: 'West Bradenton', lat: 27.4900, lng: -82.6000 },
+  // Palmetto / Ellenton / Anna Maria
+  { name: 'Palmetto / Ellenton', lat: 27.5200, lng: -82.5200 },
+  { name: 'Anna Maria Island', lat: 27.5300, lng: -82.7300 },
+  { name: 'Holmes Beach', lat: 27.4900, lng: -82.7100 },
+  // South county
+  { name: 'Palmer Ranch / Osprey', lat: 27.2800, lng: -82.4900 },
+  { name: 'Venice North', lat: 27.2200, lng: -82.4700 },
+  { name: 'Venice Downtown', lat: 27.0980, lng: -82.4400 },
+  { name: 'Englewood', lat: 26.9620, lng: -82.3530 },
+  // Inland
+  { name: 'Parrish', lat: 27.5800, lng: -82.3600 },
+  { name: 'Cortez / Bayshore', lat: 27.4700, lng: -82.6800 },
 ];
-const ZONE_RADIUS = 8000; // 8km per zone — covers the county nicely
+const ZONE_RADIUS = 5000; // 5km per zone
 
 let masterPool = []; // full deduplicated pool of all restaurants
 
@@ -1310,6 +1342,7 @@ async function loadMasterPool() {
           restaurants = [...masterPool];
           console.log(`[pick] Loaded ${masterPool.length} API restaurants from storage (${Math.round(age/86400000)}d old)`);
           console.log(`[pick] 🍽️ POOL STATS: ${masterPool.length} total restaurants in database`);
+          enrichWithYelpPrices(); // backfill prices in background
           return true;
         } else {
           console.log(`[pick] Stored pool invalid — age: ${Math.round(age/86400000)}d, hasApiData: ${hasApiData}. Will refetch.`);
@@ -1332,6 +1365,7 @@ async function loadMasterPool() {
           restaurants = [...masterPool];
           console.log(`[pick] Loaded ${masterPool.length} API restaurants from localStorage (${Math.round(age/86400000)}d old)`);
           console.log(`[pick] 🍽️ POOL STATS: ${masterPool.length} total restaurants in database`);
+          enrichWithYelpPrices(); // backfill prices in background
           return true;
         }
       }
@@ -1392,11 +1426,110 @@ async function buildMasterPool() {
     console.log(`[pick] Pool built: ${masterPool.length} restaurants (after quality filter)`);
     console.log(`[pick] 🍽️ POOL STATS: ${masterPool.length} total restaurants in database`);
     console.log(`[pick] Top rated: ${masterPool.slice(0, 5).map(r => `${r.name} (${r.rating}★)`).join(', ')}`);
+    showPrefsSummary();
+    
+    // Enrich with Yelp prices in background (doesn't block spin)
+    enrichWithYelpPrices();
+    
     return true;
   } catch (e) {
     if (e.message !== 'sandbox') console.warn('[pick] buildMasterPool failed:', e);
     return false;
   }
+}
+
+// ─── Yelp Price Enrichment ───
+async function enrichWithYelpPrices() {
+  // Check if we already enriched this pool
+  try {
+    const enriched = localStorage.getItem('pick-yelp-enriched');
+    if (enriched) {
+      const data = JSON.parse(enriched);
+      // If enriched recently (within 30 days) and pool hasn't changed much, use cached
+      if (data.ts && Date.now() - data.ts < 30 * 24 * 60 * 60 * 1000 && data.prices) {
+        applyYelpPrices(data.prices);
+        console.log(`[pick] 💰 Loaded cached Yelp prices for ${Object.keys(data.prices).length} restaurants`);
+        return;
+      }
+    }
+  } catch {}
+
+  console.log('[pick] 💰 Fetching Yelp prices...');
+  
+  // Fetch Yelp data for each zone
+  const allPrices = {};
+  for (const zone of SRQ_ZONES) {
+    try {
+      const resp = await fetch(`/api/yelp-prices?lat=${zone.lat}&lng=${zone.lng}`);
+      if (resp.ok) {
+        const data = await resp.json();
+        if (data.prices) Object.assign(allPrices, data.prices);
+      }
+    } catch (e) {
+      console.warn(`[pick] Yelp fetch failed for ${zone.name}:`, e);
+    }
+  }
+  
+  const matchCount = applyYelpPrices(allPrices);
+  console.log(`[pick] 💰 Yelp prices: ${Object.keys(allPrices).length} found, ${matchCount} matched to pool`);
+  
+  // Cache the prices
+  try {
+    localStorage.setItem('pick-yelp-enriched', JSON.stringify({ prices: allPrices, ts: Date.now() }));
+  } catch {}
+  
+  // Re-save the pool with updated prices
+  try {
+    await window.storage.set('master-pool', JSON.stringify({
+      restaurants: masterPool,
+      fetchedAt: Date.now(),
+      count: masterPool.length,
+    }));
+    localStorage.setItem('pick-master-pool', JSON.stringify({
+      restaurants: masterPool,
+      fetchedAt: Date.now(),
+      count: masterPool.length,
+    }));
+  } catch {}
+  
+  // Update UI
+  showPrefsSummary();
+}
+
+function applyYelpPrices(yelpPrices) {
+  let matched = 0;
+  const priceToString = { 1: '$', 2: '$$', 3: '$$$', 4: '$$$$' };
+  
+  for (const r of masterPool) {
+    const nameLower = r.name.toLowerCase();
+    // Try exact match first
+    if (yelpPrices[nameLower] !== undefined) {
+      r._priceNum = yelpPrices[nameLower];
+      r.price = priceToString[r._priceNum] || '$$';
+      r._priceSource = 'yelp';
+      matched++;
+      continue;
+    }
+    // Try fuzzy match — check if Yelp name contains our name or vice versa
+    for (const [yelpName, yelpPrice] of Object.entries(yelpPrices)) {
+      if (nameLower.includes(yelpName) || yelpName.includes(nameLower)) {
+        r._priceNum = yelpPrice;
+        r.price = priceToString[r._priceNum] || '$$';
+        r._priceSource = 'yelp';
+        matched++;
+        break;
+      }
+    }
+  }
+  
+  // Log unmatched restaurants with unknown price
+  const unmatched = masterPool.filter(r => r._priceSource !== 'yelp' && (r._priceNum === undefined || r._priceNum === null));
+  if (unmatched.length) {
+    console.log(`[pick] 💰 ${unmatched.length} restaurants still missing price: ${unmatched.map(r => r.name).join(', ')}`);
+  }
+  
+  restaurants = [...masterPool];
+  return matched;
 }
 
 // Get user's coordinates from GPS or geocoded ZIP
@@ -1489,7 +1622,18 @@ function filterPool() {
   // Filter by budget
   if (state.budget && state.budget !== 'Any') {
     const maxP = budgetToMaxPrice();
-    pool = pool.filter(r => (r._priceNum || 2) <= maxP);
+    const beforeBudget = pool.length;
+    pool = pool.filter(r => {
+      // If we have confirmed price data (from Yelp or Google), enforce strictly
+      if (r._priceNum !== undefined && r._priceNum !== null) {
+        return r._priceNum <= maxP;
+      }
+      // No price data — include but it's unverified
+      return true;
+    });
+    if (pool.length < beforeBudget) {
+      console.log(`[pick] Budget filter (${state.budget}, max ${maxP}): ${beforeBudget} → ${pool.length}`);
+    }
   }
 
   // Filter by distance using GPS or geocoded ZIP coords
@@ -1507,13 +1651,16 @@ function filterPool() {
 
   if (pool.length === 0) {
     restaurants = [];
+    console.log(`[pick] Filter result: 0 restaurants (masterPool: ${masterPool.length}, budget: ${state.budget}, dist: ${state.dist}mi)`);
     return 'empty';
   }
   if (pool.length < 5) {
     restaurants = pool;
+    console.log(`[pick] Filter result: ${pool.length} restaurants (few)`);
     return 'few';
   }
   restaurants = pool;
+  console.log(`[pick] Filter result: ${pool.length} restaurants`);
   return 'ok';
 }
 
@@ -1674,7 +1821,7 @@ function showPrefsSummary() {
   // Run filterPool to get accurate count
   filterPool();
   const spotCount = restaurants.length;
-  const spotLabel = spotCount > 0 ? `${spotCount} spots` : '0 spots';
+  const spotLabel = masterPool.length > 0 ? `${spotCount} spots` : 'Loading…';
   
   const parts = [locLabel, `${state.dist} mi`, state.budget, openNow ? 'Open now' : '', spotLabel].filter(Boolean);
   if (state.excluded.length) parts.push(`${state.excluded.length} hidden`);
@@ -1891,7 +2038,7 @@ function updateDistHint() {
   // Apply budget filter
   if (state.budget && state.budget !== 'Any') {
     const maxP = budgetToMaxPrice();
-    pool = pool.filter(r => (r._priceNum || 2) <= maxP);
+    pool = pool.filter(r => (r._priceNum === undefined || r._priceNum === null) ? true : r._priceNum <= maxP);
   }
   
   // Apply distance filter
@@ -2013,7 +2160,7 @@ async function handleSpinClick() {
         const maxP = budgetToMaxPrice();
         restaurants = restaurants.filter(r => {
           const distOk = r._distNum !== undefined && r._distNum <= maxDist;
-          const priceOk = state.budget === 'Any' || (r._priceNum || 2) <= maxP;
+          const priceOk = state.budget === 'Any' || r._priceNum === undefined || r._priceNum === null || r._priceNum <= maxP;
           return distOk && priceOk;
         });
         if (!restaurants.length) {
@@ -2035,7 +2182,7 @@ async function handleSpinClick() {
     const maxP = budgetToMaxPrice();
     restaurants = restaurants.filter(r => {
       const distOk = r._distNum !== undefined && r._distNum <= maxDist;
-      const priceOk = state.budget === 'Any' || (r._priceNum || 2) <= maxP;
+      const priceOk = state.budget === 'Any' || r._priceNum === undefined || r._priceNum === null || r._priceNum <= maxP;
       return distOk && priceOk;
     });
     if (!restaurants.length) {
