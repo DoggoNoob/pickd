@@ -1022,6 +1022,7 @@ function budgetToMaxPrice() {
 function budgetAllowsPrice(priceNum) {
   // Core budget check — does the selected budget include this price level?
   if (!Array.isArray(state.budget) || state.budget.length === 0) return true; // no filter
+  if (priceNum === -1) return true; // unknown price — always show
   const map = { '$': 1, '$$': 2, '$$$': 3 };
   const allowed = new Set(state.budget.map(b => map[b]).filter(Boolean));
   if (allowed.size === 0) return true;
@@ -1586,6 +1587,31 @@ function applyYelpPrices(yelpPrices) {
         }
       }
     }
+    // Try first-word match (e.g. "Outback" matches "Outback Steakhouse")
+    if (yelpPrice === undefined && norm.length > 3) {
+      const firstWord = norm.split(' ')[0];
+      if (firstWord.length >= 4) {
+        for (const [yelpNormName, yp] of Object.entries(yelpNorm)) {
+          const yelpFirst = yelpNormName.split(' ')[0];
+          if (firstWord === yelpFirst && Math.abs(norm.length - yelpNormName.length) < 15) {
+            yelpPrice = yp; break;
+          }
+        }
+      }
+    }
+    // Try word overlap — if 2+ significant words match, consider it a hit
+    if (yelpPrice === undefined) {
+      const words = norm.split(' ').filter(w => w.length >= 3);
+      if (words.length >= 2) {
+        for (const [yelpNormName, yp] of Object.entries(yelpNorm)) {
+          const yWords = yelpNormName.split(' ').filter(w => w.length >= 3);
+          const overlap = words.filter(w => yWords.includes(w)).length;
+          if (overlap >= 2) {
+            yelpPrice = yp; break;
+          }
+        }
+      }
+    }
     
     if (yelpPrice !== undefined) {
       // Log price corrections where Yelp disagrees with Google
@@ -1597,16 +1623,31 @@ function applyYelpPrices(yelpPrices) {
       r._priceSource = 'yelp';
       matched++;
     } else if (!r._priceNum && r._priceSource !== 'yelp') {
-      // No Google price AND no Yelp match - infer from restaurant type/name
+      // No Google price AND no Yelp match - infer from restaurant type/name/characteristics
       const name = r.name.toLowerCase();
       const types = r._types || [];
-      if (types.includes('fine_dining') || /steakhouse|filet|wagyu|omakase|prix fixe/i.test(r.name)) {
+      
+      // $$$ — fine dining, steakhouses, upscale
+      if (types.includes('fine_dining') || /steakhouse|filet|wagyu|omakase|prix fixe|chops|ruth|morton|capital grille|flemings|eddie v|ocean prime/i.test(r.name)) {
         r._priceNum = 3; r.price = '$$$'; r._priceSource = 'inferred';
-      } else if (/taco|burrito|pho|banh mi|pizza|deli|sub|wing|donut|bagel|diner/i.test(r.name) ||
-                 types.includes('fast_food') || types.includes('meal_takeaway')) {
+      }
+      // $ — fast food, takeout, cheap eats, ethnic casual, chains, cafes
+      else if (
+        types.includes('fast_food') || types.includes('meal_takeaway') ||
+        types.includes('meal_delivery') ||
+        /taco|burrito|pho|banh mi|pizza|deli|sub|wing|donut|bagel|diner|waffle|pancake|buffet|noodle|ramen|gyro|falafel|shawarma|kebab|curry|wok|chinese|thai express|teriyaki|hibachi express|sushi roll|poke|acai|smoothie|juice|cafe|caf[eé]|coffee|bakery|sandwich|cheesesteak|hot dog|pretzel|bbq|barbecue|rib shack|chicken|popeye|chick.fil|wendy|mcdonald|burger king|five guys|sonic|taco bell|chipotle|panda express|wawa|subway|firehouse|jersey mike|jimmy john|jason.s deli|panera|zaxby|cook.out|checkers|rally|whataburger|culver|in.n.out|el pollo|church.s|krystal|captain d|long john|pollo tropical|moe.s|qdoba|del taco|wingstop|raising cane|slim chicken|tropical smoothie|jamba|dunkin|starbuck|tim horton|krispy kreme|applebee|ihop|denny|cracker barrel|bob evans|golden corral|waffle house|huddle house|perkins|shoney|cici|little caesars|domino|papa john|papa murphy|marco.s pizza|hungry howie|jet.s pizza|blaze pizza|mod pizza|pie five|your pie|mellow mushroom|tijuana flats|bento|teriyaki|pei wei|noodles.*company|fazoli|culinary|food truck|grill.*bar|pub.*grill|sports.*bar/i.test(r.name) ||
+        // Google types that indicate cheap/casual
+        types.some(t => ['bakery', 'cafe', 'coffee_shop', 'sandwich_shop', 'ice_cream_shop',
+          'fast_food', 'pizza_restaurant', 'hamburger_restaurant', 'breakfast_restaurant',
+          'chinese_restaurant', 'mexican_restaurant', 'thai_restaurant', 'vietnamese_restaurant',
+          'indian_restaurant', 'greek_restaurant', 'turkish_restaurant', 'ramen_restaurant',
+          'vegan_restaurant', 'vegetarian_restaurant'].includes(t))
+      ) {
         r._priceNum = 1; r.price = '$'; r._priceSource = 'inferred';
-      } else {
-        r._priceNum = 2; r.price = '$$'; r._priceSource = 'inferred';
+      }
+      // Default unknown — mark as 'unknown' so it passes all budget filters
+      else {
+        r._priceNum = -1; r.price = ''; r._priceSource = 'unknown';
       }
     }
   }
@@ -1620,9 +1661,15 @@ function applyYelpPrices(yelpPrices) {
   restaurants = [...masterPool];
   
   // Log price distribution
-  const priceDist = { 1: 0, 2: 0, 3: 0, 4: 0, 0: 0 };
-  masterPool.forEach(r => { priceDist[r._priceNum || 0]++; });
-  console.log(`[pick] 💰 PRICE DISTRIBUTION: $=${priceDist[1]}, $$=${priceDist[2]}, $$$=${priceDist[3]}, $$$$=${priceDist[4]}, unknown=${priceDist[0]}`);
+  const priceDist = { 1: 0, 2: 0, 3: 0, 4: 0, unknown: 0 };
+  masterPool.forEach(r => { 
+    if (r._priceNum === 1) priceDist[1]++;
+    else if (r._priceNum === 2) priceDist[2]++;
+    else if (r._priceNum === 3) priceDist[3]++;
+    else if (r._priceNum === 4) priceDist[4]++;
+    else priceDist['unknown']++;
+  });
+  console.log(`[pick] 💰 PRICE DISTRIBUTION: $=${priceDist[1]}, $$=${priceDist[2]}, $$$=${priceDist[3]}, $$$$=${priceDist[4]}, unknown=${priceDist['unknown']}`);
   
   return matched;
 }
@@ -1666,11 +1713,37 @@ function filterPool() {
     pool = pool.filter(r => !state.excluded.includes(r.name));
   }
 
-  // Filter by Open Now
-  const openNow = document.getElementById('open-toggle')?.classList.contains('on');
-  if (openNow) {
-    const beforeCount = pool.length;
-    pool = pool.filter(r => r._isOpen !== false); // keep true and null (unknown)
+  // Filter by Open Now — parse hours LIVE, don't rely on stale cached _isOpen
+  const openToggleOn = document.getElementById('open-toggle')?.classList.contains('on');
+  if (openToggleOn) {
+    const now = new Date();
+    const nowMin = now.getHours() * 60 + now.getMinutes();
+    const beforeOpen = pool.length;
+    pool = pool.filter(r => {
+      // If we have today's hours string, parse it live
+      if (r._todayHours) {
+        const h = r._todayHours;
+        if (/closed/i.test(h)) return false;
+        if (/24 hours|open 24/i.test(h)) return true;
+        const match = h.match(/(\d{1,2}):?(\d{2})?\s*(AM|PM)\s*[–—\-]\s*(\d{1,2}):?(\d{2})?\s*(AM|PM)/i);
+        if (match) {
+          let oH = parseInt(match[1]), oM = parseInt(match[2]||'0');
+          let cH = parseInt(match[4]), cM = parseInt(match[5]||'0');
+          if (match[3].toUpperCase()==='PM' && oH!==12) oH+=12;
+          if (match[3].toUpperCase()==='AM' && oH===12) oH=0;
+          if (match[6].toUpperCase()==='PM' && cH!==12) cH+=12;
+          if (match[6].toUpperCase()==='AM' && cH===12) cH=0;
+          let openMin = oH*60+oM, closeMin = cH*60+cM;
+          if (closeMin <= openMin) closeMin += 1440;
+          return nowMin >= openMin && (nowMin <= closeMin || nowMin+1440 <= closeMin);
+        }
+      }
+      // Fallback: keep if _isOpen is true or unknown
+      return r._isOpen !== false;
+    });
+    if (beforeOpen !== pool.length) {
+      console.log(`[pick] Open now filter: ${beforeOpen} → ${pool.length}`);
+    }
   }
 
   // ─── Meal-time filter ───
@@ -1718,21 +1791,15 @@ function filterPool() {
   if (Array.isArray(state.budget) && state.budget.length > 0) {
     const beforeBudget = pool.length;
     pool = pool.filter(r => {
-      // Must have confirmed price data to pass budget filter
+      // Unknown price (-1) — always include
+      if (r._priceNum === -1) return true;
+      // Has confirmed price — check against budget
       if (r._priceNum !== undefined && r._priceNum !== null && r._priceNum > 0) {
         return budgetAllowsPrice(r._priceNum);
       }
-      // No price data — exclude (prevents random expensive places sneaking in)
-      return false;
+      // No price data at all — include (better to show than hide)
+      return true;
     });
-    // If strict filtering leaves too few results, add back unknowns
-    if (pool.length < 3) {
-      const unknowns = [...(masterPool.length ? masterPool : fallbackRestaurants)].filter(r => {
-        return (r._priceNum === undefined || r._priceNum === null || r._priceNum === 0);
-      });
-      pool = pool.concat(unknowns);
-      console.log(`[pick] Budget filter too strict, added ${unknowns.length} unknowns back`);
-    }
     if (beforeBudget !== pool.length) {
       console.log(`[pick] Budget filter (${state.budget.join(',')}): ${beforeBudget} → ${pool.length}`);
     }
@@ -2129,19 +2196,41 @@ function updateDistHint() {
     pool = pool.filter(r => !state.excluded.includes(r.name));
   }
   
-  // Apply openNow filter
-  const openNow = document.getElementById('open-toggle')?.classList.contains('on');
-  if (openNow) {
-    pool = pool.filter(r => r._isOpen !== false);
+  // Apply openNow filter — parse hours live
+  const openNowHint = document.getElementById('open-toggle')?.classList.contains('on');
+  if (openNowHint) {
+    const now = new Date();
+    const nowMin = now.getHours() * 60 + now.getMinutes();
+    pool = pool.filter(r => {
+      if (r._todayHours) {
+        const h = r._todayHours;
+        if (/closed/i.test(h)) return false;
+        if (/24 hours|open 24/i.test(h)) return true;
+        const match = h.match(/(\d{1,2}):?(\d{2})?\s*(AM|PM)\s*[–—\-]\s*(\d{1,2}):?(\d{2})?\s*(AM|PM)/i);
+        if (match) {
+          let oH = parseInt(match[1]), oM = parseInt(match[2]||'0');
+          let cH = parseInt(match[4]), cM = parseInt(match[5]||'0');
+          if (match[3].toUpperCase()==='PM' && oH!==12) oH+=12;
+          if (match[3].toUpperCase()==='AM' && oH===12) oH=0;
+          if (match[6].toUpperCase()==='PM' && cH!==12) cH+=12;
+          if (match[6].toUpperCase()==='AM' && cH===12) cH=0;
+          let openMin = oH*60+oM, closeMin = cH*60+cM;
+          if (closeMin <= openMin) closeMin += 1440;
+          return nowMin >= openMin && (nowMin <= closeMin || nowMin+1440 <= closeMin);
+        }
+      }
+      return r._isOpen !== false;
+    });
   }
   
   // Apply budget filter — EXACT MATCH, same logic as filterPool
   if (Array.isArray(state.budget) && state.budget.length > 0) {
     pool = pool.filter(r => {
+      if (r._priceNum === -1) return true; // unknown price — include
       if (r._priceNum !== undefined && r._priceNum !== null && r._priceNum > 0) {
         return budgetAllowsPrice(r._priceNum);
       }
-      return false; // exclude unknowns
+      return true; // no data — include
     });
   }
   
@@ -2608,14 +2697,28 @@ function showResult(pickedName) {
   const hoursRow = document.getElementById('res-hours-row');
   const hoursEl = document.getElementById('res-hours');
   if (pick._todayHours) {
-    const openLabel = pick._isOpen === true ? '🟢 Open' : (pick._isOpen === false ? '🔴 Closed' : '');
+    // Compute open/closed LIVE from hours string
+    let liveOpen = null;
+    const h = pick._todayHours;
+    if (/closed/i.test(h)) { liveOpen = false; }
+    else if (/24 hours|open 24/i.test(h)) { liveOpen = true; }
+    else {
+      const match = h.match(/(\d{1,2}):?(\d{2})?\s*(AM|PM)\s*[–—\-]\s*(\d{1,2}):?(\d{2})?\s*(AM|PM)/i);
+      if (match) {
+        let oH = parseInt(match[1]), oM = parseInt(match[2]||'0');
+        let cH = parseInt(match[4]), cM = parseInt(match[5]||'0');
+        if (match[3].toUpperCase()==='PM' && oH!==12) oH+=12;
+        if (match[3].toUpperCase()==='AM' && oH===12) oH=0;
+        if (match[6].toUpperCase()==='PM' && cH!==12) cH+=12;
+        if (match[6].toUpperCase()==='AM' && cH===12) cH=0;
+        let openMin = oH*60+oM, closeMin = cH*60+cM;
+        if (closeMin <= openMin) closeMin += 1440;
+        const nowMin = new Date().getHours()*60+new Date().getMinutes();
+        liveOpen = nowMin >= openMin && (nowMin <= closeMin || nowMin+1440 <= closeMin);
+      }
+    }
+    const openLabel = liveOpen === true ? '🟢 Open' : (liveOpen === false ? '🔴 Closed' : '');
     hoursEl.textContent = (openLabel ? openLabel + ' · ' : '') + pick._todayHours;
-    hoursRow.style.display = 'flex';
-  } else if (pick._isOpen === true) {
-    hoursEl.textContent = '🟢 Open now';
-    hoursRow.style.display = 'flex';
-  } else if (pick._isOpen === false) {
-    hoursEl.textContent = '🔴 Currently closed';
     hoursRow.style.display = 'flex';
   } else {
     hoursRow.style.display = 'none';
@@ -2634,7 +2737,7 @@ function showResult(pickedName) {
 
   // Show info section if either row is visible
   const infoSection = document.getElementById('res-info');
-  infoSection.style.display = (pick._todayHours || pick._isOpen === true || pick._isOpen === false || pick._phone) ? 'flex' : 'none';
+  infoSection.style.display = (pick._todayHours || pick._phone) ? 'flex' : 'none';
 
   const badge = document.getElementById('streak-badge');
   const num = document.getElementById('streak-num');
