@@ -1188,11 +1188,17 @@ async function geocodeZip(zip) {
 const SRQ_ZONES = [
   // Sarasota core (dense — lots of restaurants)
   { name: 'Downtown Sarasota', lat: 27.3364, lng: -82.5307 },
+  { name: 'Downtown Sarasota East', lat: 27.3364, lng: -82.5200 },
   { name: 'Sarasota Midtown', lat: 27.3450, lng: -82.5150 },
+  { name: 'Sarasota Midtown West', lat: 27.3450, lng: -82.5350 },
   { name: 'Gulf Gate / Bee Ridge', lat: 27.3050, lng: -82.5100 },
+  { name: 'Gulf Gate South', lat: 27.2950, lng: -82.5000 },
   { name: 'Fruitville / Tuttle', lat: 27.3400, lng: -82.4900 },
+  { name: 'Fruitville East', lat: 27.3400, lng: -82.4650 },
   { name: 'Sarasota Springs', lat: 27.3100, lng: -82.4700 },
   { name: 'Beneva / Webber', lat: 27.3250, lng: -82.4850 },
+  { name: 'Ringling / Tamiami', lat: 27.3600, lng: -82.5500 },
+  { name: '17th Street', lat: 27.3200, lng: -82.5250 },
   // Beaches & keys
   { name: 'St. Armands / Lido', lat: 27.3170, lng: -82.5780 },
   { name: 'Siesta Key Village', lat: 27.2670, lng: -82.5460 },
@@ -1202,30 +1208,36 @@ const SRQ_ZONES = [
   // University / mall corridor
   { name: 'UTC / University', lat: 27.3550, lng: -82.4550 },
   { name: 'University Park', lat: 27.3750, lng: -82.4300 },
+  { name: 'Cattlemen / Bee Ridge', lat: 27.3100, lng: -82.4550 },
   // Lakewood Ranch
   { name: 'Lakewood Ranch West', lat: 27.3950, lng: -82.4050 },
   { name: 'Lakewood Ranch East', lat: 27.4050, lng: -82.3600 },
   { name: 'Lakewood Ranch Main St', lat: 27.3850, lng: -82.3900 },
+  { name: 'Lakewood Ranch North', lat: 27.4200, lng: -82.3800 },
   // Bradenton
   { name: 'Bradenton South', lat: 27.4600, lng: -82.5600 },
   { name: 'Bradenton Downtown', lat: 27.4989, lng: -82.5748 },
   { name: 'Bradenton East', lat: 27.4800, lng: -82.5100 },
   { name: 'Bradenton 14th St', lat: 27.4700, lng: -82.5400 },
   { name: 'West Bradenton', lat: 27.4900, lng: -82.6000 },
+  { name: 'Bradenton Cortez Rd', lat: 27.4550, lng: -82.5300 },
   // Palmetto / Ellenton / Anna Maria
   { name: 'Palmetto / Ellenton', lat: 27.5200, lng: -82.5200 },
   { name: 'Anna Maria Island', lat: 27.5300, lng: -82.7300 },
   { name: 'Holmes Beach', lat: 27.4900, lng: -82.7100 },
   // South county
   { name: 'Palmer Ranch / Osprey', lat: 27.2800, lng: -82.4900 },
+  { name: 'Clark Rd Corridor', lat: 27.2900, lng: -82.4700 },
   { name: 'Venice North', lat: 27.2200, lng: -82.4700 },
   { name: 'Venice Downtown', lat: 27.0980, lng: -82.4400 },
+  { name: 'Venice South', lat: 27.0800, lng: -82.4300 },
   { name: 'Englewood', lat: 26.9620, lng: -82.3530 },
+  { name: 'North Port', lat: 27.0440, lng: -82.2360 },
   // Inland
   { name: 'Parrish', lat: 27.5800, lng: -82.3600 },
   { name: 'Cortez / Bayshore', lat: 27.4700, lng: -82.6800 },
 ];
-const ZONE_RADIUS = 5000; // 5km per zone
+const ZONE_RADIUS = 6000; // 6km per zone for more overlap
 
 let masterPool = []; // full deduplicated pool of all restaurants
 
@@ -1267,7 +1279,7 @@ async function fetchWithTimeout(url, opts, ms) {
 async function fetchZone(zone) {
   try {
     const body = {
-      includedTypes: ['restaurant'],
+      includedTypes: ['restaurant', 'cafe', 'meal_takeaway', 'meal_delivery'],
       maxResultCount: 20,
       locationRestriction: {
         circle: { center: { latitude: zone.lat, longitude: zone.lng }, radius: ZONE_RADIUS }
@@ -1329,8 +1341,8 @@ function placesToAppFormat(places, refLat, refLng) {
   });
   // Quality gate — log what's being filtered
   const before = result.length;
-  const filtered = result.filter(r => r.rating >= 3.5 && r._ratingCount >= 10);
-  console.log(`[pick] Quality gate: ${before} total → ${filtered.length} passed (3.5+ stars, 10+ reviews). Rejected: ${result.filter(r => r.rating < 3.5 || r._ratingCount < 10).map(r => `${r.name} (${r.rating}★, ${r._ratingCount} reviews)`).join(', ')}`);
+  const filtered = result.filter(r => r.rating >= 3.2 && r._ratingCount >= 5);
+  console.log(`[pick] Quality gate: ${before} total → ${filtered.length} passed (3.2+ stars, 5+ reviews). Rejected: ${result.filter(r => r.rating < 3.2 || r._ratingCount < 5).slice(0,10).map(r => `${r.name} (${r.rating}★, ${r._ratingCount} reviews)`).join(', ')}`);
   return filtered;
 }
 
@@ -1766,7 +1778,7 @@ async function fetchTargeted() {
 
   try {
     const body = {
-      includedTypes: ['restaurant'],
+      includedTypes: ['restaurant', 'cafe', 'meal_takeaway', 'meal_delivery'],
       maxResultCount: 20,
       locationRestriction: {
         circle: { center: { latitude: lat, longitude: lng }, radius: Math.min(radiusM, 50000) }
@@ -2536,7 +2548,7 @@ function startSpin() {
     }
     reel.style.transform = `translateY(-${currentY}px)`;
     const centeredIdx = Math.round(currentY / itemH);
-    if (centeredIdx !== lastCenteredIdx) { lastCenteredIdx = centeredIdx; SFX.reelTick(); }
+    if (centeredIdx !== lastCenteredIdx) { lastCenteredIdx = centeredIdx; SFX.reelTick(); if (navigator.vibrate) navigator.vibrate(8); }
     reel.querySelectorAll('.slot-item').forEach((el, i) => el.classList.toggle('lit', i === centeredIdx));
     if (phase === 'done') {
       clearInterval(statusTimer); SFX.reveal();
