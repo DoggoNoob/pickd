@@ -1,0 +1,3155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=no">
+<title>pick. — let the app decide</title>
+<meta name="description" content="Can't pick a restaurant? pick. finds places near you and picks one at random. No more scrolling, no more debates.">
+<meta name="theme-color" content="#0E0D0B">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="pick.">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="format-detection" content="telephone=no">
+<link rel="icon" type="image/png" href="data:image/png;base64,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">
+<link rel="apple-touch-icon" href="data:image/png;base64,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">
+<link rel="manifest" href="data:application/json;base64,eyJuYW1lIjoicGljay4iLCJzaG9ydF9uYW1lIjoicGljay4iLCJzdGFydF91cmwiOiIvIiwiZGlzcGxheSI6InN0YW5kYWxvbmUiLCJiYWNrZ3JvdW5kX2NvbG9yIjoiIzBCMEEwOSIsInRoZW1lX2NvbG9yIjoiIzBCMEEwOSIsImljb25zIjpbeyJzcmMiOiIvcGljay1pY29uLTUxMi5wbmciLCJzaXplcyI6IjUxMng1MTIiLCJ0eXBlIjoiaW1hZ2UvcG5nIn1dfQ==">
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg: #0B0A09;
+  --bg2: #111110;
+  --surface: #161514;
+  --ink: #EDE8E0;
+  --ink-muted: #736E65;
+  --ink-subtle: #4A4640;
+  --accent: #DC2626;
+  --accent2: #E5A000;
+  --card: rgba(22,21,20,0.85);
+  --card-border: rgba(255,255,255,0.06);
+  --border: rgba(255,255,255,0.06);
+  --border2: rgba(255,255,255,0.1);
+  --radius: 14px;
+  --radius-sm: 10px;
+  --radius-xs: 6px;
+  --tab-h: 64px;
+  --glow: rgba(220,38,38,0.3);
+  --glow2: rgba(229,160,0,0.25);
+  --safe-top: env(safe-area-inset-top, 0px);
+  --safe-bottom: env(safe-area-inset-bottom, 0px);
+  --font: 'DM Sans', -apple-system, sans-serif;
+  --serif: 'DM Serif Display', Georgia, serif;
+}
+
+html { overscroll-behavior: none; overflow: hidden; height: 100%; }
+body {
+  overflow-y: auto; height: 100%; -webkit-overflow-scrolling: touch;
+  font-family: var(--font); background: var(--bg); color: var(--ink);
+  -webkit-font-smoothing: antialiased; line-height: 1.5;
+}
+button, a, .pill, .tag, .nav-tab, .toggle, .sort-pill, .log-view-btn { touch-action: manipulation; -webkit-tap-highlight-color: transparent; }
+input, textarea { font-size: 16px !important; }
+@media all and (display-mode: standalone) { body { padding-top: 0; } }
+
+/* ─── Layout ─── */
+#shell { min-height: 100%; display: flex; flex-direction: column; }
+#app {
+  flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center;
+  padding: calc(var(--safe-top) + 32px) 24px calc(var(--tab-h) + var(--safe-bottom) + 28px);
+  position: relative; max-width: 480px; margin: 0 auto; width: 100%;
+}
+.screen { display: none; width: 100%; }
+.screen.active { display: flex; flex-direction: column; }
+body.no-nav #bottom-nav { display: none; }
+body.no-nav #app { padding-bottom: 40px; }
+
+/* ─── Spacers ─── */
+.g4 { height: 4px; } .g8 { height: 8px; } .g12 { height: 12px; } .g16 { height: 16px; }
+.g20 { height: 20px; } .g24 { height: 24px; } .g28 { height: 28px; } .g32 { height: 32px; }
+.g40 { height: 40px; } .g48 { height: 48px; }
+
+/* ─── Flash overlay ─── */
+#flash-overlay { position: fixed; inset: 0; background: white; opacity: 0; pointer-events: none; z-index: 250; display: none; }
+
+/* ─── Bottom Nav ─── */
+#bottom-nav {
+  position: fixed; bottom: 0; left: 0; right: 0;
+  height: calc(var(--tab-h) + var(--safe-bottom));
+  padding-bottom: var(--safe-bottom);
+  background: rgba(11,10,9,0.92); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+  border-top: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: center; gap: 56px; z-index: 100;
+}
+.nav-tab {
+  display: flex; flex-direction: column; align-items: center; gap: 4px;
+  background: none; border: none; cursor: pointer; padding: 8px 16px;
+  color: var(--ink-muted); font-family: var(--font);
+  font-size: 10px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase;
+  transition: color 0.2s;
+}
+.nav-tab.active { color: var(--ink); }
+.nav-tab svg { width: 20px; height: 20px; stroke: currentColor; fill: none; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
+.nav-dot { width: 5px; height: 5px; background: var(--accent); border-radius: 50%; position: absolute; top: 4px; right: 4px; display: none; box-shadow: 0 0 8px var(--accent); }
+.nav-dot.visible { display: block; }
+
+/* ─── Typography ─── */
+.display { font-family: var(--serif); font-size: 2.4rem; line-height: 1.15; color: var(--ink); letter-spacing: -0.02em; }
+.display em { font-style: italic; color: var(--accent); }
+.section-title { font-family: var(--serif); font-size: 1.4rem; color: var(--ink); letter-spacing: -0.01em; }
+.label { font-size: 11px; font-weight: 500; color: var(--ink-muted); letter-spacing: 0.12em; text-transform: uppercase; }
+.back-link {
+  background: none; border: none; color: var(--ink-muted); font-size: 13px; font-family: var(--font);
+  cursor: pointer; padding: 0; margin-bottom: 20px; align-self: flex-start; transition: color 0.2s;
+}
+.back-link:hover { color: var(--ink); }
+
+/* ─── Buttons ─── */
+.btn-primary {
+  width: 100%; padding: 15px 20px; font-size: 14px; font-weight: 500; font-family: var(--font);
+  background: var(--accent); color: white; border: none; border-radius: var(--radius-sm);
+  cursor: pointer; transition: all 0.2s; letter-spacing: 0.02em;
+}
+.btn-primary:hover { filter: brightness(1.1); }
+.btn-primary:active { transform: scale(0.98); }
+.btn-secondary {
+  width: 100%; padding: 15px 20px; font-size: 14px; font-weight: 500; font-family: var(--font);
+  background: transparent; color: var(--ink); border: 1px solid var(--border2); border-radius: var(--radius-sm);
+  cursor: pointer; transition: all 0.2s;
+}
+.btn-secondary:hover { border-color: var(--ink-muted); }
+.btn-ghost {
+  background: none; border: none; color: var(--ink-muted); font-size: 13px; font-family: var(--font);
+  cursor: pointer; padding: 10px; transition: color 0.2s;
+}
+.btn-ghost:hover { color: var(--ink); }
+
+/* ─── Onboarding ─── */
+#onboarding-screen { text-align: center; align-items: center; }
+.onb-slides { width: 100%; overflow: hidden; }
+.onb-track { display: flex; transition: transform 0.35s ease; }
+.onb-slide { min-width: 100%; padding: 40px 16px; display: flex; flex-direction: column; align-items: center; }
+.onb-icon { font-size: 3rem; margin-bottom: 20px; display: block; }
+.onb-title { font-family: var(--serif); font-size: 1.5rem; color: var(--ink); margin-bottom: 12px; }
+.onb-body { font-size: 14px; color: var(--ink-muted); max-width: 280px; line-height: 1.6; }
+.onb-dots { display: flex; gap: 8px; justify-content: center; }
+.onb-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--ink-subtle); transition: all 0.3s; }
+.onb-dot.active { background: var(--accent); width: 20px; border-radius: 3px; }
+
+/* ─── Entry Screen ─── */
+#entry-screen { text-align: center; align-items: center; }
+.streak-badge {
+  font-size: 12px; color: var(--ink-muted); background: var(--surface);
+  border: 1px solid var(--border); padding: 6px 14px; border-radius: 20px;
+  margin-bottom: 20px; transition: opacity 0.3s;
+}
+.streak-badge.hidden { opacity: 0; pointer-events: none; }
+
+/* ─── Spin Button ─── */
+.spin-btn-wrap { position: relative; width: 100%; }
+.spin-btn {
+  width: 100%; padding: 18px; font-size: 16px; font-weight: 500; font-family: var(--font);
+  background: var(--accent); color: white; border: none; border-radius: var(--radius-sm);
+  cursor: pointer; transition: all 0.2s; position: relative; overflow: hidden;
+  box-shadow: 0 0 0 0 var(--glow);
+}
+.spin-btn:hover { box-shadow: 0 4px 24px var(--glow); }
+.spin-btn:active { transform: scale(0.97); }
+.spin-btn.fired { animation: btnPulse 0.3s ease; }
+@keyframes btnPulse { 0% { box-shadow: 0 0 0 0 var(--glow); } 50% { box-shadow: 0 0 0 16px transparent; } 100% { box-shadow: 0 0 0 0 transparent; } }
+.spin-btn.shimmer::after {
+  content: ''; position: absolute; inset: 0;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.15), transparent);
+  animation: shimmer 0.6s ease;
+}
+@keyframes shimmer { from { transform: translateX(-100%); } to { transform: translateX(100%); } }
+.charge-bar-wrap {
+  position: absolute; bottom: -6px; left: 10%; right: 10%; height: 3px;
+  background: rgba(255,255,255,0.05); border-radius: 2px; opacity: 0; transition: opacity 0.3s;
+}
+.charge-bar-wrap.visible { opacity: 1; }
+.charge-bar { height: 100%; background: linear-gradient(90deg, var(--accent), var(--accent2)); border-radius: 2px; transition: width 0.1s; width: 0%; }
+
+/* ─── Location ─── */
+.loc-option {
+  display: flex; align-items: center; gap: 14px;
+  background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-sm);
+  padding: 16px 18px; cursor: pointer; width: 100%; transition: all 0.2s;
+}
+.loc-option:hover { border-color: var(--border2); }
+.loc-icon { font-size: 1.4rem; }
+.loc-option-text { display: flex; flex-direction: column; text-align: left; }
+.loc-option-text span:first-child { font-size: 14px; font-weight: 500; color: var(--ink); }
+.loc-option-sub { font-size: 12px; color: var(--ink-muted); margin-top: 2px; }
+.or-divider { text-align: center; color: var(--ink-subtle); font-size: 12px; letter-spacing: 0.08em; }
+input[type="text"], input[type="number"], textarea {
+  width: 100%; padding: 14px 16px; font-size: 15px; font-family: var(--font);
+  background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-sm);
+  color: var(--ink); outline: none; transition: border-color 0.2s;
+}
+input:focus, textarea:focus { border-color: var(--accent); }
+input::placeholder, textarea::placeholder { color: var(--ink-subtle); }
+
+/* ─── Filters ─── */
+.slider-wrap { position: relative; padding-bottom: 4px; }
+input[type="range"] { width: 100%; accent-color: var(--accent); height: 4px; background: var(--border); border-radius: 2px; outline: none; -webkit-appearance: none; }
+input[type="range"]::-webkit-slider-thumb { -webkit-appearance: none; width: 20px; height: 20px; border-radius: 50%; background: var(--accent); cursor: pointer; border: 2px solid var(--bg); box-shadow: 0 0 8px var(--glow); }
+.slider-val { font-size: 12px; color: var(--ink-muted); font-weight: 500; }
+.slider-max { float: right; }
+.pill-group { display: flex; gap: 8px; }
+.pill {
+  flex: 1; padding: 12px 8px; font-size: 13px; font-weight: 500; font-family: var(--font);
+  background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-sm);
+  color: var(--ink-muted); cursor: pointer; text-align: center; transition: all 0.2s;
+}
+.pill.active { background: var(--accent); color: white; border-color: var(--accent); }
+.toggle-row { display: flex; justify-content: space-between; align-items: center; margin-top: 20px; padding: 4px 0; }
+.toggle-label { font-size: 14px; color: var(--ink); }
+.toggle {
+  width: 44px; height: 24px; border-radius: 12px; border: none;
+  background: var(--ink-subtle); cursor: pointer; position: relative; transition: background 0.3s;
+}
+.toggle::after {
+  content: ''; width: 18px; height: 18px; border-radius: 50%; background: white;
+  position: absolute; top: 3px; left: 3px; transition: transform 0.3s;
+}
+.toggle.on { background: var(--accent); }
+.toggle.on::after { transform: translateX(20px); }
+
+/* ─── Slot Machine ─── */
+.slot-machine { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); position: relative; overflow: hidden; width: 100%; }
+.slot-highlight {
+  position: absolute; left: 0; right: 0; top: 50%; transform: translateY(-50%);
+  height: 52px; border-top: 1px solid var(--accent); border-bottom: 1px solid var(--accent);
+  background: rgba(220,38,38,0.04); z-index: 2; pointer-events: none;
+}
+.slot-reel { position: relative; z-index: 1; }
+.slot-item {
+  height: 52px; display: flex; align-items: center; justify-content: center;
+  font-family: var(--serif); font-size: 1.1rem; color: var(--ink);
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis; padding: 0 24px;
+}
+.spin-status { text-align: center; margin-top: 16px; font-size: 12px; color: var(--ink-muted); }
+
+/* ─── Result Card ─── */
+.restaurant-card {
+  background: var(--card); border: 1px solid var(--card-border);
+  border-radius: var(--radius); overflow: hidden; width: 100%;
+  backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+  box-shadow: 0 8px 40px rgba(0,0,0,0.3), 0 0 0 1px rgba(255,255,255,0.03);
+  animation: cardIn 0.5s ease;
+}
+@keyframes cardIn { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+.card-body { padding: 28px 24px 20px; }
+.restaurant-name { font-family: var(--serif); font-size: 1.6rem; color: var(--ink); line-height: 1.2; margin-bottom: 10px; }
+.restaurant-meta { display: flex; align-items: center; gap: 8px; font-size: 13px; color: var(--ink-muted); flex-wrap: wrap; }
+.meta-dot { width: 3px; height: 3px; border-radius: 50%; background: var(--ink-subtle); }
+.star { color: var(--accent2); }
+.tags { display: flex; gap: 6px; margin-top: 14px; flex-wrap: wrap; }
+.tag {
+  font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; font-weight: 500;
+  padding: 5px 12px; border: 1px solid var(--border2); border-radius: 20px;
+  color: var(--ink-muted); opacity: 0; animation: tagIn 0.35s ease forwards;
+}
+@keyframes tagIn { from { opacity: 0; transform: translateY(6px) scale(0.9); } to { opacity: 1; transform: translateY(0) scale(1); } }
+.why-section {
+  padding: 16px 24px 18px;
+  background: rgba(220,38,38,0.03);
+  border-top: 1px solid var(--border);
+}
+.why-pick { font-size: 13px; color: var(--ink-muted); font-style: italic; line-height: 1.55; margin: 0; }
+.why-pick::before { content: '\201C'; font-family: var(--serif); font-size: 1.5rem; color: var(--accent); line-height: 0; vertical-align: -5px; margin-right: 2px; }
+.why-pick::after { content: '\201D'; font-family: var(--serif); font-size: 1.5rem; color: var(--accent); line-height: 0; vertical-align: -5px; margin-left: 1px; }
+.res-info { margin-top: 14px; display: flex; flex-direction: column; gap: 6px; }
+.res-info-row { display: flex; align-items: center; gap: 8px; font-size: 12px; color: var(--ink-muted); }
+.res-info-icon { font-size: 11px; }
+.res-info-row a { color: var(--accent); text-decoration: none; }
+.res-info-row a:hover { text-decoration: underline; }
+
+/* ─── Actions ─── */
+.action-row { display: flex; gap: 8px; width: 100%; }
+.action-row .btn-primary, .action-row .btn-secondary { flex: 1; padding: 14px 10px; font-size: 13px; }
+.reroll-btn {
+  width: 100%; padding: 12px; font-size: 13px; font-family: var(--font);
+  background: transparent; border: 1px solid var(--border); border-radius: var(--radius-sm);
+  color: var(--ink-muted); cursor: pointer; transition: all 0.2s;
+}
+.reroll-btn:hover { border-color: var(--border2); color: var(--ink); }
+.share-btn {
+  width: 100%; padding: 10px; margin-top: 6px; font-size: 12px; font-family: var(--font);
+  background: none; border: none; color: var(--ink-subtle); cursor: pointer; transition: color 0.2s;
+}
+.share-btn:hover { color: var(--ink-muted); }
+.exclude-link { background: none; border: none; color: var(--ink-subtle); font-size: 11px; cursor: pointer; opacity: 0.4; transition: opacity 0.2s; padding: 4px 0; font-family: var(--font); }
+.exclude-link:hover { opacity: 0.7; }
+.micro-btn {
+  padding: 8px 16px; font-size: 12px; font-family: var(--font); font-weight: 500;
+  background: transparent; border: 1px solid var(--border); border-radius: 20px;
+  color: var(--ink-muted); cursor: pointer; transition: all 0.2s;
+}
+.micro-btn:hover { border-color: var(--ink-muted); }
+.micro-row { display: flex; gap: 6px; justify-content: center; flex-wrap: wrap; }
+
+/* ─── No Results ─── */
+#noresults-screen { text-align: center; align-items: center; }
+.noresults-icon { font-size: 2.4rem; margin-bottom: 16px; }
+.quick-fix-row { display: flex; gap: 8px; width: 100%; margin-top: 12px; }
+.quick-fix {
+  flex: 1; padding: 16px 12px; background: var(--surface); border: 1px solid var(--border);
+  border-radius: var(--radius-sm); cursor: pointer; text-align: center; transition: border-color 0.2s;
+  font-family: var(--font); font-size: 13px; font-weight: 500; color: var(--ink);
+}
+.quick-fix span { display: block; font-size: 11px; color: var(--ink-muted); font-weight: 400; margin-top: 4px; }
+.quick-fix:hover { border-color: var(--border2); }
+
+/* ─── Good Luck Screen ─── */
+.goodluck-big { font-size: 3.2rem; margin-bottom: 8px; }
+.aggregate-reveal { opacity: 0; transform: translateY(6px); transition: all 0.4s ease; text-align: center; width: 100%; }
+.aggregate-reveal.visible { opacity: 1; transform: translateY(0); }
+.aggregate-label { font-size: 11px; color: var(--ink-muted); margin-bottom: 8px; letter-spacing: 0.08em; text-transform: uppercase; }
+.bar-track { height: 4px; background: var(--border); border-radius: 2px; margin-bottom: 8px; overflow: hidden; }
+.bar-fill { height: 100%; background: linear-gradient(90deg, var(--accent), var(--accent2)); border-radius: 2px; transition: width 1s ease; width: 0; }
+.bar-votes { font-size: 11px; color: var(--ink-subtle); }
+
+/* ─── Share Card ─── */
+#share-overlay {
+  position: fixed; inset: 0; background: rgba(0,0,0,0.7); backdrop-filter: blur(8px);
+  z-index: 200; display: none; align-items: center; justify-content: center; padding: 24px;
+}
+#share-overlay.visible { display: flex; }
+.share-card {
+  background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius);
+  width: 100%; max-width: 340px; overflow: hidden;
+}
+.share-card-top { padding: 28px 24px 20px; }
+.share-eyebrow { font-size: 11px; color: var(--ink-muted); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 12px; }
+.share-restaurant-name { font-family: var(--serif); font-size: 1.5rem; color: var(--ink); margin-bottom: 8px; }
+.share-meta { display: flex; align-items: center; gap: 8px; font-size: 12px; color: var(--ink-muted); }
+.share-meta .meta-dot { width: 3px; height: 3px; border-radius: 50%; background: var(--ink-subtle); display: inline-block; }
+.share-tags { display: flex; gap: 5px; margin-top: 12px; flex-wrap: wrap; }
+.share-tag { font-size: 9px; letter-spacing: 0.08em; text-transform: uppercase; padding: 4px 10px; border: 1px solid var(--border2); border-radius: 16px; color: var(--ink-muted); }
+.share-tagline {
+  padding: 14px 24px; border-top: 1px solid var(--border);
+  font-size: 13px; color: var(--ink-muted); font-style: italic;
+}
+.share-card-bottom {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 14px 24px; border-top: 1px solid var(--border);
+}
+.share-credit { font-size: 10px; color: var(--ink-subtle); }
+.share-logo { font-family: var(--serif); font-style: italic; font-size: 1rem; color: var(--ink-muted); }
+.share-close { position: absolute; top: 16px; right: 16px; background: none; border: none; color: var(--ink-muted); font-size: 20px; cursor: pointer; }
+.share-actions { padding: 16px 24px; }
+.share-actions button { width: 100%; }
+
+/* ─── Log ─── */
+#log-screen { min-height: 40vh; }
+.log-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; width: 100%; }
+.log-stats-row {
+  display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin-bottom: 20px; width: 100%;
+}
+.log-stat {
+  background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-sm);
+  padding: 14px 10px; text-align: center;
+}
+.log-stat-num { font-family: var(--serif); font-size: 1.1rem; color: var(--ink); margin-bottom: 2px; }
+.log-stat-label { font-size: 10px; color: var(--ink-muted); letter-spacing: 0.06em; text-transform: uppercase; }
+.log-view-toggle {
+  display: flex; background: var(--surface); border-radius: var(--radius-sm); padding: 3px;
+  margin-bottom: 14px; border: 1px solid var(--border); width: 100%;
+}
+.log-view-btn {
+  flex: 1; padding: 9px 0; font-size: 12px; font-weight: 500; font-family: var(--font);
+  border: none; background: none; color: var(--ink-muted); cursor: pointer;
+  border-radius: 8px; transition: all 0.2s;
+}
+.log-view-btn.active { background: var(--ink); color: var(--bg); }
+.log-search-wrap { margin-bottom: 14px; width: 100%; }
+.log-search-wrap input {
+  width: 100%; padding: 11px 16px; font-size: 13px; font-family: var(--font);
+  background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-sm);
+  color: var(--ink); outline: none;
+}
+.log-search-wrap input::placeholder { color: var(--ink-subtle); opacity: 0.6; }
+.log-search-wrap input:focus { border-color: var(--accent); }
+.sort-bar { display: flex; gap: 6px; margin-bottom: 16px; }
+.sort-pill {
+  padding: 7px 14px; font-size: 11px; font-weight: 500; font-family: var(--font);
+  background: var(--surface); border: 1px solid var(--border); border-radius: 20px;
+  color: var(--ink-muted); cursor: pointer; transition: all 0.2s;
+}
+.sort-pill.active { background: var(--ink); color: var(--bg); border-color: var(--ink); }
+.log-empty { text-align: center; padding: 40px 0; color: var(--ink-muted); font-size: 14px; line-height: 1.6; }
+.log-empty-icon { font-size: 2.2rem; margin-bottom: 14px; }
+.log-list { width: 100%; }
+.log-entry {
+  padding: 16px 0; border-bottom: 1px solid var(--border); width: 100%;
+  animation: fadeUp 0.3s ease;
+}
+@keyframes fadeUp { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
+.log-entry-top { display: flex; justify-content: space-between; align-items: baseline; }
+.log-entry-name { font-weight: 600; font-size: 14px; color: var(--ink); }
+.log-entry-date { font-size: 11px; color: var(--ink-subtle); white-space: nowrap; }
+.log-entry-stars { margin: 5px 0; font-size: 13px; letter-spacing: 1px; }
+.log-entry-stars .filled { color: var(--accent2); }
+.log-entry-stars .empty { color: var(--ink-subtle); opacity: 0.3; }
+.log-entry-meta { margin-top: 4px; }
+.log-entry-note { font-size: 12px; color: var(--ink-muted); font-style: italic; margin-top: 6px; }
+.log-entry-actions { display: flex; gap: 6px; margin-top: 10px; }
+.saved-action-btn {
+  padding: 6px 12px; font-size: 11px; font-weight: 500; font-family: var(--font);
+  background: transparent; border: 1px solid var(--border); border-radius: 6px;
+  color: var(--ink-muted); cursor: pointer; transition: all 0.2s;
+}
+.saved-action-btn:hover { border-color: var(--border2); color: var(--ink); }
+.saved-action-btn.danger { border-color: rgba(220,38,38,0.2); color: rgba(220,38,38,0.5); }
+.saved-action-btn.danger:hover { border-color: var(--accent); color: var(--accent); }
+
+/* ─── History ─── */
+.history-entry { padding: 14px 0; border-bottom: 1px solid var(--border); }
+.history-top { display: flex; justify-content: space-between; align-items: baseline; }
+.history-name { font-weight: 600; font-size: 14px; color: var(--ink); }
+.history-date { font-size: 11px; color: var(--ink-subtle); white-space: nowrap; }
+.history-meta { font-size: 12px; color: var(--ink-muted); margin-top: 3px; }
+.history-actions { display: flex; align-items: center; gap: 8px; margin-top: 8px; }
+.history-badge { font-size: 10px; color: var(--accent2); font-weight: 500; letter-spacing: 0.04em; }
+
+/* ─── Excluded items ─── */
+.excluded-item {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 8px 12px; background: var(--surface); border: 1px solid var(--border);
+  border-radius: 8px; font-size: 12px; color: var(--ink-muted);
+}
+.excluded-item button { background: none; border: none; color: var(--accent); font-size: 11px; cursor: pointer; padding: 4px 8px; font-family: var(--font); }
+
+/* ─── Profile ─── */
+#profile-screen { min-height: 40vh; }
+.profile-hero { text-align: center; width: 100%; margin-bottom: 28px; }
+.profile-avatar {
+  width: 56px; height: 56px; border-radius: 50%; background: var(--surface); border: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--serif); font-size: 1.3rem; color: var(--ink); margin: 0 auto 10px;
+}
+.profile-username { font-size: 14px; color: var(--ink-muted); margin-bottom: 20px; }
+.profile-stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
+.profile-stat-card {
+  background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-sm);
+  padding: 14px 8px; text-align: center;
+}
+.profile-stat-val { font-family: var(--serif); font-size: 1rem; color: var(--ink); margin-bottom: 2px; }
+.profile-stat-key { font-size: 9px; color: var(--ink-muted); letter-spacing: 0.06em; text-transform: uppercase; }
+.profile-section-title {
+  font-size: 12px; font-weight: 600; color: var(--ink-muted); letter-spacing: 0.08em; text-transform: uppercase;
+  margin-bottom: 12px; padding-bottom: 8px; border-bottom: 1px solid var(--border); width: 100%;
+}
+
+/* ─── Rate Overlay ─── */
+#rate-overlay {
+  position: fixed; inset: 0; background: rgba(0,0,0,0.8); backdrop-filter: blur(12px);
+  z-index: 200; display: none; align-items: flex-end; justify-content: center; padding: 0;
+}
+#rate-overlay.visible { display: flex; }
+.rate-card {
+  background: var(--bg2); border-top: 1px solid var(--border);
+  border-radius: var(--radius) var(--radius) 0 0;
+  width: 100%; max-width: 480px; padding: 28px 24px calc(var(--safe-bottom) + 24px);
+  max-height: 85vh; overflow-y: auto;
+}
+.rate-card-title { font-family: var(--serif); font-size: 1.2rem; color: var(--ink); margin-bottom: 4px; }
+.rate-card-sub { font-size: 12px; color: var(--ink-muted); margin-bottom: 20px; }
+.star-picker { display: flex; gap: 8px; margin-bottom: 20px; }
+.star-pick {
+  font-size: 28px; cursor: pointer; color: var(--ink-subtle); transition: all 0.15s;
+  background: none; border: none; padding: 4px;
+}
+.star-pick.filled { color: var(--accent2); transform: scale(1.1); }
+.tag-picker { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 16px; }
+.tag-pick {
+  padding: 7px 14px; font-size: 12px; font-family: var(--font);
+  border: 1px solid var(--border); border-radius: 20px;
+  background: transparent; color: var(--ink-muted); cursor: pointer; transition: all 0.2s;
+}
+.tag-pick.selected { border-color: var(--accent); color: var(--accent); background: rgba(220,38,38,0.06); }
+.rate-actions { display: flex; gap: 8px; margin-top: 16px; }
+.rate-actions .btn-primary, .rate-actions .btn-secondary { flex: 1; }
+
+/* ─── Toast ─── */
+#toast {
+  position: fixed; bottom: calc(var(--tab-h) + var(--safe-bottom) + 16px); left: 50%; transform: translateX(-50%) translateY(20px);
+  background: var(--surface); border: 1px solid var(--border); color: var(--ink);
+  padding: 10px 20px; border-radius: 10px; font-size: 13px; font-family: var(--font);
+  opacity: 0; transition: all 0.3s ease; z-index: 300; pointer-events: none;
+  backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+}
+#toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+/* ─── Utils ─── */
+.hidden { display: none !important; }
+.blink { animation: blink 1s step-end infinite; }
+@keyframes blink { 50% { opacity: 0; } }
+</style>
+</head>
+<body class="no-nav">
+
+<div id="flash-overlay" style="display:none"></div>
+
+<!-- SPLASH / LOADING -->
+<div id="splash-screen" style="position:fixed;inset:0;background:var(--bg);z-index:999;display:flex;flex-direction:column;align-items:center;justify-content:center;transition:opacity 0.4s ease,transform 0.4s ease">
+  <div style="font-family:'DM Serif Display',serif;font-size:2.8rem;font-style:italic;color:var(--ink);letter-spacing:-0.02em">pick.</div>
+  <div style="margin-top:8px;font-size:12px;color:var(--ink-muted);letter-spacing:0.1em;text-transform:uppercase">Let the app decide</div>
+  <div style="margin-top:32px;width:40px;height:2px;background:var(--border);border-radius:1px;overflow:hidden">
+    <div style="width:40%;height:100%;background:linear-gradient(90deg,var(--accent),var(--accent2));border-radius:1px;animation:splashLoad 1s ease infinite"></div>
+  </div>
+</div>
+<style>
+@keyframes splashLoad { 0%{transform:translateX(-100%)} 50%{transform:translateX(150%)} 100%{transform:translateX(-100%)} }
+</style>
+
+<div id="shell">
+  <div id="app">
+
+    <!-- ONBOARDING -->
+    <div id="onboarding-screen" class="screen active">
+      <div class="onb-slides">
+        <div class="onb-track" id="onb-track">
+          <div class="onb-slide">
+            <span class="onb-icon">🍽️</span>
+            <div class="onb-title">Can't pick a restaurant?</div>
+            <p class="onb-body">pick. finds real restaurants near you and picks one at random. No more scrolling. No more debates.</p>
+          </div>
+          <div class="onb-slide">
+            <span class="onb-icon">📍</span>
+            <div class="onb-title">Set your vibe</div>
+            <p class="onb-body">Distance, budget, open now — dial in your filters and we'll search your area.</p>
+          </div>
+          <div class="onb-slide">
+            <span class="onb-icon">🎰</span>
+            <div class="onb-title">Spin & go</div>
+            <p class="onb-body">Hit spin, get a pick, see it on Maps. Don't love it? Re-roll instantly.</p>
+          </div>
+          <div class="onb-slide">
+            <span class="onb-icon">✦</span>
+            <div class="onb-title">Rate & track</div>
+            <p class="onb-body">Log every pick with a rating, tags, and notes. Build your own personal restaurant journal over time.</p>
+          </div>
+        </div>
+      </div>
+      <div class="g24"></div>
+      <div class="onb-dots" id="onb-dots">
+        <div class="onb-dot active"></div>
+        <div class="onb-dot"></div>
+        <div class="onb-dot"></div>
+        <div class="onb-dot"></div>
+      </div>
+      <div class="g32"></div>
+      <button class="btn-primary" id="onb-btn" onclick="onbNext()">Next →</button>
+      <div class="g8"></div>
+      <button class="btn-ghost" onclick="finishOnboarding()">Skip intro</button>
+    </div>
+
+    <!-- ENTRY -->
+    <div id="entry-screen" class="screen">
+      <div class="streak-badge hidden" id="streak-badge">⚡ <span id="streak-num">0</span> spins in your area</div>
+      <p class="label" id="entry-meal-label">Dinner decisions</p>
+      <div class="g12"></div>
+      <h1 class="display">Can't decide?<br>Press the <em>button.</em></h1>
+      <div class="g32"></div>
+      <div class="spin-btn-wrap">
+        <button class="spin-btn" id="main-spin-btn"
+          onmousedown="startCharge()" onmouseup="releaseCharge()" ontouchstart="startCharge()" ontouchend="releaseCharge()"
+          onclick="handleSpinClick()">
+          Spin 🎰
+        </button>
+        <div class="charge-bar-wrap" id="charge-bar-wrap">
+          <div class="charge-bar" id="charge-bar"></div>
+        </div>
+      </div>
+      <div class="g8"></div>
+      <p style="font-size:12px;color:var(--ink-muted);text-align:center" id="spin-hint">Hold for extra luck ✦</p>
+      <div id="saved-prefs" style="display:none;text-align:center;margin-top:14px;">
+        <p style="font-size:12px;color:var(--ink-muted);line-height:1.5" id="prefs-summary"></p>
+        <button class="btn-ghost" style="font-size:12px;margin-top:4px" onclick="show('location-screen')">Settings</button>
+      </div>
+    </div>
+
+    <!-- LOCATION -->
+    <div id="location-screen" class="screen">
+      <button class="back-link" onclick="show('entry-screen')">← Back</button>
+      <p class="label">Step 1 of 2</p>
+      <div class="g8"></div>
+      <h2 class="section-title">Where are you?</h2>
+      <div class="g24"></div>
+      <button class="loc-option" onclick="useMyLocation()">
+        <span class="loc-icon">📍</span>
+        <span class="loc-option-text"><span>Use my location</span><span class="loc-option-sub">Fastest — one tap</span></span>
+      </button>
+      <div class="g12"></div>
+      <div class="or-divider">or</div>
+      <div class="g12"></div>
+      <input type="text" id="zip-input" placeholder="Enter ZIP code" maxlength="10" inputmode="numeric"
+        onkeydown="if(event.key==='Enter') validateZip()">
+      <div class="g8"></div>
+      <button class="btn-primary" onclick="validateZip()">Continue →</button>
+    </div>
+
+    <!-- FILTERS -->
+    <div id="filters-screen" class="screen">
+      <button class="back-link" onclick="show('location-screen')">← Back</button>
+      <p class="label">Step 2 of 2</p>
+      <div class="g8"></div>
+      <h2 class="section-title">Set your vibe</h2>
+      <div class="g28"></div>
+      <p class="label">Max distance</p>
+      <div class="g8"></div>
+      <div class="slider-wrap">
+        <input type="range" id="dist-slider" min="1" max="25" value="5" step="1" oninput="updateDist(this.value)">
+        <span class="slider-val" id="dist-label">5 mi</span>
+        <span class="slider-val slider-max" id="dist-max-label">25 mi</span>
+      </div>
+      <p class="slider-hint" id="dist-hint" style="font-size:11px;color:var(--ink-muted);margin-top:4px"></p>
+      <div class="g16"></div>
+      <p class="label">Budget</p>
+      <div class="g8"></div>
+      <div class="pill-group" id="budget-group">
+        <button class="pill active" onclick="selectBudget(this,'$')">$</button>
+        <button class="pill" onclick="selectBudget(this,'$$')">$$</button>
+        <button class="pill" onclick="selectBudget(this,'$$$')">$$$</button>
+        <button class="pill" onclick="selectBudget(this,'Any')">Any</button>
+      </div>
+      <div class="toggle-row">
+        <span class="toggle-label">Open now</span>
+        <button class="toggle on" id="open-toggle" onclick="this.classList.toggle('on');updateDistHint();savePrefs()"></button>
+      </div>
+      <div id="excluded-section" style="display:none;margin-top:16px">
+        <p class="label" style="margin-bottom:8px">Hidden restaurants <span id="excluded-count" style="color:var(--ink-muted)"></span></p>
+        <div id="excluded-list" style="display:flex;flex-direction:column;gap:4px"></div>
+      </div>
+      <div class="g20"></div>
+      <div class="spin-btn-wrap">
+        <button class="spin-btn" id="filter-spin-btn"
+          onmousedown="startCharge()" onmouseup="releaseCharge()" ontouchstart="startCharge()" ontouchend="releaseCharge()"
+          onclick="handleSpinClick()">
+          Spin 🎰
+        </button>
+        <div class="charge-bar-wrap" id="filter-charge-bar-wrap">
+          <div class="charge-bar" id="filter-charge-bar"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SPINNING / SLOT MACHINE -->
+    <div id="spin-screen" class="screen">
+      <div class="slot-machine" id="slot-machine" style="height:156px">
+        <div class="slot-highlight"></div>
+        <div class="slot-reel" id="slot-reel"></div>
+      </div>
+      <p class="spin-status" id="spin-status"><span class="blink">●</span> Scanning nearby…</p>
+    </div>
+
+    <!-- RESULT -->
+    <div id="result-screen" class="screen">
+      <button class="back-link" onclick="show('entry-screen')">← Back</button>
+      <p class="label" id="result-label">Your pick</p>
+      <div class="g12"></div>
+      <div class="restaurant-card" id="result-card">
+        <div class="card-body">
+          <div class="restaurant-name" id="res-name"></div>
+          <div class="restaurant-meta">
+            <span><span class="star">★</span> <span id="res-rating"></span></span>
+            <span class="meta-dot"></span>
+            <span id="res-price"></span>
+            <span class="meta-dot"></span>
+            <span id="res-dist"></span>
+          </div>
+          <div class="tags" id="res-tags"></div>
+          <div class="res-info" id="res-info" style="display:none">
+            <div class="res-info-row" id="res-hours-row" style="display:none">
+              <span class="res-info-icon">🕐</span>
+              <span id="res-hours"></span>
+            </div>
+            <div class="res-info-row" id="res-phone-row" style="display:none">
+              <span class="res-info-icon">📞</span>
+              <a id="res-phone" href="#" style="color:var(--accent);text-decoration:none"></a>
+            </div>
+          </div>
+        </div>
+        <div class="why-section">
+          <p class="why-pick" id="res-why"></p>
+        </div>
+      </div>
+      <div class="g14" style="height:14px"></div>
+      <div class="action-row">
+        <button class="btn-primary" onclick="getDirections()">View on Maps</button>
+        <button class="btn-secondary" onclick="openRateOverlay()">✦ Rate & Log</button>
+      </div>
+      <div class="g8"></div>
+      <button class="reroll-btn" onclick="reroll()">↻ Re-roll — try another</button>
+      <button class="share-btn" onclick="openShareCard()">↗ Share this pick</button>
+      <div style="text-align:center;margin-top:12px">
+        <button class="exclude-link" onclick="excludeRestaurant()">Hide this place</button>
+      </div>
+    </div>
+
+    <!-- NO RESULTS -->
+    <div id="noresults-screen" class="screen">
+      <div class="noresults-icon">🍃</div>
+      <div class="g8"></div>
+      <h2 class="section-title">Nothing nearby</h2>
+      <div class="g8"></div>
+      <p style="font-size:14px;color:var(--ink-muted);line-height:1.6;text-align:center">No restaurants match your current filters.<br>Try widening your search:</p>
+      <div class="g20"></div>
+      <div class="quick-fix-row">
+        <button class="quick-fix" onclick="expandDistance()">↔ Wider range<span>+5 mi</span></button>
+        <button class="quick-fix" onclick="expandBudget()">💰 More budget<span>Expand tier</span></button>
+      </div>
+      <div class="g20"></div>
+      <button class="spin-btn" onclick="handleSpinClick()" style="font-size:1.1rem;padding:16px">Try again 🎰</button>
+      <div class="g8"></div>
+      <button class="btn-ghost" onclick="show('filters-screen');calibrateDistSlider()">Edit settings</button>
+    </div>
+
+    <!-- GOOD LUCK -->
+    <div id="goodluck-screen" class="screen">
+      <div class="goodluck-big" id="goodluck-emoji">👀</div>
+      <div class="g8"></div>
+      <h2 class="display" style="font-size:2rem">Good luck.</h2>
+      <div class="g8"></div>
+      <p style="font-size:14px;color:var(--ink-muted)">Hope it slaps.</p>
+      <div class="g28"></div>
+      <button class="btn-primary" style="max-width:240px;margin:0 auto" onclick="openRateOverlay()">✦ Rate & Log</button>
+      <p style="font-size:11px;color:var(--ink-subtle);text-align:center;margin-top:10px">You can also rate later from the Unrated tab</p>
+      <div class="g24"></div>
+      <button class="reroll-btn" onclick="reroll()">↻ Pick again</button>
+      <div class="g8"></div>
+      <button class="btn-ghost" onclick="show('entry-screen')">Start over</button>
+    </div>
+
+    <!-- LOG (Private Journal) -->
+    <div id="log-screen" class="screen">
+      <div class="log-header">
+        <h2 class="section-title">My Log</h2>
+        <div style="display:flex;gap:8px">
+          <button class="saved-action-btn" onclick="previewMyProfile()" style="font-size:12px">👤 Profile</button>
+          <button class="saved-action-btn" onclick="shareMyLog()" style="font-size:12px">↗ Share</button>
+        </div>
+      </div>
+      <div class="log-stats-row" id="log-stats-row">
+        <div class="log-stat"><div class="log-stat-num" id="log-total">0</div><div class="log-stat-label">Logged</div></div>
+        <div class="log-stat"><div class="log-stat-num" id="log-avg">—</div><div class="log-stat-label">Avg rating</div></div>
+        <div class="log-stat"><div class="log-stat-num" id="log-fav-cuisine">—</div><div class="log-stat-label">Top cuisine</div></div>
+        <div class="log-stat"><div class="log-stat-num" id="log-fav-price">—</div><div class="log-stat-label">Usual $</div></div>
+      </div>
+      <div class="log-view-toggle">
+        <button class="log-view-btn active" id="log-view-rated" onclick="setLogView('rated')">Rated</button>
+        <button class="log-view-btn" id="log-view-history" onclick="setLogView('history')">Unrated</button>
+      </div>
+      <div class="log-search-wrap">
+        <input type="text" id="log-search" placeholder="Search your log…" oninput="filterLog()" autocomplete="off">
+      </div>
+      <div id="log-rated-section">
+        <div class="sort-bar" id="log-sort-bar">
+          <button class="sort-pill active" onclick="sortLog('recent',this)">Recent</button>
+          <button class="sort-pill" onclick="sortLog('highest',this)">Highest</button>
+          <button class="sort-pill" onclick="sortLog('lowest',this)">Lowest</button>
+        </div>
+        <div id="log-empty" class="log-empty">
+          <div class="log-empty-icon">📓</div>
+          <p>No entries yet.<br>Rate a restaurant after spinning to start your log.</p>
+          <div class="g20"></div>
+          <button class="btn-secondary" style="max-width:180px;margin:0 auto" onclick="switchTab('spin')">Find a place →</button>
+        </div>
+        <div class="log-list" id="log-list"></div>
+      </div>
+      <div id="log-history-section" style="display:none">
+        <div id="history-empty" class="log-empty" style="display:none">
+          <div class="log-empty-icon">🎰</div>
+          <p>No unrated picks.<br>You've rated everything — nice.</p>
+        </div>
+        <div class="log-list" id="history-list"></div>
+      </div>
+    </div>
+
+    <!-- USERNAME SETUP (shown once before sharing) -->
+    <div id="username-screen" class="screen">
+      <button class="back-link" onclick="show('log-screen')">← Back</button>
+      <div class="g20"></div>
+      <span style="font-size:2.4rem">👤</span>
+      <div class="g12"></div>
+      <h2 class="section-title">Pick a username</h2>
+      <div class="g4"></div>
+      <p style="font-size:13px;color:var(--ink-muted)">This creates your public profile link.</p>
+      <div class="g20"></div>
+      <input type="text" id="username-input" placeholder="e.g. alejandro" maxlength="20"
+        onkeydown="if(event.key==='Enter') saveUsername()"
+        oninput="this.value=this.value.toLowerCase().replace(/[^a-z0-9_]/g,'')">
+      <div class="g4"></div>
+      <p style="font-size:12px;color:var(--ink-muted)">pickd.one/u/<span id="username-preview">…</span></p>
+      <div class="g16"></div>
+      <button class="btn-primary" onclick="saveUsername()">Claim username</button>
+    </div>
+
+    <!-- PUBLIC PROFILE (read-only) -->
+    <div id="profile-screen" class="screen">
+      <button class="back-link" onclick="show('log-screen')">← Back to my log</button>
+      <div class="profile-hero">
+        <div class="profile-avatar" id="profile-avatar">?</div>
+        <div class="profile-username" id="profile-username">—</div>
+        <div class="profile-stats-grid" id="profile-stats-grid"></div>
+      </div>
+
+      <div class="profile-section-title">Top Rated</div>
+      <div class="log-list" id="profile-top-list"></div>
+      <div class="g24"></div>
+
+      <div class="profile-section-title">Recent Activity</div>
+      <div class="log-list" id="profile-recent-list"></div>
+      <div class="g24"></div>
+
+      <p style="font-size:11px;color:var(--ink-muted);text-align:center;font-style:italic">
+        Logged on pickd.one
+      </p>
+    </div>
+
+  </div>
+
+  <!-- SHARE OVERLAY -->
+  <div id="share-overlay" onclick="closeShareCardOnBg(event)">
+    <div class="share-card" id="share-card">
+      <div class="share-card-top">
+        <div class="share-eyebrow">I let an app decide 🎰</div>
+        <div class="share-restaurant-name" id="share-name"></div>
+        <div class="share-meta">
+          <span>★ <span id="share-rating"></span></span>
+          <span class="meta-dot"></span>
+          <span id="share-price"></span>
+          <span class="meta-dot"></span>
+          <span id="share-dist"></span>
+        </div>
+        <div class="share-tags" id="share-tags"></div>
+      </div>
+      <div class="share-tagline" id="share-tagline"></div>
+      <div class="share-card-bottom">
+        <div class="share-credit">picked by pickd.one</div>
+        <div class="share-logo">pick.</div>
+      </div>
+    </div>
+    <div class="share-actions">
+      <button class="btn-primary" onclick="nativeShare()" style="width:100%">Share →</button>
+    </div>
+    <button class="share-close" onclick="closeShareCard()">← Close</button>
+  </div>
+
+  <!-- RATE OVERLAY -->
+  <div id="rate-overlay" onclick="if(event.target===this)closeRateOverlay()">
+    <div class="rate-card">
+      <p class="label">Log to journal</p>
+      <div class="g8"></div>
+      <div class="rate-card-title" id="rate-restaurant-name">—</div>
+      <div class="rate-card-sub" id="rate-restaurant-meta">—</div>
+
+      <p class="label">Your rating</p>
+      <div class="g8"></div>
+      <div class="star-picker" id="star-picker">
+        <button class="star-pick" onclick="pickStar(1)">★</button>
+        <button class="star-pick" onclick="pickStar(2)">★</button>
+        <button class="star-pick" onclick="pickStar(3)">★</button>
+        <button class="star-pick" onclick="pickStar(4)">★</button>
+        <button class="star-pick" onclick="pickStar(5)">★</button>
+      </div>
+
+      <p class="label">Tags <span style="font-weight:400;text-transform:none;letter-spacing:0">(up to 3)</span></p>
+      <div class="g8"></div>
+      <div class="tag-picker" id="tag-picker">
+        <button class="tag-pick" onclick="pickTag(this)">Date night</button>
+        <button class="tag-pick" onclick="pickTag(this)">Quick bite</button>
+        <button class="tag-pick" onclick="pickTag(this)">Comfort food</button>
+        <button class="tag-pick" onclick="pickTag(this)">Healthy</button>
+        <button class="tag-pick" onclick="pickTag(this)">Splurge</button>
+        <button class="tag-pick" onclick="pickTag(this)">Late night</button>
+        <button class="tag-pick" onclick="pickTag(this)">Takeout</button>
+        <button class="tag-pick" onclick="pickTag(this)">Brunch</button>
+        <button class="tag-pick" onclick="pickTag(this)">Solo</button>
+        <button class="tag-pick" onclick="pickTag(this)">Group</button>
+      </div>
+
+      <div class="g8"></div>
+      <p class="label">Note <span style="font-weight:400;text-transform:none;letter-spacing:0">(optional, 140 chars)</span></p>
+      <div class="g8"></div>
+      <textarea id="rate-note" placeholder="How was it?" maxlength="140" rows="2"></textarea>
+
+      <div class="g8"></div>
+      <p class="label">Price paid <span style="font-weight:400;text-transform:none;letter-spacing:0">(optional)</span></p>
+      <div class="g8"></div>
+      <div class="pill-group" id="rate-price-group">
+        <button class="pill" onclick="pickRatePrice(this,'$')">$</button>
+        <button class="pill" onclick="pickRatePrice(this,'$$')">$$</button>
+        <button class="pill" onclick="pickRatePrice(this,'$$$')">$$$</button>
+        <button class="pill" onclick="pickRatePrice(this,'$$$$')">$$$$</button>
+      </div>
+
+      <div class="rate-actions">
+        <button class="btn-primary" onclick="submitRating()">Log it ✦</button>
+        <button class="btn-secondary" onclick="closeRateOverlay()">Cancel</button>
+      </div>
+    </div>
+  </div>
+
+  <nav id="bottom-nav">
+    <button class="nav-tab active" id="tab-spin" onclick="switchTab('spin')">
+      <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 3v4M12 17v4M3 12h4M17 12h4"/></svg>
+      Spin
+    </button>
+    <button class="nav-tab" id="tab-log" onclick="switchTab('log')" style="position:relative">
+      <svg viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+      Log
+      <div class="nav-dot" id="log-dot"></div>
+    </button>
+  </nav>
+</div>
+
+<div id="toast"></div>
+
+<script>
+// ═══════════════════════════════════════════════════
+// CONFIGURATION — Put your Google Places API key here
+// ═══════════════════════════════════════════════════
+const GOOGLE_API_KEY = 'AIzaSyC0aDX9EKhV52b0tdmF3vEgyf2LceDTlyE'; // ← Paste your key between the quotes
+
+// Storage shim — window.storage exists in Claude artifacts but not on real websites
+// This polyfill uses localStorage so everything works the same on pickd.one
+if (!window.storage) {
+  window.storage = {
+    async get(key, shared) {
+      try {
+        const prefix = shared ? 'shared:' : '';
+        const val = localStorage.getItem(prefix + key);
+        return val !== null ? { key, value: val, shared: !!shared } : null;
+      } catch { return null; }
+    },
+    async set(key, value, shared) {
+      try {
+        const prefix = shared ? 'shared:' : '';
+        localStorage.setItem(prefix + key, value);
+        return { key, value, shared: !!shared };
+      } catch { return null; }
+    },
+    async delete(key, shared) {
+      try {
+        const prefix = shared ? 'shared:' : '';
+        localStorage.removeItem(prefix + key);
+        return { key, deleted: true, shared: !!shared };
+      } catch { return null; }
+    },
+    async list(prefix, shared) {
+      try {
+        const sp = shared ? 'shared:' : '';
+        const keys = [];
+        for (let i = 0; i < localStorage.length; i++) {
+          const k = localStorage.key(i);
+          if (k.startsWith(sp + (prefix || ''))) keys.push(k.replace(sp, ''));
+        }
+        return { keys, prefix, shared: !!shared };
+      } catch { return { keys: [], prefix, shared: !!shared }; }
+    }
+  };
+  console.log('[pick] Using localStorage storage shim');
+}
+
+// ─── State ───
+const state = {
+  location: null, zip: null, dist: 5, budget: '$',
+  openNow: true, currentRestaurant: null,
+  totalSpins: 0, chargeLevel: 0,
+  username: null,
+  ratings: [],
+  rateForm: { rating: 0, tags: [], note: '', pricePaid: null },
+  logSort: 'recent',
+  logView: 'rated', // 'rated' or 'history'
+  history: [], // all spins, not just rated
+  liveRestaurants: [],
+  lastFetchKey: null,
+  _zipCoords: null, // geocoded ZIP lat/lng
+  _lastPick: null,
+  excluded: [], // names of restaurants to never show
+};
+
+// ─── Fallback restaurants (Sarasota) — used when no API key or offline ───
+// ── FALLBACK RESTAURANTS — shown when API is unavailable (offline, quota exceeded, etc.) ──
+const fallbackRestaurants = [
+  { name: "Owen's Fish Camp", rating: 4.7, price: '$$', dist: '0.8 mi', tags: ['Seafood','Southern','Live music'], why: '#1 seafood spot — porch swings & fried green tomatoes', cuisine: 'Seafood', _lat: 27.334, _lng: -82.537, _priceNum: 2 },
+  { name: 'Indigenous', rating: 4.8, price: '$$$', dist: '1.1 mi', tags: ['Farm-to-table','Sustainable','Fine dining'], why: 'Highest Zagat-rated in Sarasota', cuisine: 'American', _lat: 27.3372, _lng: -82.53, _priceNum: 3 },
+  { name: 'Selva Grill', rating: 4.6, price: '$$$', dist: '0.5 mi', tags: ['Peruvian','Latin fusion','Ceviche'], why: 'Best ceviche in town', cuisine: 'Peruvian', _lat: 27.336, _lng: -82.533, _priceNum: 3 },
+  { name: 'Columbia Restaurant', rating: 4.5, price: '$$', dist: '2.8 mi', tags: ['Cuban','Spanish','Historic'], why: "Florida's oldest restaurant", cuisine: 'Cuban', _lat: 27.317, _lng: -82.578, _priceNum: 2 },
+  { name: "Duval's Fresh Local Seafood", rating: 4.6, price: '$$', dist: '0.4 mi', tags: ['Seafood','Po boys','Happy hour'], why: 'Voted best seafood 10 years running', cuisine: 'Seafood', _lat: 27.3365, _lng: -82.5335, _priceNum: 2 },
+  { name: "Caf\u00e9 Barbosso", rating: 4.5, price: '$$', dist: '0.7 mi', tags: ['Italian','Handmade pasta','Wine'], why: 'Top-ranked Italian in SRQ', cuisine: 'Italian', _lat: 27.336, _lng: -82.530, _priceNum: 2 },
+  { name: "Michael's On East", rating: 4.7, price: '$$$', dist: '1.6 mi', tags: ['Fine dining','Anniversary','Wine cellar'], why: "Sarasota's only AAA Four-Diamond restaurant", cuisine: 'American', _lat: 27.329, _lng: -82.522, _priceNum: 3 },
+  { name: 'Marina Jack', rating: 4.4, price: '$$', dist: '0.9 mi', tags: ['Waterfront','Sunset','Live jazz'], why: 'Bayfront sunset views with live jazz', cuisine: 'Seafood', _lat: 27.331, _lng: -82.536, _priceNum: 2 },
+  { name: 'Kojo', rating: 4.5, price: '$$', dist: '1.3 mi', tags: ['Japanese','Ramen','Fusion'], why: 'Wood-fired ramen & pork belly buns', cuisine: 'Japanese', _lat: 27.335, _lng: -82.529, _priceNum: 2 },
+  { name: 'The Cottage', rating: 4.6, price: '$$', dist: '0.6 mi', tags: ['Brunch','American','Patio'], why: 'The patio salad alone is worth the trip', cuisine: 'American', _lat: 27.337, _lng: -82.532, _priceNum: 2 },
+  { name: 'Napule', rating: 4.5, price: '$$', dist: '1.0 mi', tags: ['Italian','Open-air','Cocktails'], why: 'Modern-rustic Italian vibes', cuisine: 'Italian', _lat: 27.336, _lng: -82.531, _priceNum: 2 },
+  { name: 'Dry Dock Waterfront Grill', rating: 4.5, price: '$$', dist: '4.2 mi', tags: ['Waterfront','Casual','Grouper'], why: 'Top 100 Most Scenic Restaurants in America', cuisine: 'Seafood', _lat: 27.301, _lng: -82.553, _priceNum: 2 },
+  { name: 'La Violetta', rating: 4.8, price: '$$$', dist: '2.4 mi', tags: ['Italian','Homemade pasta','Intimate'], why: 'Hidden gem — reservations essential', cuisine: 'Italian', _lat: 27.317, _lng: -82.579, _priceNum: 3 },
+  { name: 'Blu Kouzina', rating: 4.6, price: '$$', dist: '2.9 mi', tags: ['Greek','Mediterranean','Fresh fish'], why: 'Mykonos vibes on St. Armands', cuisine: 'Greek', _lat: 27.317, _lng: -82.581, _priceNum: 2 },
+  { name: 'Mi Pueblo', rating: 4.4, price: '$', dist: '3.1 mi', tags: ['Mexican','Authentic','Mariachi'], why: 'Real-deal Mexican with live mariachi', cuisine: 'Mexican', _lat: 27.34, _lng: -82.513, _priceNum: 1 },
+  { name: 'Baker & Wife', rating: 4.5, price: '$$', dist: '1.4 mi', tags: ['Global','Cocktails','Date night'], why: 'Globally-inspired menu and killer cocktails', cuisine: 'American', _lat: 27.333, _lng: -82.528, _priceNum: 2 },
+  { name: 'Tikka Indian Cuisine', rating: 4.7, price: '$$', dist: '3.5 mi', tags: ['Indian','Curry','Samosas'], why: 'Top-rated Indian in all of Florida', cuisine: 'Indian', _lat: 27.312, _lng: -82.498, _priceNum: 2 },
+  { name: 'New Pass Grill & Bait Shop', rating: 4.3, price: '$', dist: '3.8 mi', tags: ['Fish shack','Burgers','Old Florida'], why: 'Paper plates, water views, zero pretense', cuisine: 'American', _lat: 27.325, _lng: -82.586, _priceNum: 1 },
+  { name: 'Meliora', rating: 4.9, price: '$$$', dist: '0.6 mi', tags: ['Tasting menu','Molecular','Chef-driven'], why: 'Only 22 seats. Most experimental in SRQ.', cuisine: 'American', _lat: 27.3365, _lng: -82.531, _priceNum: 3 },
+  { name: 'Olive Eats', rating: 4.6, price: '$', dist: '2.0 mi', tags: ['Middle Eastern','Hummus','Casual'], why: 'Perfect lentil soup and the freshest hummus', cuisine: 'Middle Eastern', _lat: 27.341, _lng: -82.515, _priceNum: 1 },
+  { name: 'Rendezvous', rating: 4.7, price: '$', dist: '2.2 mi', tags: ['French bakery','Croissants','Pastries'], why: 'Authentic French pastries from a French family', cuisine: 'French', _lat: 27.338, _lng: -82.519, _priceNum: 1 },
+  { name: 'Lila', rating: 4.5, price: '$$', dist: '0.3 mi', tags: ['Vegetable-forward','Organic','Main St'], why: 'Farm-fresh and plant-focused on Main Street', cuisine: 'American', _lat: 27.337, _lng: -82.5315, _priceNum: 2 },
+  { name: 'Speaks Clam Bar', rating: 4.6, price: '$$', dist: '2.8 mi', tags: ['Clams','Raw bar','St. Armands'], why: 'St. Armands raw bar done right', cuisine: 'Seafood', _lat: 27.316, _lng: -82.58, _priceNum: 2 },
+  { name: 'Jpan', rating: 4.5, price: '$$', dist: '1.7 mi', tags: ['Sushi','Japanese','Date night'], why: 'Changed the SRQ sushi game', cuisine: 'Japanese', _lat: 27.334, _lng: -82.525, _priceNum: 2 },
+  { name: 'Chart House', rating: 4.4, price: '$$$', dist: '5.1 mi', tags: ['Waterfront','Sunset','Longboat Key'], why: 'Epic sunset views on Longboat Key', cuisine: 'Seafood', _lat: 27.381, _lng: -82.623, _priceNum: 3 },
+  { name: 'Funky Fusion', rating: 4.6, price: '$', dist: '2.6 mi', tags: ['Filipino','Adobo','Lumpia'], why: "SRQ's only Filipino spot", cuisine: 'Filipino', _lat: 27.342, _lng: -82.51, _priceNum: 1 },
+  { name: 'La Dolce Vita', rating: 4.7, price: '$$', dist: '3.3 mi', tags: ['Italian','Neapolitan','Award-winning'], why: 'Gambero Rosso recognized Italian', cuisine: 'Italian', _lat: 27.318, _lng: -82.579, _priceNum: 2 },
+];
+
+// Active restaurant list — live API when available, fallback otherwise
+let restaurants = [];
+
+// ═══════════════════════════════════════════════════
+// GOOGLE PLACES API INTEGRATION
+// ═══════════════════════════════════════════════════
+
+function budgetToMaxPrice() {
+  const map = { '$': 1, '$$': 2, '$$$': 3, 'Any': 4 };
+  return map[state.budget] || 4;
+}
+function priceLevelToString(level) {
+  return ({ 0: '$', 1: '$', 2: '$$', 3: '$$$', 4: '$$$$' })[level] || '$$';
+}
+function distMiles(lat1, lon1, lat2, lon2) {
+  const R = 3959;
+  const dLat = (lat2 - lat1) * Math.PI / 180;
+  const dLon = (lon2 - lon1) * Math.PI / 180;
+  const a = Math.sin(dLat/2)**2 + Math.cos(lat1*Math.PI/180) * Math.cos(lat2*Math.PI/180) * Math.sin(dLon/2)**2;
+  return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+}
+function extractCuisine(types) {
+  if (!types || !types.length) return 'Restaurant';
+  const m = {
+    'italian_restaurant':'Italian','mexican_restaurant':'Mexican','japanese_restaurant':'Japanese',
+    'chinese_restaurant':'Chinese','thai_restaurant':'Thai','indian_restaurant':'Indian',
+    'french_restaurant':'French','greek_restaurant':'Greek','korean_restaurant':'Korean',
+    'vietnamese_restaurant':'Vietnamese','seafood_restaurant':'Seafood','steak_house':'Steakhouse',
+    'pizza_restaurant':'Pizza','sushi_restaurant':'Sushi','barbecue_restaurant':'BBQ',
+    'breakfast_restaurant':'Breakfast','brunch_restaurant':'Brunch','hamburger_restaurant':'Burgers',
+    'sandwich_shop':'Sandwiches','american_restaurant':'American','mediterranean_restaurant':'Mediterranean',
+    'cafe':'Caf\u00e9','bakery':'Bakery','bar':'Bar','vegan_restaurant':'Vegan',
+  };
+  for (const t of types) { if (m[t]) return m[t]; }
+  return 'Restaurant';
+}
+function extractTags(types, cuisine) {
+  const tags = [cuisine];
+  const m = { 'bar':'Bar','cafe':'Caf\u00e9','bakery':'Bakery','meal_takeaway':'Takeout','meal_delivery':'Delivery' };
+  for (const t of types) { if (m[t] && !tags.includes(m[t])) tags.push(m[t]); if (tags.length >= 3) break; }
+  if (tags.length < 3) tags.push('Nearby');
+  return tags.slice(0, 3);
+}
+function generateWhy(name, rating, dist, ratingCount, cuisine, types) {
+  const t = types || [];
+  const isBar = t.includes('bar');
+  const isCafe = t.includes('cafe');
+  const isBakery = t.includes('bakery');
+  const hasDelivery = t.includes('meal_delivery');
+  const hasTakeout = t.includes('meal_takeaway');
+  
+  // High review count = popular
+  if (ratingCount > 1000 && rating >= 4.5) return `${(ratingCount/1000).toFixed(1)}k reviews and still a ${rating} — that's legit`;
+  if (ratingCount > 500 && rating >= 4.5) return `Over ${ratingCount} reviews and still crushing it`;
+  if (ratingCount > 500) return `${ratingCount}+ people reviewed this — certified local staple`;
+  
+  // Rating-based
+  if (rating >= 4.8) return 'Nearly perfect rating \u2014 this one is special';
+  if (rating >= 4.6 && dist < 1) return 'Top rated and walking distance? Let\u2019s go';
+  if (rating >= 4.6) return `${rating} stars \u2014 locals clearly love this spot`;
+  
+  // Distance-based
+  if (dist < 0.3) return 'Practically next door — no excuse not to';
+  if (dist < 0.8) return 'Close enough to walk — dinner in minutes';
+  
+  // Type-based
+  if (isBakery) return 'Fresh-baked everything — treat yourself';
+  if (isCafe) return 'Good vibes and good bites';
+  if (isBar) return 'Drinks + food — solid combo night';
+  
+  // Cuisine-based
+  if (cuisine && cuisine !== 'Restaurant' && cuisine !== 'American') return `${cuisine} spot with a strong rep nearby`;
+  
+  // Feature-based  
+  if (hasDelivery && hasTakeout) return 'Dine in, take out, or get it delivered — your call';
+  if (hasTakeout) return 'Quick grab-and-go option when you need speed';
+  
+  // Rating fallbacks
+  if (rating >= 4.3) return 'Solid reviews — worth giving a shot';
+  if (rating >= 4.0) return 'Good pick — reliable and reviewed';
+  return 'New find — could be your next favorite';
+}
+
+// Local ZIP → coords lookup for Sarasota + Manatee counties (works offline, no API needed)
+const ZIP_COORDS = {
+  // ── Manatee County ──
+  '33598': { latitude: 27.5700, longitude: -82.2300 }, // Wimauma (partial)
+  '34201': { latitude: 27.4400, longitude: -82.4900 }, // Bradenton
+  '34202': { latitude: 27.3950, longitude: -82.4050 }, // Lakewood Ranch
+  '34203': { latitude: 27.4200, longitude: -82.4600 }, // Bradenton / Bayshore Gardens
+  '34204': { latitude: 27.4600, longitude: -82.5700 }, // Bradenton PO Box
+  '34205': { latitude: 27.4700, longitude: -82.5700 }, // Bradenton / South Bradenton
+  '34206': { latitude: 27.4900, longitude: -82.5600 }, // Bradenton PO Box
+  '34207': { latitude: 27.4300, longitude: -82.5500 }, // Bradenton / Bayshore Gardens
+  '34208': { latitude: 27.4900, longitude: -82.5100 }, // Bradenton / Samoset
+  '34209': { latitude: 27.4500, longitude: -82.5900 }, // Bradenton West
+  '34210': { latitude: 27.4400, longitude: -82.6200 }, // Cortez / Longboat Key
+  '34211': { latitude: 27.4200, longitude: -82.3800 }, // Lakewood Ranch East
+  '34212': { latitude: 27.3800, longitude: -82.3700 }, // Lakewood Ranch South
+  '34215': { latitude: 27.4700, longitude: -82.6800 }, // Bradenton Beach / Cortez
+  '34216': { latitude: 27.5300, longitude: -82.7300 }, // Anna Maria
+  '34217': { latitude: 27.4900, longitude: -82.7100 }, // Holmes Beach / Bradenton Beach
+  '34218': { latitude: 27.5000, longitude: -82.7000 }, // Holmes Beach PO Box
+  '34219': { latitude: 27.4100, longitude: -82.3200 }, // Parrish
+  '34220': { latitude: 27.3400, longitude: -82.5300 }, // Sarasota PO Box (Manatee)
+  '34221': { latitude: 27.5200, longitude: -82.5300 }, // Palmetto / Ellenton
+  '34222': { latitude: 27.5200, longitude: -82.4800 }, // Ellenton
+  '34228': { latitude: 27.3800, longitude: -82.6000 }, // Longboat Key
+  '34243': { latitude: 27.3900, longitude: -82.5100 }, // Whitfield / Sarasota
+  '34250': { latitude: 27.5100, longitude: -82.7000 }, // Terra Ceia PO Box
+  '34251': { latitude: 27.3200, longitude: -82.3500 }, // Myakka City
+  '34260': { latitude: 27.4800, longitude: -82.5500 }, // Manasota PO Box
+  '34264': { latitude: 27.3200, longitude: -82.3500 }, // Oneco PO Box
+  '34270': { latitude: 27.4600, longitude: -82.5600 }, // Tallevast PO Box
+  '34280': { latitude: 27.4900, longitude: -82.5600 }, // Bradenton PO Box
+  '34281': { latitude: 27.4900, longitude: -82.5600 }, // Bradenton PO Box
+  '34282': { latitude: 27.4900, longitude: -82.5600 }, // Bradenton PO Box
+  // ── Sarasota County ──
+  '34223': { latitude: 27.1700, longitude: -82.4500 }, // Englewood
+  '34224': { latitude: 27.0900, longitude: -82.3700 }, // Englewood East
+  '34229': { latitude: 27.2900, longitude: -82.5200 }, // Osprey
+  '34230': { latitude: 27.3100, longitude: -82.5400 }, // Sarasota South
+  '34231': { latitude: 27.2800, longitude: -82.5100 }, // Bee Ridge
+  '34232': { latitude: 27.3100, longitude: -82.4700 }, // Sarasota East
+  '34233': { latitude: 27.2800, longitude: -82.4800 }, // Sarasota SE
+  '34234': { latitude: 27.3600, longitude: -82.5400 }, // Sarasota North
+  '34235': { latitude: 27.3500, longitude: -82.5000 }, // Sarasota NE
+  '34236': { latitude: 27.3300, longitude: -82.5600 }, // St. Armands / Lido Key
+  '34237': { latitude: 27.3400, longitude: -82.5200 }, // Downtown Sarasota
+  '34238': { latitude: 27.2600, longitude: -82.4700 }, // Palmer Ranch
+  '34239': { latitude: 27.3200, longitude: -82.5300 }, // Sarasota Central
+  '34240': { latitude: 27.3400, longitude: -82.4300 }, // UTC / Fruitville
+  '34241': { latitude: 27.2700, longitude: -82.4200 }, // Sarasota Far East
+  '34242': { latitude: 27.2700, longitude: -82.5500 }, // Siesta Key
+  '34266': { latitude: 27.2000, longitude: -82.3300 }, // Arcadia area (partial)
+  '34269': { latitude: 27.1500, longitude: -82.2500 }, // Arcadia area (partial)
+  '34275': { latitude: 27.1900, longitude: -82.4900 }, // Nokomis
+  '34276': { latitude: 27.3300, longitude: -82.5300 }, // Sarasota PO Box
+  '34277': { latitude: 27.3300, longitude: -82.5300 }, // Sarasota PO Box
+  '34278': { latitude: 27.3300, longitude: -82.5300 }, // Sarasota PO Box
+  '34285': { latitude: 27.1000, longitude: -82.4500 }, // Venice
+  '34286': { latitude: 27.0700, longitude: -82.4200 }, // North Port
+  '34287': { latitude: 27.0500, longitude: -82.2400 }, // North Port East
+  '34288': { latitude: 27.0600, longitude: -82.1800 }, // North Port NE
+  '34289': { latitude: 27.0900, longitude: -82.1500 }, // North Port Far East
+  '34291': { latitude: 27.1100, longitude: -82.3600 }, // Venice / Warm Mineral Springs
+  '34292': { latitude: 27.1100, longitude: -82.4100 }, // Venice East
+  '34293': { latitude: 27.0700, longitude: -82.4400 }, // Venice South
+};
+
+async function geocodeZip(zip) {
+  // Try local lookup first (instant, no API call)
+  if (ZIP_COORDS[zip]) return ZIP_COORDS[zip];
+
+  // Fall back to Google Geocoding API
+  if (!GOOGLE_API_KEY) return null;
+  try {
+    const r = await fetchWithTimeout(`https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(zip)}&key=${GOOGLE_API_KEY}`, {}, 3000);
+    const d = await r.json();
+    if (d.results && d.results.length) { const l = d.results[0].geometry.location; return { latitude: l.lat, longitude: l.lng }; }
+  } catch (e) { if (e.message !== 'sandbox') console.warn('Geocode failed:', e); }
+  return null;
+}
+
+// ─── Persistent restaurant pool ───
+// One-time bulk fetch across Sarasota/Manatee zones, stored permanently
+const SRQ_ZONES = [
+  { name: 'Downtown Sarasota', lat: 27.3364, lng: -82.5307 },
+  { name: 'Siesta Key / South', lat: 27.2670, lng: -82.5460 },
+  { name: 'St. Armands / Lido', lat: 27.3170, lng: -82.5780 },
+  { name: 'Lakewood Ranch', lat: 27.3950, lng: -82.4050 },
+  { name: 'Bradenton / Cortez', lat: 27.4989, lng: -82.5748 },
+  { name: 'UTC / University', lat: 27.3550, lng: -82.4550 },
+];
+const ZONE_RADIUS = 8000; // 8km per zone — covers the county nicely
+
+let masterPool = []; // full deduplicated pool of all restaurants
+
+// Detect if external fetch works
+let _fetchWorks = undefined;
+let _probePromise = null;
+
+function probeFetch() {
+  if (_fetchWorks !== undefined) return Promise.resolve(_fetchWorks);
+  if (_probePromise) return _probePromise;
+  _probePromise = new Promise(resolve => {
+    // Use fetch with no-cors — avoids CORS blocking on the probe
+    const timer = setTimeout(() => {
+      console.log('[pick] Network probe timed out');
+      _fetchWorks = false;
+      resolve(false);
+    }, 5000);
+    fetch('https://places.googleapis.com/v1/places:searchNearby', { method: 'OPTIONS', mode: 'cors' })
+      .then(() => { clearTimeout(timer); _fetchWorks = true; resolve(true); })
+      .catch(() => {
+        // CORS error on OPTIONS is expected — but it means network IS reachable
+        // The actual POST requests with API key will work fine
+        clearTimeout(timer);
+        console.log('[pick] Probe got CORS error but network is reachable');
+        _fetchWorks = true;
+        resolve(true);
+      });
+  });
+  return _probePromise;
+}
+
+async function fetchWithTimeout(url, opts, ms) {
+  return Promise.race([
+    fetch(url, opts),
+    new Promise((_, reject) => setTimeout(() => reject(new Error('timeout')), ms))
+  ]);
+}
+
+async function fetchZone(zone) {
+  try {
+    const body = {
+      includedTypes: ['restaurant'],
+      maxResultCount: 20,
+      locationRestriction: {
+        circle: { center: { latitude: zone.lat, longitude: zone.lng }, radius: ZONE_RADIUS }
+      },
+    };
+    const resp = await fetchWithTimeout('https://places.googleapis.com/v1/places:searchNearby', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-Goog-Api-Key': GOOGLE_API_KEY,
+        'X-Goog-FieldMask': 'places.id,places.displayName,places.rating,places.userRatingCount,places.priceLevel,places.types,places.location,places.currentOpeningHours,places.nationalPhoneNumber,places.formattedAddress',
+      },
+      body: JSON.stringify(body),
+    }, 8000);
+    if (!resp.ok) {
+      const errText = await resp.text().catch(() => '');
+      console.error(`[pick] API error for ${zone.name}: ${resp.status} ${errText}`);
+      return [];
+    }
+    const data = await resp.json();
+    console.log(`[pick] Zone ${zone.name}: ${(data.places || []).length} places`);
+    return data.places || [];
+  } catch (e) { 
+    console.error(`[pick] Zone fetch failed: ${zone.name}`, e.message);
+    return []; 
+  }
+}
+
+function placesToAppFormat(places, refLat, refLng) {
+  const plMap = { 'PRICE_LEVEL_FREE':0,'PRICE_LEVEL_INEXPENSIVE':1,'PRICE_LEVEL_MODERATE':2,'PRICE_LEVEL_EXPENSIVE':3,'PRICE_LEVEL_VERY_EXPENSIVE':4 };
+  return places.map(p => {
+    const pLoc = p.location || {};
+    const d = distMiles(refLat || 27.3364, refLng || -82.5307, pLoc.latitude || 27.3364, pLoc.longitude || -82.5307);
+    const rating = Math.round((p.rating || 0) * 10) / 10;
+    const price = priceLevelToString(plMap[p.priceLevel] ?? 2);
+    const types = p.types || [];
+    const cuisine = extractCuisine(types);
+    const ratingCount = p.userRatingCount || 0;
+    const hours = p.currentOpeningHours || null;
+    const isOpen = hours?.openNow ?? null;
+    const phone = p.nationalPhoneNumber || null;
+    const address = p.formattedAddress || null;
+    return {
+      name: p.displayName?.text || 'Unknown',
+      rating, price,
+      dist: d < 0.1 ? '< 0.1 mi' : d.toFixed(1) + ' mi',
+      tags: extractTags(types, cuisine),
+      why: generateWhy(p.displayName?.text || '', rating, d, ratingCount, cuisine, types),
+      cuisine, placeId: p.id,
+      _lat: pLoc.latitude, _lng: pLoc.longitude,
+      _priceNum: plMap[p.priceLevel] ?? 2,
+      _ratingCount: ratingCount,
+      _isOpen: isOpen,
+      _phone: phone,
+      _address: address,
+      _todayHours: parseTodayHours(hours),
+      _types: types, // raw Google types for meal-time filtering
+    };
+  });
+  // Quality gate — log what's being filtered
+  const before = result.length;
+  const filtered = result.filter(r => r.rating >= 3.5 && r._ratingCount >= 10);
+  console.log(`[pick] Quality gate: ${before} total → ${filtered.length} passed (3.5+ stars, 10+ reviews). Rejected: ${result.filter(r => r.rating < 3.5 || r._ratingCount < 10).map(r => `${r.name} (${r.rating}★, ${r._ratingCount} reviews)`).join(', ')}`);
+  return filtered;
+}
+
+function parseTodayHours(hours) {
+  if (!hours || !hours.weekdayDescriptions) return null;
+  const today = new Date().toLocaleDateString('en-US', { weekday: 'long' });
+  const match = hours.weekdayDescriptions.find(d => d.startsWith(today));
+  return match ? match.replace(today + ': ', '') : null;
+}
+
+async function loadMasterPool() {
+  try {
+    const stored = await window.storage.get('master-pool');
+    if (stored && stored.value) {
+      const parsed = JSON.parse(stored.value);
+      if (parsed.restaurants && parsed.restaurants.length >= 10 && parsed.fetchedAt) {
+        const age = Date.now() - parsed.fetchedAt;
+        // Validate it's real API data (has placeId) and not stale
+        const hasApiData = parsed.restaurants.some(r => r.placeId);
+        if (age < 30 * 24 * 60 * 60 * 1000 && hasApiData) {
+          masterPool = parsed.restaurants;
+          restaurants = [...masterPool];
+          console.log(`[pick] Loaded ${masterPool.length} API restaurants from storage (${Math.round(age/86400000)}d old)`);
+          console.log(`[pick] 🍽️ POOL STATS: ${masterPool.length} total restaurants in database`);
+          return true;
+        } else {
+          console.log(`[pick] Stored pool invalid — age: ${Math.round(age/86400000)}d, hasApiData: ${hasApiData}. Will refetch.`);
+        }
+      }
+    }
+  } catch (e) {
+    console.log('[pick] No stored pool:', e?.message || e);
+  }
+  // Also try localStorage backup
+  try {
+    const local = localStorage.getItem('pick-master-pool');
+    if (local) {
+      const parsed = JSON.parse(local);
+      if (parsed.restaurants && parsed.restaurants.length >= 10 && parsed.fetchedAt) {
+        const age = Date.now() - parsed.fetchedAt;
+        const hasApiData = parsed.restaurants.some(r => r.placeId);
+        if (age < 30 * 24 * 60 * 60 * 1000 && hasApiData) {
+          masterPool = parsed.restaurants;
+          restaurants = [...masterPool];
+          console.log(`[pick] Loaded ${masterPool.length} API restaurants from localStorage (${Math.round(age/86400000)}d old)`);
+          console.log(`[pick] 🍽️ POOL STATS: ${masterPool.length} total restaurants in database`);
+          return true;
+        }
+      }
+    }
+  } catch {}
+  return false;
+}
+
+async function buildMasterPool() {
+  if (!GOOGLE_API_KEY) return false;
+
+  try {
+    // Fetch all zones in parallel
+    const allPlaces = await Promise.all(SRQ_ZONES.map(z => fetchZone(z)));
+
+    // Flatten and deduplicate by place ID
+    const seen = new Set();
+    const uniquePlaces = [];
+    for (const zonePlaces of allPlaces) {
+      for (const p of zonePlaces) {
+        if (p.id && !seen.has(p.id)) {
+          seen.add(p.id);
+          uniquePlaces.push(p);
+        }
+      }
+    }
+
+    console.log(`[pick] Fetched ${uniquePlaces.length} unique places from ${allPlaces.length} zones`);
+
+    if (uniquePlaces.length < 1) return false;
+
+    // Convert to app format
+    masterPool = placesToAppFormat(uniquePlaces);
+
+    // Sort by rating count (popularity) then rating
+    masterPool.sort((a, b) => b._ratingCount - a._ratingCount || b.rating - a.rating);
+
+    // Save to persistent storage
+    try {
+      await window.storage.set('master-pool', JSON.stringify({
+        restaurants: masterPool,
+        fetchedAt: Date.now(),
+        count: masterPool.length,
+      }));
+      console.log(`[pick] Saved ${masterPool.length} restaurants to storage`);
+    } catch (e) { console.warn('[pick] Storage save failed:', e); }
+
+    // Backup to localStorage
+    try {
+      localStorage.setItem('pick-master-pool', JSON.stringify({
+        restaurants: masterPool,
+        fetchedAt: Date.now(),
+        count: masterPool.length,
+      }));
+    } catch {}
+
+    restaurants = [...masterPool];
+    console.log(`[pick] Pool built: ${masterPool.length} restaurants (after quality filter)`);
+    console.log(`[pick] 🍽️ POOL STATS: ${masterPool.length} total restaurants in database`);
+    console.log(`[pick] Top rated: ${masterPool.slice(0, 5).map(r => `${r.name} (${r.rating}★)`).join(', ')}`);
+    return true;
+  } catch (e) {
+    if (e.message !== 'sandbox') console.warn('[pick] buildMasterPool failed:', e);
+    return false;
+  }
+}
+
+// Get user's coordinates from GPS or geocoded ZIP
+function getUserCoords() {
+  if (state.location && state.location !== 'mock' && state.location.latitude) {
+    return { latitude: state.location.latitude, longitude: state.location.longitude };
+  }
+  if (state._zipCoords) {
+    return state._zipCoords;
+  }
+  return null;
+}
+
+// Recalculate distances from user's actual position for any restaurant list
+function recalcDistances(list) {
+  const coords = getUserCoords();
+  if (!coords) return list;
+  return list.map(r => {
+    if (r._lat && r._lng) {
+      const d = distMiles(coords.latitude, coords.longitude, r._lat, r._lng);
+      return { ...r, dist: d < 0.1 ? '< 0.1 mi' : d.toFixed(1) + ' mi', _distNum: d };
+    }
+    return r;
+  });
+}
+
+// Filter the master pool based on current user preferences
+// Returns: 'ok' | 'empty' | 'few'
+function filterPool() {
+  if (!masterPool.length) {
+    restaurants = [...fallbackRestaurants];
+    return 'ok';
+  }
+
+  let pool = [...(masterPool.length ? masterPool : fallbackRestaurants)];
+
+  // Filter out excluded restaurants
+  if (state.excluded.length) {
+    pool = pool.filter(r => !state.excluded.includes(r.name));
+  }
+
+  // Filter by Open Now
+  const openNow = document.getElementById('open-toggle')?.classList.contains('on');
+  if (openNow) {
+    const beforeCount = pool.length;
+    pool = pool.filter(r => r._isOpen !== false); // keep true and null (unknown)
+  }
+
+  // ─── Meal-time filter ───
+  // Only show restaurants appropriate for the current meal period
+  const hour = new Date().getHours();
+  const beforeMealFilter = pool.length;
+  
+  const BREAKFAST_TYPES = ['breakfast_restaurant', 'brunch_restaurant'];
+  const MORNING_FRIENDLY = [...BREAKFAST_TYPES, 'cafe', 'bakery', 'coffee_shop'];
+  const DINNER_UNFRIENDLY = ['breakfast_restaurant', 'brunch_restaurant']; // spots that typically close by dinner
+  const BREAKFAST_UNFRIENDLY = ['bar', 'steak_house', 'fine_dining_restaurant']; // not breakfast spots
+  
+  pool = pool.filter(r => {
+    const types = r._types || [];
+    if (!types.length) return true; // no type info — include it
+    
+    if (hour < 11) {
+      // BREAKFAST: exclude places that are clearly dinner-only
+      // If a place has ONLY dinner-type tags (bar, steakhouse) and NO morning tags, skip it
+      const hasMorningType = types.some(t => MORNING_FRIENDLY.includes(t));
+      const hasGeneralType = types.some(t => ['restaurant', 'american_restaurant', 'mexican_restaurant', 'chinese_restaurant', 'italian_restaurant', 'japanese_restaurant', 'mediterranean_restaurant', 'seafood_restaurant', 'indian_restaurant', 'thai_restaurant', 'korean_restaurant', 'vietnamese_restaurant', 'greek_restaurant', 'french_restaurant', 'pizza_restaurant', 'hamburger_restaurant', 'sandwich_shop', 'meal_takeaway', 'meal_delivery', 'fast_food_restaurant', 'vegan_restaurant'].includes(t));
+      const onlyDinnerTypes = types.some(t => BREAKFAST_UNFRIENDLY.includes(t)) && !hasMorningType && !hasGeneralType;
+      return !onlyDinnerTypes;
+    }
+    
+    if (hour >= 17) {
+      // DINNER: exclude breakfast/brunch-only places
+      // If a place is ONLY tagged as breakfast/brunch/cafe/bakery with no general restaurant type, skip it
+      const hasOnlyMorningTypes = types.every(t => 
+        MORNING_FRIENDLY.includes(t) || ['food', 'point_of_interest', 'establishment', 'store', 'meal_takeaway', 'meal_delivery'].includes(t)
+      );
+      const isBreakfastSpecific = types.some(t => DINNER_UNFRIENDLY.includes(t));
+      return !(hasOnlyMorningTypes && isBreakfastSpecific);
+    }
+    
+    // LUNCH / AFTERNOON: include everything
+    return true;
+  });
+  
+  if (pool.length < beforeMealFilter) {
+    console.log(`[pick] Meal filter (hour ${hour}): ${beforeMealFilter} → ${pool.length} restaurants`);
+  }
+
+  // Filter by budget
+  if (state.budget && state.budget !== 'Any') {
+    const maxP = budgetToMaxPrice();
+    pool = pool.filter(r => (r._priceNum || 2) <= maxP);
+  }
+
+  // Filter by distance using GPS or geocoded ZIP coords
+  const coords = getUserCoords();
+  if (coords) {
+    const maxDist = state.dist || 10;
+    pool = pool.map(r => {
+      if (r._lat && r._lng) {
+        const d = distMiles(coords.latitude, coords.longitude, r._lat, r._lng);
+        return { ...r, dist: d < 0.1 ? '< 0.1 mi' : d.toFixed(1) + ' mi', _distNum: d };
+      }
+      return { ...r, _distNum: 99 };
+    }).filter(r => r._distNum <= maxDist);
+  }
+
+  if (pool.length === 0) {
+    restaurants = [];
+    return 'empty';
+  }
+  if (pool.length < 5) {
+    restaurants = pool;
+    return 'few';
+  }
+  restaurants = pool;
+  return 'ok';
+}
+
+// Targeted API call when filters produce no results — searches user's exact area
+async function fetchTargeted() {
+  if (!GOOGLE_API_KEY) return false;
+
+  const coords = getUserCoords();
+  if (!coords) return false;
+  const lat = coords.latitude, lng = coords.longitude;
+
+  const radiusM = Math.round(state.dist * 1609.34);
+
+  try {
+    const body = {
+      includedTypes: ['restaurant'],
+      maxResultCount: 20,
+      locationRestriction: {
+        circle: { center: { latitude: lat, longitude: lng }, radius: Math.min(radiusM, 50000) }
+      },
+    };
+
+    // Add price filter
+    if (state.budget && state.budget !== 'Any') {
+      const maxP = budgetToMaxPrice();
+      const pl = [];
+      if (maxP >= 1) pl.push('PRICE_LEVEL_INEXPENSIVE');
+      if (maxP >= 2) pl.push('PRICE_LEVEL_MODERATE');
+      if (maxP >= 3) pl.push('PRICE_LEVEL_EXPENSIVE');
+      if (maxP >= 4) pl.push('PRICE_LEVEL_VERY_EXPENSIVE');
+      body.priceLevels = pl;
+    }
+
+    const resp = await fetchWithTimeout('https://places.googleapis.com/v1/places:searchNearby', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-Goog-Api-Key': GOOGLE_API_KEY,
+        'X-Goog-FieldMask': 'places.id,places.displayName,places.rating,places.userRatingCount,places.priceLevel,places.types,places.location,places.currentOpeningHours,places.nationalPhoneNumber,places.formattedAddress',
+      },
+      body: JSON.stringify(body),
+    }, 5000);
+    const data = await resp.json();
+    if (!data.places || !data.places.length) return false;
+
+    // Convert and deduplicate against master pool
+    const newPlaces = placesToAppFormat(data.places, lat, lng);
+    const existingIds = new Set(masterPool.map(r => r.placeId).filter(Boolean));
+    let added = 0;
+
+    for (const p of newPlaces) {
+      if (p.placeId && !existingIds.has(p.placeId)) {
+        masterPool.push(p);
+        existingIds.add(p.placeId);
+        added++;
+      }
+    }
+
+    // Save expanded pool to storage
+    if (added > 0) {
+      try {
+        await window.storage.set('master-pool', JSON.stringify({
+          restaurants: masterPool,
+          fetchedAt: Date.now(),
+          count: masterPool.length,
+        }));
+        console.log(`Added ${added} new restaurants, pool now ${masterPool.length}`);
+      } catch (e) { console.warn('Storage save failed:', e); }
+    }
+
+    // Re-filter with the expanded pool
+    const status = filterPool();
+    return status !== 'empty';
+  } catch (e) {
+    if (e.message !== 'sandbox') console.warn('Targeted fetch failed:', e);
+    return false;
+  }
+}
+
+// Legacy wrapper — kept for handleSpinClick compatibility
+async function fetchNearbyRestaurants() {
+  // If we already know external fetch is blocked, skip everything
+  if (_fetchWorks === false) return false;
+  
+  // First try loading from storage
+  const loaded = await loadMasterPool();
+  if (loaded) { filterPool(); return true; }
+
+  // If nothing stored, do the bulk fetch
+  const built = await buildMasterPool();
+  if (built) { filterPool(); return true; }
+
+  return false;
+}
+
+// ─── Navigation ───
+function show(id) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  window.scrollTo(0, 0);
+  // When showing filters, refresh the excluded list and dist hint
+  if (id === 'filters-screen') {
+    renderExcludedList();
+    updateDistHint();
+  }
+}
+function switchTab(tab) {
+  document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+  if (tab === 'spin') {
+    document.getElementById('tab-spin').classList.add('active');
+    show(state.currentRestaurant ? 'result-screen' : 'entry-screen');
+  } else if (tab === 'log') {
+    document.getElementById('tab-log').classList.add('active');
+    renderLog(); show('log-screen');
+  }
+}
+
+// ─── Preferences persistence ───
+async function savePrefs() {
+  try {
+    const prefs = {
+      onboarded: true,
+      locationType: state.location ? 'gps' : (state.zip ? 'zip' : null),
+      zip: state.zip,
+      dist: state.dist,
+      budget: state.budget,
+      openNow: document.getElementById('open-toggle')?.classList.contains('on') ?? true,
+    };
+    await window.storage.set('user-prefs', JSON.stringify(prefs));
+    try { localStorage.setItem('pick-prefs', JSON.stringify(prefs)); } catch {}
+  } catch {}
+}
+
+async function loadPrefs() {
+  try {
+    const result = await window.storage.get('user-prefs');
+    if (result) return JSON.parse(result.value);
+  } catch {}
+  // Fall back to localStorage
+  try {
+    const local = localStorage.getItem('pick-prefs');
+    if (local) return JSON.parse(local);
+  } catch {}
+  return null;
+}
+
+function showPrefsSummary() {
+  // Update time-sensitive meal label
+  const h = new Date().getHours();
+  const meal = h < 11 ? 'Breakfast' : h < 15 ? 'Lunch' : h < 17 ? 'Afternoon' : 'Dinner';
+  const mealLabel = document.getElementById('entry-meal-label');
+  if (mealLabel) mealLabel.textContent = `${meal} decisions`;
+
+  const locLabel = state.location ? '📍 My location' : (state.zip ? `📍 ${state.zip}` : null);
+  if (!locLabel) return;
+  const openNow = document.getElementById('open-toggle')?.classList.contains('on');
+  
+  // Run filterPool to get accurate count
+  filterPool();
+  const spotCount = restaurants.length;
+  const spotLabel = spotCount > 0 ? `${spotCount} spots` : '0 spots';
+  
+  const parts = [locLabel, `${state.dist} mi`, state.budget, openNow ? 'Open now' : '', spotLabel].filter(Boolean);
+  if (state.excluded.length) parts.push(`${state.excluded.length} hidden`);
+  document.getElementById('prefs-summary').textContent = parts.join(' · ');
+  document.getElementById('saved-prefs').style.display = 'block';
+}
+
+function applyPrefsToUI() {
+  document.getElementById('dist-slider').value = state.dist;
+  document.getElementById('dist-label').textContent = state.dist + ' mi';
+  const order = ['$','$$','$$$','Any'];
+  document.querySelectorAll('#budget-group .pill').forEach((p, i) => {
+    p.classList.toggle('active', order[i] === state.budget);
+  });
+}
+
+// ─── Init for returning users ───
+async function initApp() {
+  // Check if this is a shared profile link (/u/username or ?u=username)
+  const sharedUsername = checkForSharedProfile();
+  if (sharedUsername) {
+    const splash = document.getElementById('splash-screen');
+    if (splash) { splash.style.opacity = '0'; setTimeout(() => splash.remove(), 400); }
+    const loaded = await showSharedProfile(sharedUsername);
+    if (loaded) return; // stop init — showing shared profile
+  }
+  
+  // Start network probe immediately (runs in background)
+  probeFetch();
+  
+  const prefs = await loadPrefs();
+  if (prefs && prefs.onboarded) {
+    document.body.classList.remove('no-nav');
+    state.dist = prefs.dist || 5;
+    state.budget = prefs.budget || '$';
+    if (prefs.zip) state.zip = prefs.zip;
+    const toggle = document.getElementById('open-toggle');
+    if (toggle) {
+      if (prefs.openNow) toggle.classList.add('on');
+      else toggle.classList.remove('on');
+    }
+    applyPrefsToUI();
+    if (prefs.locationType === 'gps' && navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        pos => { state.location = { latitude: pos.coords.latitude, longitude: pos.coords.longitude }; showPrefsSummary(); },
+        ()  => { state.location = 'mock'; showPrefsSummary(); }
+      );
+    } else if (prefs.locationType === 'zip' && prefs.zip) {
+      state.zip = prefs.zip;
+      document.getElementById('zip-input').value = prefs.zip;
+    }
+    show('entry-screen');
+    showPrefsSummary();
+  }
+  // Load log data
+  await loadLogData();
+  await loadHistory();
+  await loadExcluded();
+  // Preload restaurant pool from storage (if previously fetched)
+  if (GOOGLE_API_KEY && _fetchWorks !== false) {
+    try {
+      const poolLoaded = await loadMasterPool();
+      if (poolLoaded) { showPrefsSummary(); console.log(`Pool ready: ${masterPool.length} restaurants`); }
+    } catch (e) { console.log('Pool preload skipped:', e); }
+  }
+  // Dismiss splash
+  const splash = document.getElementById('splash-screen');
+  if (splash) {
+    splash.style.opacity = '0';
+    splash.style.transform = 'scale(1.02)';
+    setTimeout(() => splash.remove(), 400);
+  }
+  // Prompt to rate unrated past picks
+  if (prefs && prefs.onboarded) {
+    setTimeout(() => promptUnratedPicks(), 800);
+  }
+}
+initApp();
+
+function promptUnratedPicks() {
+  const unrated = state.history.filter(h => !state.ratings.some(r => r.restaurantName === h.name));
+  if (unrated.length === 0) return;
+  const recent = unrated[0];
+  const idx = state.history.indexOf(recent);
+  const banner = document.createElement('div');
+  banner.id = 'unrated-banner';
+  banner.style.cssText = `
+    position:fixed;top:calc(var(--safe-top) + 12px);left:16px;right:16px;z-index:150;
+    background:var(--surface);border:1px solid var(--border2);border-radius:10px;
+    padding:12px 14px;backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
+    animation:fadeUp 0.4s ease;max-width:400px;margin:0 auto;
+    box-shadow:0 4px 20px rgba(0,0,0,0.4);display:flex;align-items:center;gap:12px;
+  `;
+  banner.innerHTML = `
+    <div style="flex:1;min-width:0">
+      <span style="font-size:12px;color:var(--ink-muted)">How was</span>
+      <span style="font-size:13px;font-weight:600;color:var(--ink);display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${recent.name}</span>
+    </div>
+    <button onclick="rateFromBanner(${idx})" style="background:var(--accent);color:white;border:none;padding:6px 14px;border-radius:6px;font-size:11px;font-weight:500;cursor:pointer;font-family:var(--font);white-space:nowrap">Rate</button>
+    <button onclick="document.getElementById('unrated-banner').remove()" style="background:none;border:none;color:var(--ink-subtle);font-size:16px;cursor:pointer;padding:0 2px;line-height:1">×</button>
+  `;
+  document.body.appendChild(banner);
+  setTimeout(() => { const b = document.getElementById('unrated-banner'); if (b) { b.style.opacity = '0'; b.style.transition = 'opacity 0.3s'; setTimeout(() => b.remove(), 300); } }, 10000);
+}
+
+function rateFromBanner(i) {
+  const b = document.getElementById('unrated-banner');
+  if (b) b.remove();
+  rateFromHistory(i);
+}
+
+// ─── Onboarding ───
+let onbStep = 0;
+function onbNext() {
+  onbStep++;
+  if (onbStep >= 4) { finishOnboarding(); return; }
+  document.getElementById('onb-track').style.transform = `translateX(-${onbStep * 100}%)`;
+  document.querySelectorAll('.onb-dot').forEach((d, i) => d.classList.toggle('active', i === onbStep));
+  if (onbStep === 3) document.getElementById('onb-btn').textContent = "Let's go 🎰";
+}
+function finishOnboarding() {
+  document.body.classList.remove('no-nav');
+  const h = new Date().getHours();
+  const meal = h < 11 ? 'Breakfast' : h < 15 ? 'Lunch' : h < 17 ? 'Afternoon' : 'Dinner';
+  const ml = document.getElementById('entry-meal-label'); if (ml) ml.textContent = `${meal} decisions`;
+  show('entry-screen');
+  savePrefs();
+}
+
+// ─── Location ───
+function useMyLocation() {
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(
+      pos => { state.location = { latitude: pos.coords.latitude, longitude: pos.coords.longitude }; show('filters-screen'); savePrefs(); calibrateDistSlider(); },
+      ()  => { state.location = 'mock'; show('filters-screen'); savePrefs(); }
+    );
+  } else { state.location = 'mock'; show('filters-screen'); savePrefs(); }
+}
+function validateZip() {
+  const zip = document.getElementById('zip-input').value.trim();
+  if (!zip || zip.length < 4) {
+    const inp = document.getElementById('zip-input');
+    inp.style.borderColor = 'var(--accent)';
+    inp.style.animation = 'shake 0.3s ease';
+    setTimeout(() => { inp.style.borderColor = ''; inp.style.animation = ''; }, 1000);
+    return;
+  }
+  state.zip = zip; state._zipCoords = ZIP_COORDS[zip] || null; show('filters-screen'); savePrefs(); calibrateDistSlider();
+}
+
+// ─── Filters ───
+function updateDist(v) { state.dist = parseInt(v); document.getElementById('dist-label').textContent = v + ' mi'; updateDistHint(); savePrefs(); }
+
+function calibrateDistSlider() {
+  const coords = getUserCoords();
+  if (!coords) return;
+  
+  // Get all restaurants with coords (master pool or fallback)
+  const pool = masterPool.length > 0 ? masterPool : fallbackRestaurants;
+  const dists = pool
+    .filter(r => r._lat && r._lng)
+    .map(r => distMiles(coords.latitude, coords.longitude, r._lat, r._lng))
+    .sort((a, b) => a - b);
+  
+  if (!dists.length) return;
+  
+  const nearest = Math.floor(dists[0]);
+  const farthest = Math.ceil(dists[dists.length - 1]);
+  // Slider min: nearest restaurant (at least 1)
+  const sliderMin = Math.max(1, nearest);
+  // Slider max: farthest restaurant + buffer, capped at 50
+  const sliderMax = Math.min(25, Math.max(sliderMin + 5, farthest + 5));
+  
+  const slider = document.getElementById('dist-slider');
+  slider.min = sliderMin;
+  slider.max = sliderMax;
+  document.getElementById('dist-max-label').textContent = sliderMax + ' mi';
+  
+  // If current value is below new min, bump it up
+  if (state.dist < sliderMin) {
+    state.dist = sliderMin;
+    slider.value = sliderMin;
+    document.getElementById('dist-label').textContent = sliderMin + ' mi';
+  }
+  // If current value is above new max, bring it down
+  if (state.dist > sliderMax) {
+    state.dist = sliderMax;
+    slider.value = sliderMax;
+    document.getElementById('dist-label').textContent = sliderMax + ' mi';
+  }
+  
+  slider.value = state.dist;
+  updateDistHint();
+}
+
+function updateDistHint() {
+  const coords = getUserCoords();
+  const hint = document.getElementById('dist-hint');
+  if (!hint || !coords) { if (hint) hint.textContent = ''; return; }
+  
+  let pool = masterPool.length > 0 ? [...masterPool] : [...fallbackRestaurants];
+  
+  // Apply excluded filter
+  if (state.excluded.length) {
+    pool = pool.filter(r => !state.excluded.includes(r.name));
+  }
+  
+  // Apply openNow filter
+  const openNow = document.getElementById('open-toggle')?.classList.contains('on');
+  if (openNow) {
+    pool = pool.filter(r => r._isOpen !== false);
+  }
+  
+  // Apply budget filter
+  if (state.budget && state.budget !== 'Any') {
+    const maxP = budgetToMaxPrice();
+    pool = pool.filter(r => (r._priceNum || 2) <= maxP);
+  }
+  
+  // Apply distance filter
+  const count = pool.filter(r => {
+    if (!r._lat || !r._lng) return false;
+    return distMiles(coords.latitude, coords.longitude, r._lat, r._lng) <= state.dist;
+  }).length;
+  hint.textContent = count === 0 ? 'No spots in range' : `${count} spot${count !== 1 ? 's' : ''} in range`;
+}
+function selectBudget(el, val) {
+  state.budget = val;
+  document.querySelectorAll('#budget-group .pill').forEach(p => p.classList.remove('active'));
+  el.classList.add('active');
+  haptic('light');
+  updateDistHint();
+  savePrefs();
+}
+
+// ─── Charge mechanic ───
+let chargeInterval = null, chargeVal = 0, chargeActive = false;
+function startCharge() {
+  chargeActive = true; chargeVal = 0;
+  const wrap1 = document.getElementById('charge-bar-wrap');
+  const wrap2 = document.getElementById('filter-charge-bar-wrap');
+  [wrap1, wrap2].forEach(w => { if (w) w.classList.add('visible'); });
+  chargeInterval = setInterval(() => {
+    chargeVal = Math.min(100, chargeVal + 4);
+    ['charge-bar','filter-charge-bar'].forEach(id => {
+      const el = document.getElementById(id);
+      if (el) el.style.width = chargeVal + '%';
+    });
+    if (chargeVal === 50 || chargeVal === 100) haptic('medium');
+    if (chargeVal >= 100) { clearInterval(chargeInterval); chargeInterval = null; }
+  }, 30);
+}
+function releaseCharge() {
+  if (!chargeActive) return; chargeActive = false;
+  if (chargeInterval) { clearInterval(chargeInterval); chargeInterval = null; }
+  setTimeout(() => {
+    ['charge-bar','filter-charge-bar'].forEach(id => { const el = document.getElementById(id); if(el) el.style.width = '0%'; });
+    ['charge-bar-wrap','filter-charge-bar-wrap'].forEach(id => { const el = document.getElementById(id); if(el) el.classList.remove('visible'); });
+    chargeVal = 0;
+  }, 300);
+}
+
+async function handleSpinClick() {
+  SFX.tap(); releaseCharge();
+  ['main-spin-btn','filter-spin-btn'].forEach(id => {
+    const btn = document.getElementById(id);
+    if (btn) { btn.classList.remove('fired'); void btn.offsetWidth; btn.classList.add('fired'); btn.classList.add('shimmer'); setTimeout(() => { btn.classList.remove('fired','shimmer'); }, 400); }
+  });
+  if (!state.location && !state.zip) { show('location-screen'); return; }
+  savePrefs();
+
+  // Resolve coordinates if we don't have them yet
+  if (!state.location || state.location === 'mock' || !state.location.latitude) {
+    // Try GPS first if available
+    if (navigator.geolocation) {
+      try {
+        const pos = await new Promise((resolve, reject) => {
+          navigator.geolocation.getCurrentPosition(resolve, reject, { timeout: 3000 });
+        });
+        state.location = { latitude: pos.coords.latitude, longitude: pos.coords.longitude };
+      } catch (e) { /* GPS failed — fall through to ZIP */ }
+    }
+    // If still no GPS coords, try ZIP
+    if ((!state.location || state.location === 'mock') && state.zip && !state._zipCoords) {
+      try {
+        const geo = await geocodeZip(state.zip);
+        if (geo) state._zipCoords = geo;
+      } catch (e) { if (e.message !== 'sandbox') console.warn('Geocode failed:', e); }
+    }
+  }
+
+  showPrefsSummary();
+
+  const coords = getUserCoords();
+  console.log(`[pick] Spin — API key: ${!!GOOGLE_API_KEY}, masterPool: ${masterPool.length}, coords:`, coords);
+
+  if (GOOGLE_API_KEY && masterPool.length > 0) {
+    const status = filterPool();
+    console.log(`[pick] Filtered: ${restaurants.length} restaurants, status: ${status}`);
+
+    if (status === 'empty') {
+      show('spin-screen');
+      const statusEl = document.getElementById('spin-status');
+      if (statusEl) statusEl.innerHTML = '<span class="blink">●</span> Searching harder…';
+
+      try {
+        const found = await fetchTargeted();
+        if (!found || !restaurants.length) {
+          show('noresults-screen');
+          return;
+        }
+      } catch (e) {
+        if (e.message !== 'sandbox') console.warn('Targeted fetch failed:', e);
+        show('noresults-screen');
+        return;
+      }
+    }
+  } else if (GOOGLE_API_KEY) {
+    // First time or API pool not built yet
+    show('spin-screen');
+    const statusEl = document.getElementById('spin-status');
+    if (statusEl) statusEl.innerHTML = '<span class="blink">●</span> Building your restaurant pool…';
+
+    let ok = false;
+    try {
+      ok = await fetchNearbyRestaurants();
+    } catch (e) {
+      if (e.message !== 'sandbox') console.warn('Fetch failed:', e);
+    }
+
+    if (!ok || !restaurants.length) {
+      // API failed — fall back to curated list with real distances
+      if (coords) {
+        restaurants = recalcDistances([...fallbackRestaurants]);
+        const maxDist = state.dist || 10;
+        const maxP = budgetToMaxPrice();
+        restaurants = restaurants.filter(r => {
+          const distOk = r._distNum !== undefined && r._distNum <= maxDist;
+          const priceOk = state.budget === 'Any' || (r._priceNum || 2) <= maxP;
+          return distOk && priceOk;
+        });
+        if (!restaurants.length) {
+          show('noresults-screen');
+          return;
+        }
+      } else {
+        show('noresults-screen');
+        return;
+      }
+    } else {
+      if (statusEl) statusEl.innerHTML = `<span class="blink">●</span> ${restaurants.length} spots loaded!`;
+      await new Promise(r => setTimeout(r, 400));
+    }
+  } else if (!GOOGLE_API_KEY && coords) {
+    // No API key — use fallback with filtering
+    restaurants = recalcDistances([...fallbackRestaurants]);
+    const maxDist = state.dist || 10;
+    const maxP = budgetToMaxPrice();
+    restaurants = restaurants.filter(r => {
+      const distOk = r._distNum !== undefined && r._distNum <= maxDist;
+      const priceOk = state.budget === 'Any' || (r._priceNum || 2) <= maxP;
+      return distOk && priceOk;
+    });
+    if (!restaurants.length) {
+      show('noresults-screen');
+      return;
+    }
+  } else {
+    show('noresults-screen');
+    return;
+  }
+
+  // Final check
+  if (!restaurants.length) {
+    show('noresults-screen');
+    return;
+  }
+
+  // Recalculate distances one final time
+  restaurants = recalcDistances(restaurants);
+
+  startSpin();
+}
+
+// ─── Haptic ───
+function haptic(style) {
+  if (navigator.vibrate) {
+    if (style === 'light') navigator.vibrate(10);
+    else if (style === 'medium') navigator.vibrate(25);
+    else if (style === 'heavy') navigator.vibrate([30,10,30]);
+    else if (style === 'success') navigator.vibrate([20,30,60]);
+  }
+}
+
+// ─── Sound Engine (Web Audio API) ───
+const SFX = (() => {
+  let ctx = null;
+  function getCtx() {
+    if (!ctx) try { ctx = new (window.AudioContext || window.webkitAudioContext)(); } catch { return null; }
+    if (ctx.state === 'suspended') ctx.resume();
+    return ctx;
+  }
+
+  // Soft tap — tiny pop for button presses
+  function tap() {
+    const c = getCtx(); if (!c) return;
+    const o = c.createOscillator(), g = c.createGain();
+    o.type = 'sine'; o.frequency.value = 800;
+    o.frequency.exponentialRampToValueAtTime(600, c.currentTime + 0.04);
+    g.gain.setValueAtTime(0.08, c.currentTime);
+    g.gain.exponentialRampToValueAtTime(0.001, c.currentTime + 0.06);
+    o.connect(g); g.connect(c.destination);
+    o.start(); o.stop(c.currentTime + 0.06);
+  }
+
+  // Spin start — ascending whoosh with filtered noise
+  function spinStart() {
+    const c = getCtx(); if (!c) return;
+    const t = c.currentTime;
+    // Rising sweep
+    const o = c.createOscillator(), g = c.createGain();
+    o.type = 'sine'; o.frequency.value = 200;
+    o.frequency.exponentialRampToValueAtTime(900, t + 0.4);
+    g.gain.setValueAtTime(0.06, t);
+    g.gain.exponentialRampToValueAtTime(0.001, t + 0.5);
+    o.connect(g); g.connect(c.destination);
+    o.start(); o.stop(t + 0.5);
+    // Subtle shimmer layer
+    const o2 = c.createOscillator(), g2 = c.createGain();
+    o2.type = 'triangle'; o2.frequency.value = 400;
+    o2.frequency.exponentialRampToValueAtTime(1800, t + 0.35);
+    g2.gain.setValueAtTime(0.03, t);
+    g2.gain.exponentialRampToValueAtTime(0.001, t + 0.4);
+    o2.connect(g2); g2.connect(c.destination);
+    o2.start(); o2.stop(t + 0.4);
+  }
+
+  // Reel tick — soft click as each name passes
+  let _lastTick = 0;
+  function reelTick() {
+    const c = getCtx(); if (!c) return;
+    const now = c.currentTime;
+    if (now - _lastTick < 0.06) return; // throttle
+    _lastTick = now;
+    const o = c.createOscillator(), g = c.createGain();
+    o.type = 'sine'; o.frequency.value = 1200 + Math.random() * 200;
+    g.gain.setValueAtTime(0.03, now);
+    g.gain.exponentialRampToValueAtTime(0.001, now + 0.03);
+    o.connect(g); g.connect(c.destination);
+    o.start(); o.stop(now + 0.03);
+  }
+
+  // Reveal — satisfying dopamine chord with shimmer tail
+  function reveal() {
+    const c = getCtx(); if (!c) return;
+    const t = c.currentTime;
+    // Main chord: root + major third + fifth + octave
+    const freqs = [523.25, 659.25, 783.99, 1046.5]; // C5 chord
+    freqs.forEach((f, i) => {
+      const o = c.createOscillator(), g = c.createGain();
+      o.type = i === 0 ? 'triangle' : 'sine';
+      o.frequency.value = f;
+      const vol = i === 0 ? 0.1 : 0.06;
+      g.gain.setValueAtTime(0, t);
+      g.gain.linearRampToValueAtTime(vol, t + 0.02);
+      g.gain.exponentialRampToValueAtTime(0.001, t + 0.8);
+      o.connect(g); g.connect(c.destination);
+      o.start(t + i * 0.015); o.stop(t + 0.8);
+    });
+    // Sparkle layer — descending shimmer
+    setTimeout(() => {
+      const t2 = c.currentTime;
+      [2093, 1568, 1318].forEach((f, i) => {
+        const o = c.createOscillator(), g = c.createGain();
+        o.type = 'sine'; o.frequency.value = f;
+        g.gain.setValueAtTime(0.04, t2 + i * 0.08);
+        g.gain.exponentialRampToValueAtTime(0.001, t2 + i * 0.08 + 0.2);
+        o.connect(g); g.connect(c.destination);
+        o.start(t2 + i * 0.08); o.stop(t2 + i * 0.08 + 0.2);
+      });
+    }, 200);
+  }
+
+  // Star select — rising tone per star number (1-5)
+  function starPick(n) {
+    const c = getCtx(); if (!c) return;
+    const t = c.currentTime;
+    const baseFreq = 400 + (n - 1) * 80; // rises with each star
+    const o = c.createOscillator(), g = c.createGain();
+    o.type = 'triangle'; o.frequency.value = baseFreq;
+    o.frequency.exponentialRampToValueAtTime(baseFreq * 1.15, t + 0.1);
+    g.gain.setValueAtTime(0.08, t);
+    g.gain.exponentialRampToValueAtTime(0.001, t + 0.15);
+    o.connect(g); g.connect(c.destination);
+    o.start(); o.stop(t + 0.15);
+  }
+
+  // Submit success — warm ascending arpeggio
+  function success() {
+    const c = getCtx(); if (!c) return;
+    const t = c.currentTime;
+    const notes = [523.25, 659.25, 783.99, 1046.5, 1318.5]; // C E G C' E'
+    notes.forEach((f, i) => {
+      const o = c.createOscillator(), g = c.createGain();
+      o.type = 'sine'; o.frequency.value = f;
+      g.gain.setValueAtTime(0, t + i * 0.07);
+      g.gain.linearRampToValueAtTime(0.07, t + i * 0.07 + 0.02);
+      g.gain.exponentialRampToValueAtTime(0.001, t + i * 0.07 + 0.3);
+      o.connect(g); g.connect(c.destination);
+      o.start(t + i * 0.07); o.stop(t + i * 0.07 + 0.3);
+    });
+  }
+
+  // Toast — tiny notification blip
+  function notify() {
+    const c = getCtx(); if (!c) return;
+    const t = c.currentTime;
+    const o = c.createOscillator(), g = c.createGain();
+    o.type = 'sine'; o.frequency.value = 880;
+    o.frequency.exponentialRampToValueAtTime(1100, t + 0.05);
+    g.gain.setValueAtTime(0.05, t);
+    g.gain.exponentialRampToValueAtTime(0.001, t + 0.1);
+    o.connect(g); g.connect(c.destination);
+    o.start(); o.stop(t + 0.1);
+  }
+
+  return { tap, spinStart, reelTick, reveal, starPick, success, notify };
+})()
+
+// ─── Flash ───
+function flashScreen() {
+  const f = document.getElementById('flash-overlay');
+  f.style.display = 'block'; f.style.opacity = '0.12';
+  setTimeout(() => { f.style.opacity = '0'; setTimeout(() => { f.style.display = 'none'; }, 100); }, 80);
+}
+
+// ─── Confetti ───
+function spawnParticles(cx, cy, count = 60) {
+  const colors = ['#DC2626','#E5A000','#FF4444','#FFF0E0','#FF6B6B','#FFD700'];
+  const container = document.createElement('div');
+  container.style.cssText = 'position:fixed;inset:0;pointer-events:none;z-index:300;overflow:hidden';
+  document.body.appendChild(container);
+  for (let i = 0; i < count; i++) {
+    const el = document.createElement('div');
+    const size = 4 + Math.random() * 7;
+    const color = colors[Math.floor(Math.random() * colors.length)];
+    const angle = Math.random() * 360;
+    const dist = 80 + Math.random() * 220;
+    const dx = Math.cos(angle * Math.PI / 180) * dist;
+    const dy = Math.sin(angle * Math.PI / 180) * dist - 120;
+    const duration = 600 + Math.random() * 700;
+    const isRect = Math.random() > 0.5;
+    el.style.cssText = `position:absolute;left:${cx}px;top:${cy}px;width:${size}px;height:${isRect?size*0.4:size}px;background:${color};border-radius:${isRect?'1px':'50%'};transform:translate(-50%,-50%);animation:confettiPop ${duration}ms cubic-bezier(0.25,0.46,0.45,0.94) forwards;--dx:${dx}px;--dy:${dy}px;`;
+    container.appendChild(el);
+  }
+  setTimeout(() => container.remove(), 1400);
+}
+if (!document.getElementById('confetti-style')) {
+  const s = document.createElement('style'); s.id = 'confetti-style';
+  s.textContent = `@keyframes confettiPop{0%{transform:translate(-50%,-50%) scale(0);opacity:1}60%{opacity:1}100%{transform:translate(calc(-50% + var(--dx)),calc(-50% + var(--dy))) scale(0.3) rotate(720deg);opacity:0}}`;
+  document.head.appendChild(s);
+}
+function triggerConfetti() {
+  spawnParticles(window.innerWidth/2, window.innerHeight/2, 70);
+  flashScreen(); haptic('success');
+}
+
+// ─── Slot Machine ───
+const spinStatuses = GOOGLE_API_KEY
+  ? ['Scanning nearby…','Matching your vibe…','Almost locked in…']
+  : ['Scanning nearby…','Rolling the dice…','Almost locked in…'];
+let slotAnim = null;
+function buildSlotItems(forcedFinal) {
+  const names = restaurants.map(r => r.name);
+  if (!names.length) return { items: ['No restaurants found'], landIdx: 0 };
+  let items = [];
+  for (let i = 0; i < 5; i++) items = items.concat([...names].sort(() => Math.random() - 0.5));
+  // Force the final landing spot to be our pre-chosen winner
+  const landIdx = items.length - 10 + Math.floor(Math.random() * 8);
+  if (forcedFinal) items[landIdx] = forcedFinal;
+  return { items, landIdx };
+}
+
+function startSpin() {
+  show('spin-screen'); haptic('heavy'); SFX.spinStart();
+  const reel = document.getElementById('slot-reel');
+  const statusEl = document.getElementById('spin-status');
+  const itemH = 52;
+
+  // Pick the winner FIRST — true random from the full pool, avoid repeat
+  let pool = restaurants.length > 1 ? restaurants.filter(r => r.name !== state._lastPick) : restaurants;
+  const winner = pool[Math.floor(Math.random() * pool.length)];
+  state._lastPick = winner.name;
+  const { items, landIdx } = buildSlotItems(winner.name);
+
+  reel.innerHTML = '';
+  items.forEach(name => { const div = document.createElement('div'); div.className = 'slot-item'; div.textContent = name; reel.appendChild(div); });
+  const finalIdx = landIdx;
+  const finalName = winner.name;
+  let currentY = 0, targetY = finalIdx * itemH - itemH, velocity = 0;
+  const maxVelocity = 48;
+  let phase = 'accelerate', statusIdx = 0;
+  const statusTimer = setInterval(() => { statusIdx = (statusIdx + 1) % spinStatuses.length; statusEl.innerHTML = `<span class="blink">●</span> ${spinStatuses[statusIdx]}`; }, 700);
+  if (slotAnim) cancelAnimationFrame(slotAnim);
+  let cruiseTicks = 0, lastCenteredIdx = -1;
+  function tick() {
+    if (phase === 'accelerate') { velocity = Math.min(maxVelocity, velocity + 3); currentY += velocity; if (velocity >= maxVelocity) { phase = 'cruise'; cruiseTicks = 0; } }
+    else if (phase === 'cruise') { currentY += velocity; cruiseTicks++; if (cruiseTicks > 40) phase = 'decelerate'; }
+    else if (phase === 'decelerate') {
+      const dist = targetY - currentY;
+      if (Math.abs(dist) < 2) { currentY = targetY; phase = 'done'; }
+      else { velocity = dist * 0.12; currentY += velocity; }
+    }
+    reel.style.transform = `translateY(-${currentY}px)`;
+    const centeredIdx = Math.round(currentY / itemH);
+    if (centeredIdx !== lastCenteredIdx) { lastCenteredIdx = centeredIdx; SFX.reelTick(); }
+    reel.querySelectorAll('.slot-item').forEach((el, i) => el.classList.toggle('lit', i === centeredIdx));
+    if (phase === 'done') {
+      clearInterval(statusTimer); SFX.reveal();
+      const bounce = [0, -6, 2, -2, 0]; let bi = 0;
+      function doBounce() {
+        if (bi >= bounce.length) { haptic('success'); triggerConfetti(); setTimeout(() => showResult(finalName), 150); return; }
+        reel.style.transform = `translateY(-${currentY - bounce[bi]}px)`; bi++; setTimeout(doBounce, 50);
+      }
+      doBounce(); return;
+    }
+    slotAnim = requestAnimationFrame(tick);
+  }
+  tick();
+}
+
+function showResult(pickedName) {
+  let pick = restaurants.find(r => r.name === pickedName) || restaurants[Math.floor(Math.random() * restaurants.length)];
+  
+  // Recalculate distance from user's actual position for accuracy
+  const coords = getUserCoords();
+  if (coords && pick._lat && pick._lng) {
+    const d = distMiles(coords.latitude, coords.longitude, pick._lat, pick._lng);
+    pick = { ...pick, dist: d < 0.1 ? '< 0.1 mi' : d.toFixed(1) + ' mi', _distNum: d };
+  }
+  
+  state.currentRestaurant = pick;
+  state.totalSpins++;
+
+  // Record in history
+  state.history.unshift({
+    name: pick.name,
+    rating: pick.rating,
+    price: pick.price,
+    cuisine: pick.cuisine || pick.tags?.[0] || '',
+    dist: pick.dist,
+    placeId: pick.placeId || null,
+    _lat: pick._lat || null,
+    _lng: pick._lng || null,
+    spunAt: new Date().toISOString(),
+  });
+  if (state.history.length > 200) state.history.length = 200; // cap
+  saveHistory();
+  document.getElementById('res-name').textContent = pick.name;
+  document.getElementById('res-rating').textContent = pick.rating;
+  document.getElementById('res-price').textContent = pick.price;
+  const isEstimate = !state.location || state.location === 'mock' || !state.location.latitude;
+  const distLabel = isEstimate ? '~' + pick.dist + ' (est.)' : pick.dist + ' away';
+  document.getElementById('res-dist').textContent = distLabel;
+  document.getElementById('res-why').textContent = pick.why;
+  
+  // Tags with staggered animation
+  document.getElementById('res-tags').innerHTML = pick.tags.map((t, i) =>
+    `<span class="tag" style="animation-delay:${i * 0.1}s">${t}</span>`
+  ).join('');
+
+  // Hours row
+  const hoursRow = document.getElementById('res-hours-row');
+  const hoursEl = document.getElementById('res-hours');
+  if (pick._todayHours) {
+    const openLabel = pick._isOpen === true ? '🟢 Open' : (pick._isOpen === false ? '🔴 Closed' : '');
+    hoursEl.textContent = (openLabel ? openLabel + ' · ' : '') + pick._todayHours;
+    hoursRow.style.display = 'flex';
+  } else if (pick._isOpen === true) {
+    hoursEl.textContent = '🟢 Open now';
+    hoursRow.style.display = 'flex';
+  } else if (pick._isOpen === false) {
+    hoursEl.textContent = '🔴 Currently closed';
+    hoursRow.style.display = 'flex';
+  } else {
+    hoursRow.style.display = 'none';
+  }
+
+  // Phone row
+  const phoneRow = document.getElementById('res-phone-row');
+  const phoneEl = document.getElementById('res-phone');
+  if (pick._phone) {
+    phoneEl.textContent = pick._phone;
+    phoneEl.href = 'tel:' + pick._phone.replace(/[^+\d]/g, '');
+    phoneRow.style.display = 'flex';
+  } else {
+    phoneRow.style.display = 'none';
+  }
+
+  // Show info section if either row is visible
+  const infoSection = document.getElementById('res-info');
+  infoSection.style.display = (pick._todayHours || pick._isOpen === true || pick._isOpen === false || pick._phone) ? 'flex' : 'none';
+
+  const badge = document.getElementById('streak-badge');
+  const num = document.getElementById('streak-num');
+  if (badge && num) { num.textContent = state.totalSpins.toLocaleString(); badge.classList.remove('hidden'); }
+  updateGlobalSpins();
+  const h = new Date().getHours();
+  const meal = h < 11 ? 'Breakfast' : h < 15 ? 'Lunch' : h < 17 ? 'Afternoon' : 'Tonight\u2019s';
+  document.getElementById('result-label').textContent = `${meal} pick`;
+  show('result-screen');
+  const card = document.getElementById('result-card');
+  card.style.animation = 'none'; void card.offsetWidth; card.style.animation = '';
+}
+
+// ─── Actions ───
+function orderNow() { window.open(`https://www.ubereats.com/search?q=${encodeURIComponent(state.currentRestaurant?.name||'')}`, '_blank'); goGoodluck('🍽️'); }
+function getDirections() {
+  const r = state.currentRestaurant;
+  if (!r) return;
+  
+  let url;
+  if (r._lat && r._lng) {
+    // Use name + coordinates — shows named pin instead of raw coords
+    url = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(r.name)}+${r._lat},${r._lng}`;
+  } else if (r.placeId) {
+    url = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(r.name)}&query_place_id=${r.placeId}`;
+  } else {
+    url = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(r.name + ' restaurant Sarasota FL')}`;
+  }
+  
+  window.open(url, '_blank');
+  goGoodluck('🗺️');
+}
+function goGoodluck(emoji) {
+  document.getElementById('goodluck-emoji').textContent = emoji || '👀';
+  show('goodluck-screen');
+}
+function reroll() { haptic('medium'); startSpin(); }
+
+// ─── Exclude restaurant ───
+async function excludeRestaurant() {
+  const r = state.currentRestaurant;
+  if (!r) return;
+  if (state.excluded.includes(r.name)) { toast('Already excluded'); return; }
+  state.excluded.push(r.name);
+  await saveExcluded();
+  toast(`${r.name} hidden forever`);
+  haptic('medium');
+  // Re-filter and re-roll
+  filterPool();
+  if (restaurants.length > 0) {
+    startSpin();
+  } else {
+    show('noresults-screen');
+  }
+}
+
+async function saveExcluded() {
+  try { await window.storage.set('excluded-restaurants', JSON.stringify(state.excluded)); } catch {}
+  try { localStorage.setItem('pick-excluded', JSON.stringify(state.excluded)); } catch {}
+}
+
+async function loadExcluded() {
+  try {
+    const result = await window.storage.get('excluded-restaurants');
+    if (result) { state.excluded = JSON.parse(result.value); return; }
+  } catch {}
+  try {
+    const local = localStorage.getItem('pick-excluded');
+    if (local) state.excluded = JSON.parse(local);
+  } catch {}
+}
+
+function renderExcludedList() {
+  const section = document.getElementById('excluded-section');
+  const list = document.getElementById('excluded-list');
+  const count = document.getElementById('excluded-count');
+  if (!state.excluded.length) {
+    section.style.display = 'none';
+    return;
+  }
+  section.style.display = 'block';
+  count.textContent = `(${state.excluded.length})`;
+  list.innerHTML = state.excluded.map(name =>
+    `<div class="excluded-item"><span>${name}</span><button onclick="unhideRestaurant('${name.replace(/'/g, "\\'")}')">Unhide</button></div>`
+  ).join('');
+}
+
+async function unhideRestaurant(name) {
+  state.excluded = state.excluded.filter(n => n !== name);
+  await saveExcluded();
+  renderExcludedList();
+  filterPool();
+  updateDistHint();
+  toast(`${name} restored`);
+  haptic('light');
+}
+
+function getAggregateRating(name) {
+  let hash = 0;
+  for (let i = 0; i < name.length; i++) hash = (hash * 31 + name.charCodeAt(i)) & 0xffffffff;
+  return { pct: 65 + (Math.abs(hash) % 32), totalVotes: 80 + (Math.abs(hash >> 4) % 420) };
+}
+function rate(dir) {
+  ['thumb-up','thumb-down'].forEach(id => document.getElementById(id).classList.remove('active','active-gold'));
+  const btn = document.getElementById(dir === 'up' ? 'thumb-up' : 'thumb-down');
+  btn.classList.add(dir === 'up' ? 'active-gold' : 'active');
+  if (dir === 'up') { haptic('success'); spawnParticles(window.innerWidth / 2, window.innerHeight * 0.4, 30); }
+  else { haptic('light'); }
+  setTimeout(() => showAggregate(dir), 400);
+}
+function showAggregate(userDir) {
+  const name = state.currentRestaurant?.name; if (!name) return;
+  const { pct, totalVotes } = getAggregateRating(name);
+  const displayPct = userDir === 'up' ? Math.min(98, pct + Math.floor(Math.random() * 3)) : Math.max(40, pct - Math.floor(Math.random() * 4));
+  const panel = document.getElementById('aggregate-reveal');
+  const bar = document.getElementById('agg-bar');
+  document.getElementById('agg-percent').textContent = displayPct + '% liked this';
+  document.getElementById('agg-votes').textContent = `${totalVotes.toLocaleString()} picks rated so far`;
+  panel.classList.add('visible');
+  requestAnimationFrame(() => { requestAnimationFrame(() => { bar.style.width = displayPct + '%'; }); });
+}
+// ─── No results ───
+function expandDistance() { const slider = document.getElementById('dist-slider'); const max = parseInt(slider.max) || 30; const d = Math.min(max, state.dist + 5); state.dist = d; slider.value = d; document.getElementById('dist-label').textContent = d + ' mi'; updateDistHint(); toast(`↔ Distance → ${d} mi`); haptic('light'); }
+function expandBudget() { const order = ['$','$$','$$$','Any']; const next = order[Math.min(order.indexOf(state.budget) + 1, 3)]; state.budget = next; document.querySelectorAll('#budget-group .pill').forEach((p, i) => p.classList.toggle('active', order[i] === next)); toast(`💰 Budget → ${next}`); haptic('light'); }
+
+// ─── Share card ───
+function openShareCard() {
+  const r = state.currentRestaurant; if (!r) return;
+  document.getElementById('share-name').textContent = r.name;
+  document.getElementById('share-rating').textContent = r.rating;
+  document.getElementById('share-price').textContent = r.price;
+  document.getElementById('share-dist').textContent = r.dist + ' away';
+  document.getElementById('share-tagline').textContent = `"${r.why}"`;
+  document.getElementById('share-tags').innerHTML = r.tags.map(t => `<span class="share-tag">${t}</span>`).join('');
+  document.getElementById('share-overlay').classList.add('visible'); haptic('light');
+}
+function closeShareCard() { document.getElementById('share-overlay').classList.remove('visible'); }
+function closeShareCardOnBg(e) { if (e.target === document.getElementById('share-overlay')) closeShareCard(); }
+function copyShareText() {
+  const r = state.currentRestaurant; if (!r) return;
+  const text = `I let an app decide where to eat tonight 🎰\n\n${r.name} — ${r.rating}★ ${r.price} · ${r.dist}\n"${r.why}"\n\npickd.one`;
+  
+  // Try modern clipboard API
+  if (navigator.clipboard?.writeText) {
+    navigator.clipboard.writeText(text)
+      .then(() => { toast('Copied to clipboard ✦'); haptic('medium'); })
+      .catch(() => tryCopyFallback(text));
+  } else {
+    tryCopyFallback(text);
+  }
+}
+function tryCopyFallback(text) {
+  try {
+    const ta = document.createElement('textarea');
+    ta.value = text; ta.style.cssText = 'position:fixed;opacity:0';
+    document.body.appendChild(ta); ta.select();
+    const ok = document.execCommand('copy');
+    document.body.removeChild(ta);
+    if (ok) { toast('Copied to clipboard ✦'); haptic('medium'); return; }
+  } catch {}
+  // All copy methods failed — show selectable text
+  showCopyModal(text);
+}
+function showCopyModal(text) {
+  let modal = document.getElementById('copy-modal');
+  if (!modal) {
+    modal = document.createElement('div');
+    modal.id = 'copy-modal';
+    modal.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,0.85);backdrop-filter:blur(8px);z-index:500;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:24px;';
+    modal.innerHTML = `
+      <p style="color:var(--ink-muted);font-size:13px;margin-bottom:12px">Long press to select & copy</p>
+      <textarea id="copy-modal-text" readonly style="width:100%;max-width:340px;height:140px;background:var(--card);color:var(--ink);border:1.5px solid var(--border);border-radius:8px;padding:14px;font-family:'DM Sans',sans-serif;font-size:13px;resize:none;line-height:1.5"></textarea>
+      <button onclick="this.parentElement.remove()" style="margin-top:14px;background:none;border:none;color:var(--ink-muted);font-family:'DM Sans',sans-serif;font-size:13px;cursor:pointer;text-decoration:underline">Close</button>
+    `;
+    document.body.appendChild(modal);
+  }
+  document.getElementById('copy-modal-text').value = text;
+  document.getElementById('copy-modal-text').select();
+}
+function nativeShare() {
+  const r = state.currentRestaurant; if (!r) return;
+  const text = `I let an app pick where to eat 🎰\n\n${r.name} — ${r.rating}★ ${r.price}\n"${r.why}"\n\npickd.one`;
+  if (navigator.share) {
+    navigator.share({ title: `Tonight's pick: ${r.name}`, text, url: 'https://pickd.one' })
+      .then(() => { toast('Shared ✦'); haptic('medium'); })
+      .catch(() => {});
+  } else {
+    copyShareText();
+  }
+}
+
+// ─── Global spin counter ───
+async function loadGlobalSpins() {
+  try { const result = await window.storage.get('global-spin-count', true); state.totalSpins = result ? parseInt(result.value) || 0 : 0; } catch { state.totalSpins = 0; }
+  updateBadge();
+}
+async function updateGlobalSpins() { try { await window.storage.set('global-spin-count', String(state.totalSpins), true); } catch {} updateBadge(); }
+function updateBadge() {
+  const badge = document.getElementById('streak-badge'); const num = document.getElementById('streak-num');
+  if (badge && num && state.totalSpins > 0) { num.textContent = state.totalSpins.toLocaleString(); badge.classList.remove('hidden'); }
+}
+loadGlobalSpins();
+
+// ═══════════════════════════════════════════════════
+// LOG SYSTEM — Personal Restaurant Journal
+// ═══════════════════════════════════════════════════
+
+// ─── Storage for log ───
+// Uses window.storage (artifact persistent storage) with localStorage backup
+// localStorage survives across deploys on the same domain
+
+async function loadLogData() {
+  // Try artifact storage first
+  try {
+    const result = await window.storage.get('my-ratings');
+    if (result) state.ratings = JSON.parse(result.value);
+  } catch {
+    // Fall back to localStorage
+    try {
+      const local = localStorage.getItem('pick-ratings');
+      if (local) state.ratings = JSON.parse(local);
+    } catch { state.ratings = []; }
+  }
+  try {
+    const result = await window.storage.get('my-username');
+    if (result) state.username = result.value;
+  } catch {
+    try {
+      const local = localStorage.getItem('pick-username');
+      if (local) state.username = local;
+    } catch {}
+  }
+  // Update log dot
+  updateLogDot();
+}
+
+// Load spin history
+async function loadHistory() {
+  try {
+    const result = await window.storage.get('spin-history');
+    if (result) { state.history = JSON.parse(result.value); return; }
+  } catch {}
+  try {
+    const local = localStorage.getItem('pick-history');
+    if (local) state.history = JSON.parse(local);
+  } catch {}
+}
+
+async function saveLogData() {
+  try { await window.storage.set('my-ratings', JSON.stringify(state.ratings)); } catch {}
+  // Always backup to localStorage
+  try { localStorage.setItem('pick-ratings', JSON.stringify(state.ratings)); } catch {}
+  updateLogDot();
+}
+
+async function saveHistory() {
+  try { await window.storage.set('spin-history', JSON.stringify(state.history)); } catch {}
+  try { localStorage.setItem('pick-history', JSON.stringify(state.history)); } catch {}
+  updateLogDot();
+}
+
+function updateLogDot() {
+  const dot = document.getElementById('log-dot');
+  if (!dot) return;
+  const hasUnrated = state.history.some(h => !state.ratings.some(r => r.restaurantName === h.name));
+  dot.classList.toggle('visible', hasUnrated);
+}
+
+// ─── Rating overlay ───
+function openRateOverlay() {
+  const r = state.currentRestaurant;
+  if (!r) { toast('Spin first to rate a pick'); return; }
+  document.getElementById('rate-restaurant-name').textContent = r.name;
+  const tags = r.tags || [];
+  document.getElementById('rate-restaurant-meta').textContent = `${r.rating}★ · ${r.price}${tags.length ? ' · ' + tags.slice(0,2).join(', ') : ''}`;
+  // Reset form
+  state.rateForm = { rating: 0, tags: [], note: '', pricePaid: null };
+  document.querySelectorAll('#star-picker .star-pick').forEach(s => s.classList.remove('filled'));
+  document.querySelectorAll('#tag-picker .tag-pick').forEach(t => t.classList.remove('selected'));
+  document.querySelectorAll('#rate-price-group .pill').forEach(p => p.classList.remove('active'));
+  document.getElementById('rate-note').value = '';
+  document.getElementById('rate-overlay').classList.add('visible');
+  haptic('light');
+}
+function closeRateOverlay() { document.getElementById('rate-overlay').classList.remove('visible'); }
+
+function pickStar(n) {
+  state.rateForm.rating = n;
+  document.querySelectorAll('#star-picker .star-pick').forEach((s, i) => {
+    s.classList.toggle('filled', i < n);
+  });
+  haptic('light'); SFX.starPick(n);
+}
+
+function pickTag(el) {
+  if (el.classList.contains('selected')) {
+    el.classList.remove('selected');
+    state.rateForm.tags = state.rateForm.tags.filter(t => t !== el.textContent);
+  } else {
+    if (state.rateForm.tags.length >= 3) { toast('Max 3 tags'); return; }
+    el.classList.add('selected');
+    state.rateForm.tags.push(el.textContent);
+  }
+  haptic('light');
+}
+
+function pickRatePrice(el, val) {
+  state.rateForm.pricePaid = val;
+  document.querySelectorAll('#rate-price-group .pill').forEach(p => p.classList.remove('active'));
+  el.classList.add('active');
+  haptic('light');
+}
+
+async function submitRating() {
+  if (state.rateForm.rating === 0) { toast('Pick a star rating'); return; }
+  const r = state.currentRestaurant; if (!r) { toast('No restaurant selected'); return; }
+
+  const entry = {
+    id: Date.now().toString(36) + Math.random().toString(36).slice(2, 6),
+    restaurantName: r.name,
+    cuisineTypes: r.cuisine || (r.tags && r.tags[0]) || 'Other',
+    rating: state.rateForm.rating,
+    tags: [...state.rateForm.tags],
+    note: document.getElementById('rate-note').value.trim().slice(0, 140),
+    pricePaid: state.rateForm.pricePaid,
+    createdAt: new Date().toISOString(),
+  };
+
+  state.ratings.unshift(entry);
+  await saveLogData();
+  await publishProfile();
+  publishProfileToAPI(); // sync to server for sharing
+
+  closeRateOverlay();
+  triggerConfetti();
+  toast('Logged ✦');
+  haptic('success'); SFX.success();
+}
+
+async function publishProfile() {
+  if (!state.username) return;
+  try {
+    await window.storage.set(`profile-${state.username}`, JSON.stringify({
+      username: state.username,
+      ratings: state.ratings,
+      history: state.history,
+    }), true);
+  } catch {}
+}
+
+// ─── Log rendering ───
+function renderLog() {
+  const list = document.getElementById('log-list');
+  const empty = document.getElementById('log-empty');
+  const ratings = getSortedRatings();
+
+  // Stats (computed dynamically)
+  document.getElementById('log-total').textContent = state.ratings.length;
+  if (state.ratings.length > 0) {
+    const avg = (state.ratings.reduce((s, r) => s + r.rating, 0) / state.ratings.length).toFixed(1);
+    document.getElementById('log-avg').textContent = avg + '★';
+
+    // Mode cuisine
+    const cuisineCounts = {};
+    state.ratings.forEach(r => { const c = r.cuisineTypes || 'Other'; cuisineCounts[c] = (cuisineCounts[c] || 0) + 1; });
+    const topCuisine = Object.entries(cuisineCounts).sort((a, b) => b[1] - a[1])[0];
+    document.getElementById('log-fav-cuisine').textContent = topCuisine ? topCuisine[0] : '—';
+
+    // Mode price
+    const priceCounts = {};
+    state.ratings.forEach(r => { if (r.pricePaid) priceCounts[r.pricePaid] = (priceCounts[r.pricePaid] || 0) + 1; });
+    const topPrice = Object.entries(priceCounts).sort((a, b) => b[1] - a[1])[0];
+    document.getElementById('log-fav-price').textContent = topPrice ? topPrice[0] : '—';
+  } else {
+    document.getElementById('log-avg').textContent = '—';
+    document.getElementById('log-fav-cuisine').textContent = '—';
+    document.getElementById('log-fav-price').textContent = '—';
+  }
+
+  if (!ratings.length) { empty.style.display = 'block'; list.innerHTML = ''; return; }
+  empty.style.display = 'none';
+
+  list.innerHTML = ratings.map((r, i) => {
+    const stars = Array.from({length: 5}, (_, j) =>
+      `<span class="${j < r.rating ? 'filled' : 'empty'}">★</span>`
+    ).join('');
+    const date = new Date(r.createdAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+    const tagsHtml = r.tags.map(t => `<span class="tag">${t}</span>`).join('');
+    const noteHtml = r.note ? `<div class="log-entry-note">${escHtml(r.note)}</div>` : '';
+    const priceHtml = r.pricePaid ? `<span class="tag">${r.pricePaid}</span>` : '';
+
+    return `<div class="log-entry">
+      <div class="log-entry-top">
+        <div class="log-entry-name">${escHtml(r.restaurantName)}</div>
+        <div class="log-entry-date">${date}</div>
+      </div>
+      <div class="log-entry-stars">${stars}</div>
+      <div class="log-entry-meta"><div class="tags">${tagsHtml}${priceHtml}</div></div>
+      ${noteHtml}
+      <div class="log-entry-actions">
+        <button class="saved-action-btn" onclick="logOrder(${i})">Order</button>
+        <button class="saved-action-btn" onclick="logMap(${i})">Map</button>
+        <button class="saved-action-btn danger" onclick="removeLogEntry(${i})">✕</button>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function getSortedRatings() {
+  const r = [...state.ratings];
+  if (state.logSort === 'recent') r.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+  else if (state.logSort === 'highest') r.sort((a, b) => b.rating - a.rating || new Date(b.createdAt) - new Date(a.createdAt));
+  else if (state.logSort === 'lowest') r.sort((a, b) => a.rating - b.rating || new Date(b.createdAt) - new Date(a.createdAt));
+  return r;
+}
+
+function sortLog(mode, el) {
+  state.logSort = mode;
+  document.querySelectorAll('#log-sort-bar .sort-pill').forEach(p => p.classList.remove('active'));
+  el.classList.add('active');
+  renderLog();
+  haptic('light');
+}
+
+function setLogView(view) {
+  state.logView = view;
+  document.getElementById('log-view-rated').classList.toggle('active', view === 'rated');
+  document.getElementById('log-view-history').classList.toggle('active', view === 'history');
+  document.getElementById('log-rated-section').style.display = view === 'rated' ? '' : 'none';
+  document.getElementById('log-history-section').style.display = view === 'history' ? '' : 'none';
+  document.getElementById('log-search').value = '';
+  if (view === 'rated') renderLog();
+  if (view === 'history') renderHistory();
+  haptic('light');
+}
+
+function filterLog() {
+  const q = document.getElementById('log-search').value.toLowerCase().trim();
+  if (state.logView === 'rated') {
+    document.querySelectorAll('#log-list .log-entry').forEach(el => {
+      const name = el.querySelector('.log-entry-name')?.textContent.toLowerCase() || '';
+      el.style.display = !q || name.includes(q) ? '' : 'none';
+    });
+  } else {
+    document.querySelectorAll('#history-list .history-entry').forEach(el => {
+      const name = el.querySelector('.history-name')?.textContent.toLowerCase() || '';
+      el.style.display = !q || name.includes(q) ? '' : 'none';
+    });
+  }
+}
+
+function renderHistory() {
+  const list = document.getElementById('history-list');
+  const empty = document.getElementById('history-empty');
+
+  const ratedNames = new Set(state.ratings.map(r => r.restaurantName));
+  const unrated = state.history.map((h, origIdx) => ({ ...h, _idx: origIdx })).filter(h => !ratedNames.has(h.name));
+
+  if (!unrated.length) {
+    empty.style.display = 'block';
+    list.innerHTML = '';
+    return;
+  }
+  empty.style.display = 'none';
+
+  list.innerHTML = unrated.map(h => {
+    const date = new Date(h.spunAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+    const time = new Date(h.spunAt).toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' });
+    const meta = [h.rating ? h.rating + '\u2605' : '', h.price || '', h.cuisine || ''].filter(Boolean).join(' \u00b7 ');
+    const mapUrl = h._lat && h._lng
+      ? `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(h.name)}+${h._lat},${h._lng}`
+      : `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(h.name + ' restaurant Sarasota FL')}`;
+
+    return `<div class="history-entry">
+      <div class="history-top">
+        <div class="history-name">${escHtml(h.name)}</div>
+        <div class="history-date">${date} \u00b7 ${time}</div>
+      </div>
+      <div class="history-meta">${meta}</div>
+      <div class="history-actions">
+        <button class="saved-action-btn" onclick="rateFromHistory(${h._idx})">Rate</button>
+        <button class="saved-action-btn" onclick="window.open('${mapUrl}','_blank')">Map</button>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function rateFromHistory(i) {
+  const h = state.history[i];
+  if (!h) return;
+  state.currentRestaurant = {
+    name: h.name,
+    rating: h.rating || 0,
+    price: h.price || '$$',
+    tags: [h.cuisine || 'Restaurant'].filter(Boolean),
+    cuisine: h.cuisine || '',
+    placeId: h.placeId || null,
+  };
+  openRateOverlay();
+}
+
+function logOrder(i) { const r = getSortedRatings()[i]; if (r) window.open(`https://www.ubereats.com/search?q=${encodeURIComponent(r.restaurantName)}`, '_blank'); }
+function logMap(i) {
+  const r = getSortedRatings()[i];
+  if (!r) return;
+  const match = [...(masterPool.length ? masterPool : fallbackRestaurants)].find(p => p.name === r.restaurantName);
+  let url;
+  if (match && match._lat && match._lng) {
+    url = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(r.restaurantName)}+${match._lat},${match._lng}`;
+  } else {
+    url = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(r.restaurantName + ' restaurant Sarasota FL')}`;
+  }
+  window.open(url, '_blank');
+}
+async function removeLogEntry(i) {
+  const sorted = getSortedRatings();
+  const entry = sorted[i];
+  if (!entry) return;
+  state.ratings = state.ratings.filter(r => r.id !== entry.id);
+  await saveLogData();
+  renderLog();
+  toast('Entry removed');
+}
+
+function escHtml(s) { const d = document.createElement('div'); d.textContent = s; return d.innerHTML; }
+
+// ─── Shareable Log Links (via Netlify API) ───
+// Unique device ID for username ownership
+function getDeviceId() {
+  let id = localStorage.getItem('pick-device-id');
+  if (!id) { id = crypto.randomUUID ? crypto.randomUUID() : Math.random().toString(36).substring(2); localStorage.setItem('pick-device-id', id); }
+  return id;
+}
+
+async function publishProfileToAPI() {
+  if (!state.username || !state.ratings.length) return false;
+  try {
+    const resp = await fetch('/api/profile', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        username: state.username,
+        ratings: state.ratings,
+        history: state.history,
+        _deviceId: getDeviceId(),
+      }),
+    });
+    const data = await resp.json();
+    if (!resp.ok) { console.warn('[pick] Profile publish failed:', data.error); return false; }
+    console.log('[pick] Profile published for @' + state.username);
+    return true;
+  } catch (e) { console.warn('[pick] Profile publish error:', e); return false; }
+}
+
+async function loadProfileFromAPI(username) {
+  try {
+    const resp = await fetch(`/api/profile?u=${encodeURIComponent(username)}`);
+    if (!resp.ok) return null;
+    return await resp.json();
+  } catch { return null; }
+}
+
+function checkForSharedProfile() {
+  // Check for /u/username path
+  const path = window.location.pathname;
+  const match = path.match(/^\/u\/([a-z0-9_]{2,20})$/);
+  if (match) return match[1];
+  
+  // Also check ?u= param as fallback
+  const params = new URLSearchParams(window.location.search);
+  const u = params.get('u');
+  if (u && /^[a-z0-9_]{2,20}$/.test(u)) return u;
+  
+  return null;
+}
+
+async function showSharedProfile(username) {
+  const profile = await loadProfileFromAPI(username);
+  if (!profile || !profile.ratings || !profile.ratings.length) {
+    // Profile not found — show the app normally with a toast
+    toast('Profile not found');
+    return false;
+  }
+  
+  const ratings = profile.ratings;
+  
+  const avatar = document.getElementById('profile-avatar');
+  avatar.textContent = username.charAt(0).toUpperCase();
+  document.getElementById('profile-username').textContent = username;
+
+  const total = ratings.length;
+  const avg = total > 0 ? (ratings.reduce((s, r) => s + r.rating, 0) / total).toFixed(1) : '—';
+
+  const cuisineCounts = {};
+  ratings.forEach(r => { const c = r.cuisineTypes || 'Other'; cuisineCounts[c] = (cuisineCounts[c] || 0) + 1; });
+  const topCuisine = Object.entries(cuisineCounts).sort((a, b) => b[1] - a[1])[0];
+  
+  const fiveStars = ratings.filter(r => r.rating === 5).length;
+
+  document.getElementById('profile-stats-grid').innerHTML = `
+    <div class="profile-stat-card"><div class="profile-stat-val">${total}</div><div class="profile-stat-key">Rated</div></div>
+    <div class="profile-stat-card"><div class="profile-stat-val">${avg}★</div><div class="profile-stat-key">Avg</div></div>
+    <div class="profile-stat-card"><div class="profile-stat-val">${fiveStars}</div><div class="profile-stat-key">5-Star</div></div>
+    <div class="profile-stat-card"><div class="profile-stat-val">${topCuisine ? topCuisine[0] : '—'}</div><div class="profile-stat-key">Top Cuisine</div></div>
+  `;
+
+  const top5 = [...ratings].sort((a, b) => b.rating - a.rating || new Date(b.createdAt) - new Date(a.createdAt)).slice(0, 5);
+  document.getElementById('profile-top-list').innerHTML = top5.map(r => {
+    const stars = Array.from({length: 5}, (_, j) => `<span class="${j < r.rating ? 'filled' : 'empty'}">★</span>`).join('');
+    const tagsHtml = (r.tags || []).map(t => `<span class="tag" style="animation:none;opacity:1">${t}</span>`).join('');
+    const noteHtml = r.note ? `<div class="log-entry-note">${escHtml(r.note)}</div>` : '';
+    return `<div class="log-entry"><div class="log-entry-top"><div class="log-entry-name">${escHtml(r.restaurantName)}</div></div><div class="log-entry-stars">${stars}</div>${noteHtml}<div class="log-entry-meta"><div class="tags">${tagsHtml}</div></div></div>`;
+  }).join('') || '<p style="color:var(--ink-muted);font-size:13px">No ratings yet.</p>';
+
+  const recent10 = [...ratings].sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt)).slice(0, 10);
+  document.getElementById('profile-recent-list').innerHTML = recent10.map(r => {
+    const stars = Array.from({length: 5}, (_, j) => `<span class="${j < r.rating ? 'filled' : 'empty'}">★</span>`).join('');
+    const date = r.createdAt ? new Date(r.createdAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric' }) : '';
+    const noteHtml = r.note ? `<div class="log-entry-note">${escHtml(r.note)}</div>` : '';
+    return `<div class="log-entry"><div class="log-entry-top"><div class="log-entry-name">${escHtml(r.restaurantName)}</div><div class="log-entry-date">${date}</div></div><div class="log-entry-stars">${stars}</div>${noteHtml}</div>`;
+  }).join('') || '<p style="color:var(--ink-muted);font-size:13px">No activity yet.</p>';
+
+  // Hide nav for shared view, add CTA
+  document.body.classList.add('no-nav');
+  show('profile-screen');
+  
+  // Add CTA to try the app
+  if (!document.getElementById('profile-cta')) {
+    const cta = document.createElement('div');
+    cta.id = 'profile-cta';
+    cta.style.cssText = 'text-align:center;padding:24px 0 40px;';
+    cta.innerHTML = `
+      <p style="color:var(--ink-muted);font-size:13px;margin-bottom:12px">Want your own restaurant journal?</p>
+      <button onclick="window.location.href=window.location.origin" style="background:var(--accent);color:white;border:none;padding:12px 28px;border-radius:8px;font-size:14px;font-weight:500;cursor:pointer;font-family:var(--font)">Try pick. free</button>
+    `;
+    document.getElementById('profile-screen').appendChild(cta);
+  }
+  
+  return true;
+}
+
+// ─── Share Log / Username ───
+function shareMyLog() {
+  if (!state.username) {
+    show('username-screen');
+    document.getElementById('username-input').focus();
+    return;
+  }
+  
+  // Publish to API in background
+  publishProfileToAPI();
+  publishProfile(); // also save locally
+  
+  const shareUrl = `https://pickd.one/u/${state.username}`;
+  const ratedCount = state.ratings.length;
+  const topRated = state.ratings.filter(r => r.rating >= 4).length;
+  const shareText = `🎰 I've rated ${ratedCount} restaurants on pick. — ${topRated} favorites so far`;
+  
+  if (navigator.share) {
+    navigator.share({ 
+      title: `@${state.username}'s restaurant log`, 
+      text: shareText,
+      url: shareUrl 
+    }).then(() => {
+      toast('Shared ✦'); haptic('medium');
+    }).catch(() => {});
+  } else if (navigator.clipboard?.writeText) {
+    navigator.clipboard.writeText(shareUrl)
+      .then(() => { toast('Link copied ✦'); haptic('medium'); })
+      .catch(() => showCopyModal(shareUrl));
+  } else {
+    showCopyModal(shareUrl);
+  }
+}
+
+async function saveUsername() {
+  const input = document.getElementById('username-input');
+  const name = input.value.trim().toLowerCase().replace(/[^a-z0-9_]/g, '');
+  if (!name || name.length < 2) {
+    input.style.borderColor = 'var(--accent)';
+    setTimeout(() => input.style.borderColor = '', 1000);
+    toast('Too short'); return;
+  }
+  state.username = name;
+  try { await window.storage.set('my-username', name); } catch {}
+  try { localStorage.setItem('pick-username', name); } catch {}
+
+  await publishProfile();
+
+  toast('Username claimed ✦');
+  haptic('success');
+  show('log-screen');
+  const shareText = `Check out my restaurant log on pick. — @${name}\nhttps://pickd.one`;
+  navigator.clipboard?.writeText(shareText).then(() => toast('Link copied ✦')).catch(() => {});
+}
+
+// Live preview
+document.getElementById('username-input')?.addEventListener('input', function() {
+  document.getElementById('username-preview').textContent = this.value || '…';
+});
+
+// ─── Public Profile (view another user or yourself) ───
+async function viewProfile(username) {
+  let profileData = null;
+  try {
+    const result = await window.storage.get(`profile-${username}`, true);
+    if (result) profileData = JSON.parse(result.value);
+  } catch {}
+
+  if (!profileData || !profileData.ratings) {
+    toast('Profile not found'); return;
+  }
+
+  const ratings = profileData.ratings;
+  const history = profileData.history || [];
+  const avatar = document.getElementById('profile-avatar');
+  avatar.textContent = username.charAt(0).toUpperCase();
+  document.getElementById('profile-username').textContent = username;
+
+  // Compute stats
+  const total = ratings.length;
+  const avg = total > 0 ? (ratings.reduce((s, r) => s + r.rating, 0) / total).toFixed(1) : '\u2014';
+  const spins = history.length;
+
+  const cuisineCounts = {};
+  ratings.forEach(r => { const c = r.cuisineTypes || 'Other'; cuisineCounts[c] = (cuisineCounts[c] || 0) + 1; });
+  const topCuisine = Object.entries(cuisineCounts).sort((a, b) => b[1] - a[1])[0];
+
+  const priceCounts = {};
+  ratings.forEach(r => { if (r.pricePaid) priceCounts[r.pricePaid] = (priceCounts[r.pricePaid] || 0) + 1; });
+  const topPrice = Object.entries(priceCounts).sort((a, b) => b[1] - a[1])[0];
+
+  document.getElementById('profile-stats-grid').innerHTML = `
+    <div class="profile-stat-card"><div class="profile-stat-val">${total}</div><div class="profile-stat-key">Rated</div></div>
+    <div class="profile-stat-card"><div class="profile-stat-val">${spins}</div><div class="profile-stat-key">Spins</div></div>
+    <div class="profile-stat-card"><div class="profile-stat-val">${avg}\u2605</div><div class="profile-stat-key">Avg Rating</div></div>
+    <div class="profile-stat-card"><div class="profile-stat-val">${topCuisine ? topCuisine[0] : '\u2014'}</div><div class="profile-stat-key">Top Cuisine</div></div>
+  `;
+
+  // Top 5
+  const top5 = [...ratings].sort((a, b) => b.rating - a.rating || new Date(b.createdAt) - new Date(a.createdAt)).slice(0, 5);
+  document.getElementById('profile-top-list').innerHTML = top5.map(r => {
+    const stars = Array.from({length: 5}, (_, j) => `<span class="${j < r.rating ? 'filled' : 'empty'}">\u2605</span>`).join('');
+    const tagsHtml = r.tags.map(t => `<span class="tag" style="animation:none;opacity:1">${t}</span>`).join('');
+    return `<div class="log-entry"><div class="log-entry-top"><div class="log-entry-name">${escHtml(r.restaurantName)}</div></div><div class="log-entry-stars">${stars}</div><div class="log-entry-meta"><div class="tags">${tagsHtml}</div></div></div>`;
+  }).join('') || '<p style="color:var(--ink-muted);font-size:13px">No ratings yet.</p>';
+
+  // Recent 10
+  const recent10 = [...ratings].sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt)).slice(0, 10);
+  document.getElementById('profile-recent-list').innerHTML = recent10.map(r => {
+    const stars = Array.from({length: 5}, (_, j) => `<span class="${j < r.rating ? 'filled' : 'empty'}">\u2605</span>`).join('');
+    const date = new Date(r.createdAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+    const noteHtml = r.note ? `<div class="log-entry-note">${escHtml(r.note)}</div>` : '';
+    return `<div class="log-entry"><div class="log-entry-top"><div class="log-entry-name">${escHtml(r.restaurantName)}</div><div class="log-entry-date">${date}</div></div><div class="log-entry-stars">${stars}</div>${noteHtml}</div>`;
+  }).join('') || '<p style="color:var(--ink-muted);font-size:13px">No activity yet.</p>';
+
+  show('profile-screen');
+}
+
+// Button on log screen to preview own profile
+async function previewMyProfile() {
+  if (!state.username) { shareMyLog(); return; }
+  await viewProfile(state.username);
+}
+
+// ─── Toast ───
+let toastTimer = null;
+function toast(msg) {
+  const el = document.getElementById('toast');
+  el.textContent = msg; el.classList.add('show');
+  if (toastTimer) clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => el.classList.remove('show'), 2200);
+}
+</script>
+</body>
+</html>
