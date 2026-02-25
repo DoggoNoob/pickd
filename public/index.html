@@ -1305,7 +1305,7 @@ function placesToAppFormat(places, refLat, refLng) {
       why: generateWhy(p.displayName?.text || '', rating, d, ratingCount, cuisine, types),
       cuisine, placeId: p.id,
       _lat: pLoc.latitude, _lng: pLoc.longitude,
-      _priceNum: plMap[p.priceLevel] ?? 2,
+      _priceNum: plMap[p.priceLevel] ?? null,
       _ratingCount: ratingCount,
       _isOpen: isOpen,
       _phone: phone,
@@ -1328,6 +1328,23 @@ function parseTodayHours(hours) {
   return match ? match.replace(today + ': ', '') : null;
 }
 
+// Deduplicate chains — keep only the best-rated location per restaurant name
+function deduplicateChains(pool) {
+  const nameMap = new Map();
+  for (const r of pool) {
+    const key = r.name.toLowerCase().trim();
+    if (!nameMap.has(key)) {
+      nameMap.set(key, r);
+    } else {
+      const existing = nameMap.get(key);
+      if (r.rating > existing.rating || (r.rating === existing.rating && (r._ratingCount || 0) > (existing._ratingCount || 0))) {
+        nameMap.set(key, r);
+      }
+    }
+  }
+  return Array.from(nameMap.values());
+}
+
 async function loadMasterPool() {
   try {
     const stored = await window.storage.get('master-pool');
@@ -1338,7 +1355,7 @@ async function loadMasterPool() {
         // Validate it's real API data (has placeId) and not stale
         const hasApiData = parsed.restaurants.some(r => r.placeId);
         if (age < 30 * 24 * 60 * 60 * 1000 && hasApiData) {
-          masterPool = parsed.restaurants;
+          masterPool = deduplicateChains(parsed.restaurants);
           restaurants = [...masterPool];
           console.log(`[pick] Loaded ${masterPool.length} API restaurants from storage (${Math.round(age/86400000)}d old)`);
           console.log(`[pick] 🍽️ POOL STATS: ${masterPool.length} total restaurants in database`);
@@ -1361,7 +1378,7 @@ async function loadMasterPool() {
         const age = Date.now() - parsed.fetchedAt;
         const hasApiData = parsed.restaurants.some(r => r.placeId);
         if (age < 30 * 24 * 60 * 60 * 1000 && hasApiData) {
-          masterPool = parsed.restaurants;
+          masterPool = deduplicateChains(parsed.restaurants);
           restaurants = [...masterPool];
           console.log(`[pick] Loaded ${masterPool.length} API restaurants from localStorage (${Math.round(age/86400000)}d old)`);
           console.log(`[pick] 🍽️ POOL STATS: ${masterPool.length} total restaurants in database`);
@@ -1399,6 +1416,13 @@ async function buildMasterPool() {
 
     // Convert to app format
     masterPool = placesToAppFormat(uniquePlaces);
+
+    // Deduplicate chains (Chick-fil-A, McDonald's, etc.)
+    const beforeDedup = masterPool.length;
+    masterPool = deduplicateChains(masterPool);
+    if (masterPool.length < beforeDedup) {
+      console.log(`[pick] Chain dedup: ${beforeDedup} → ${masterPool.length} (removed ${beforeDedup - masterPool.length} duplicate locations)`);
+    }
 
     // Sort by rating count (popularity) then rating
     masterPool.sort((a, b) => b._ratingCount - a._ratingCount || b.rating - a.rating);
@@ -1624,14 +1648,23 @@ function filterPool() {
     const maxP = budgetToMaxPrice();
     const beforeBudget = pool.length;
     pool = pool.filter(r => {
-      // If we have confirmed price data (from Yelp or Google), enforce strictly
-      if (r._priceNum !== undefined && r._priceNum !== null) {
+      // Must have confirmed price data to pass budget filter
+      if (r._priceNum !== undefined && r._priceNum !== null && r._priceNum > 0) {
         return r._priceNum <= maxP;
       }
-      // No price data — include but it's unverified
-      return true;
+      // No price data — exclude from budget-filtered results
+      // This prevents random expensive restaurants sneaking into $ results
+      return false;
     });
-    if (pool.length < beforeBudget) {
+    // If strict filtering leaves too few results, add back unknowns
+    if (pool.length < 5) {
+      const unknowns = [...(masterPool.length ? masterPool : fallbackRestaurants)].filter(r => {
+        return (r._priceNum === undefined || r._priceNum === null || r._priceNum === 0);
+      });
+      pool = pool.concat(unknowns);
+      console.log(`[pick] Budget filter too strict, added ${unknowns.length} unknowns back`);
+    }
+    if (beforeBudget !== pool.length) {
       console.log(`[pick] Budget filter (${state.budget}, max ${maxP}): ${beforeBudget} → ${pool.length}`);
     }
   }
